@@ -8,6 +8,7 @@
     "build": "node scripts/astro.mjs check && node scripts/astro.mjs build",
     "preview": "node scripts/astro.mjs preview",
     "check": "node scripts/astro.mjs check",
+    "sync:ti-assets": "node scripts/sync-ti-assets.mjs",
     "assets:import": "node scripts/import-ti-assets.mjs"
   },
   "dependencies": {

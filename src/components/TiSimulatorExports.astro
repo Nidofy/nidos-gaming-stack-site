@@ -8,12 +8,16 @@ interface Props {
 }
 
 type ExportedAsset = {
+  id?: string;
   filename: string;
+  sourcePath?: string;
   type: string;
   role: string;
   title: string;
   alt: string;
+  recommendedAltText?: string;
   description: string;
+  websiteUsage?: string;
   width?: number;
   height?: number;
 };
@@ -25,7 +29,8 @@ type ExportManifest = {
   assets: ExportedAsset[];
 };
 
-const manifestPath = join(process.cwd(), "public", "generated", "ti-simulator", "asset-manifest.json");
+const manifestPath = join(process.cwd(), "public", "generated", "ti-simulator", "manifest.json");
+const legacyManifestPath = join(process.cwd(), "public", "generated", "ti-simulator", "asset-manifest.json");
 const assetBase = "/generated/ti-simulator";
 const { locale } = Astro.props;
 let manifest: ExportManifest | null = null;
@@ -33,6 +38,35 @@ let manifest: ExportManifest | null = null;
 if (existsSync(manifestPath)) {
   try {
     const parsed = JSON.parse(readFileSync(manifestPath, "utf8")) as Partial<ExportManifest>;
+    if (parsed.project === "ti-simulator" && Array.isArray(parsed.assets)) {
+      manifest = {
+        schemaVersion: Number(parsed.schemaVersion ?? 1),
+        project: parsed.project,
+        generatedAt: String(parsed.generatedAt ?? ""),
+        assets: parsed.assets
+          .filter((asset) => asset && typeof asset.sourcePath === "string")
+          .map((asset) => ({
+            id: String(asset.id ?? ""),
+            filename: String(asset.sourcePath),
+            sourcePath: String(asset.sourcePath),
+            type: String(asset.type ?? ""),
+            role: String(asset.websiteUsage ?? asset.id ?? "preview"),
+            title: String(asset.title ?? asset.id ?? "TI Simulator asset"),
+            alt: String(asset.recommendedAltText ?? asset.title ?? "TI Simulator preview asset"),
+            recommendedAltText: String(asset.recommendedAltText ?? ""),
+            description: String(asset.description ?? ""),
+            websiteUsage: String(asset.websiteUsage ?? ""),
+          })),
+      };
+    }
+  } catch {
+    manifest = null;
+  }
+}
+
+if (!manifest && existsSync(legacyManifestPath)) {
+  try {
+    const parsed = JSON.parse(readFileSync(legacyManifestPath, "utf8")) as Partial<ExportManifest>;
     if (parsed.project === "ti-simulator" && Array.isArray(parsed.assets)) {
       manifest = {
         schemaVersion: Number(parsed.schemaVersion ?? 1),
@@ -46,25 +80,43 @@ if (existsSync(manifestPath)) {
   }
 }
 
-const visibleAssets = manifest?.assets.slice(0, 3) ?? [];
+const imageAssets = manifest?.assets.filter((asset) => asset.type.startsWith("image/")) ?? [];
+const byId = new Map(imageAssets.map((asset) => [asset.id, asset]));
+const previewAsset = byId.get("hero-gameplay") ?? imageAssets[0];
+const screenshotAssets = ["decision-screen", "match-summary"]
+  .map((id) => byId.get(id))
+  .filter((asset): asset is ExportedAsset => Boolean(asset));
+const strategyAsset = byId.get("strategy-map");
+const achievementAsset = byId.get("achievement-screen");
+
 const copy = {
   "zh-CN": {
-    eyebrow: "Generated Media",
-    title: "来自模拟器项目的站点素材。",
-    intro: "网站会消费从 TI 模拟器项目复制过来的导出资源。资源缺失时，这个区块会自动降级，不阻塞网站构建。",
+    eyebrow: "TI Simulator Preview",
+    title: "从模拟器项目同步来的真实展示素材。",
+    intro: "这些图片来自上级 TI 模拟器项目导出的 manifest。资源缺失时，本区块会自动降级，不影响网站独立构建。",
+    preview: "TI Simulator Preview",
+    screenshots: "Gameplay Screenshots",
+    strategy: "Strategy & Match Flow",
+    achievement: "Achievement System",
     emptyEyebrow: "No export found",
     emptyTitle: "还没有导入 TI 模拟器生成素材。",
-    emptyBody: "先在模拟器项目生成站点素材，再运行网站导入脚本。导入前，网站仍可独立构建和运行。",
+    emptyBody: "先在模拟器项目生成站点素材，再运行 `npm run sync:ti-assets`。导入前，网站仍可独立构建和运行。",
   },
   en: {
-    eyebrow: "Generated Media",
-    title: "Simulator exports for the website.",
-    intro: "The website consumes a copied export bundle from the TI Simulator project. If the bundle is absent, this section falls back without blocking the build.",
+    eyebrow: "TI Simulator Preview",
+    title: "Website assets synced from the simulator project.",
+    intro: "This section reads the synced TI Simulator manifest. If generated assets are missing, it falls back without blocking the independent website build.",
+    preview: "TI Simulator Preview",
+    screenshots: "Gameplay Screenshots",
+    strategy: "Strategy & Match Flow",
+    achievement: "Achievement System",
     emptyEyebrow: "No export found",
     emptyTitle: "Generated TI Simulator assets are not imported yet.",
-    emptyBody: "Run the simulator export and website import scripts to populate this area. Until then, the website remains independently runnable.",
+    emptyBody: "Run the simulator export, then `npm run sync:ti-assets` in the website. Until then, the website remains independently runnable.",
   },
 }[locale];
+
+const imageSrc = (asset: ExportedAsset) => `${assetBase}/${asset.sourcePath ?? asset.filename}`;
 ---
 
 <section class="bg-white/70 py-20">
@@ -80,15 +132,85 @@ const copy = {
     </div>
 
     {
-      visibleAssets.length > 0 ? (
-        <div class="grid gap-4 lg:grid-cols-3">
-          {visibleAssets.map((asset) => (
-            <article class="overflow-hidden rounded-lg border border-line bg-panel shadow-sm">
+      imageAssets.length > 0 ? (
+        <div class="grid gap-5">
+          {previewAsset && (
+            <article class="overflow-hidden rounded-[22px] border border-line bg-panel shadow-soft">
               <img
-                src={`${assetBase}/${asset.filename}`}
+                src={imageSrc(previewAsset)}
+                alt={previewAsset.alt}
+                loading="lazy"
+                class="aspect-[16/9] w-full bg-paper object-cover"
+              />
+              <div class="p-6 md:p-7">
+                <p class="eyebrow">{copy.preview}</p>
+                <h3 class="mt-2 text-2xl font-semibold md:text-3xl">{previewAsset.title}</h3>
+                <p class="mt-3 max-w-3xl leading-7 text-muted">{previewAsset.description}</p>
+              </div>
+            </article>
+          )}
+
+          <div class="grid gap-5 lg:grid-cols-3">
+            {screenshotAssets.length > 0 && (
+              <article class="rounded-[20px] border border-line bg-panel p-5 shadow-sm lg:col-span-2">
+                <p class="eyebrow">{copy.screenshots}</p>
+                <div class="mt-5 grid gap-4 md:grid-cols-2">
+                  {screenshotAssets.map((asset) => (
+                    <figure class="overflow-hidden rounded-2xl border border-line bg-paper">
+                      <img
+                        src={imageSrc(asset)}
+                        alt={asset.alt}
+                        loading="lazy"
+                        class="aspect-[16/10] w-full object-cover"
+                      />
+                      <figcaption class="p-4">
+                        <h3 class="font-semibold">{asset.title}</h3>
+                        <p class="mt-2 text-sm leading-6 text-muted">{asset.description}</p>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </article>
+            )}
+
+            {strategyAsset && (
+              <article class="overflow-hidden rounded-[20px] border border-line bg-panel shadow-sm">
+                <img
+                  src={imageSrc(strategyAsset)}
+                  alt={strategyAsset.alt}
+                  loading="lazy"
+                  class="aspect-[16/11] w-full bg-paper object-cover"
+                />
+                <div class="p-5">
+                  <p class="eyebrow">{copy.strategy}</p>
+                  <h3 class="mt-2 text-xl font-semibold">{strategyAsset.title}</h3>
+                  <p class="mt-3 leading-7 text-muted">{strategyAsset.description}</p>
+                </div>
+              </article>
+            )}
+
+            {achievementAsset && (
+              <article class="overflow-hidden rounded-[20px] border border-line bg-panel shadow-sm lg:col-span-3">
+                <img
+                  src={imageSrc(achievementAsset)}
+                  alt={achievementAsset.alt}
+                  loading="lazy"
+                  class="aspect-[16/7] w-full bg-paper object-cover"
+                />
+                <div class="p-5 md:p-6">
+                  <p class="eyebrow">{copy.achievement}</p>
+                  <h3 class="mt-2 text-2xl font-semibold">{achievementAsset.title}</h3>
+                  <p class="mt-3 max-w-3xl leading-7 text-muted">{achievementAsset.description}</p>
+                </div>
+              </article>
+            )}
+
+            {imageAssets.length > 0 && !strategyAsset && !achievementAsset && screenshotAssets.length === 0 && (
+              imageAssets.slice(0, 3).map((asset) => (
+                <article class="overflow-hidden rounded-[20px] border border-line bg-panel shadow-sm">
+                  <img
+                    src={imageSrc(asset)}
                 alt={asset.alt}
-                width={asset.width}
-                height={asset.height}
                 loading="lazy"
                 class="aspect-[16/10] w-full bg-paper object-cover"
               />
@@ -98,7 +220,9 @@ const copy = {
                 <p class="mt-3 leading-7 text-muted">{asset.description}</p>
               </div>
             </article>
-          ))}
+              ))
+            )}
+          </div>
         </div>
       ) : (
         <div class="rounded-lg border border-dashed border-line bg-panel p-8">
