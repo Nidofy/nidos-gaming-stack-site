@@ -1,0 +1,33 @@
+---
+import type { Locale } from "@/data/site";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const path = Astro.url.pathname;
+const zhHref = path.startsWith("/en") ? path.replace(/^\/en/, "/zh-CN") : "/zh-CN";
+const enHref = path === "/zh-CN/wechat" || path === "/zh-CN/wechat/" ? "/en" : path.startsWith("/zh-CN") ? path.replace(/^\/zh-CN/, "/en") : "/en";
+---
+
+<nav aria-label={locale === "zh-CN" ? "语言切换" : "Language switcher"} class="flex items-center rounded-full border border-line bg-white/70 p-1 text-sm shadow-sm backdrop-blur">
+  <a
+    class:list={[
+      "rounded-full px-3 py-1.5 transition",
+      locale === "zh-CN" ? "bg-ink text-white" : "text-muted hover:text-ink",
+    ]}
+    href={zhHref}
+  >
+    中
+  </a>
+  <a
+    class:list={[
+      "rounded-full px-3 py-1.5 transition",
+      locale === "en" ? "bg-ink text-white" : "text-muted hover:text-ink",
+    ]}
+    href={enHref}
+  >
+    EN
+  </a>
+</nav>

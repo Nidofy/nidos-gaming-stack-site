@@ -1,0 +1,37 @@
+{
+  "gameSlug": "ti-simulator",
+  "version": "0.1.0-playtest",
+  "channel": "alpha",
+  "releasedAt": "2026-07-15",
+  "latest": true,
+  "files": [
+    {
+      "platform": "Windows",
+      "filename": "ti-simulator-0.1.0-playtest-win-x64.zip",
+      "size": "TODO",
+      "sha256": "TODO-SHA256-WINDOWS",
+      "globalMirror": "https://example.com/releases/ti-simulator/windows",
+      "chinaMirror": "https://example.cn/releases/ti-simulator/windows",
+      "available": false
+    },
+    {
+      "platform": "macOS",
+      "filename": "ti-simulator-0.1.0-playtest-macos-universal.zip",
+      "size": "TODO",
+      "sha256": "TODO-SHA256-MACOS",
+      "globalMirror": "https://example.com/releases/ti-simulator/macos",
+      "chinaMirror": "https://example.cn/releases/ti-simulator/macos",
+      "available": false
+    },
+    {
+      "platform": "Linux",
+      "filename": "ti-simulator-0.1.0-playtest-linux-x64.tar.gz",
+      "size": "TODO",
+      "sha256": "TODO-SHA256-LINUX",
+      "globalMirror": "https://example.com/releases/ti-simulator/linux",
+      "chinaMirror": "https://example.cn/releases/ti-simulator/linux",
+      "available": false
+    }
+  ],
+  "note": "This file is currently maintained manually from src/data/downloads.ts. Add a generation script before real releases."
+}

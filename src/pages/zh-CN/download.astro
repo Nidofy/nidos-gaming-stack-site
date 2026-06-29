@@ -1,0 +1,40 @@
+---
+import DownloadCard from "@/components/DownloadCard.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getLatestRelease } from "@/data/downloads";
+import { getGame } from "@/data/games";
+
+const locale = "zh-CN";
+const game = getGame(locale, "ti-simulator");
+const release = getLatestRelease("ti-simulator");
+if (!game || !release) throw new Error("Missing download data.");
+---
+
+<BaseLayout locale={locale} title="下载 - Nido的游戏小栈" description="下载 TI 模拟器测试版，查看 Global Mirror、China Mirror、校验值、更新日志和已知问题。">
+  <section class="container-page section-space">
+    <p class="eyebrow">Downloads</p>
+    <h1 class="balance mt-4 max-w-4xl text-5xl font-semibold md:text-7xl">测试版下载与镜像。</h1>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">{release.summary[locale]}</p>
+  </section>
+
+  <section class="container-page pb-16">
+    <div class="grid gap-4 lg:grid-cols-3">
+      {release.files.map((file) => <DownloadCard file={file} release={release} locale={locale} />)}
+    </div>
+  </section>
+
+  <section class="container-page grid gap-6 pb-24 md:grid-cols-2">
+    <article class="rounded-[24px] border border-line bg-panel p-6">
+      <h2 class="text-2xl font-semibold">更新日志</h2>
+      <ul class="mt-4 space-y-3 text-muted">
+        {release.changelog[locale].map((item) => <li>• {item}</li>)}
+      </ul>
+    </article>
+    <article class="rounded-[24px] border border-line bg-panel p-6">
+      <h2 class="text-2xl font-semibold">已知问题</h2>
+      <ul class="mt-4 space-y-3 text-muted">
+        {release.knownIssues[locale].map((item) => <li>• {item}</li>)}
+      </ul>
+    </article>
+  </section>
+</BaseLayout>

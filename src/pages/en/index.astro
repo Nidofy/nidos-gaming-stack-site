@@ -1,0 +1,76 @@
+---
+import CTAButton from "@/components/CTAButton.astro";
+import FeatureGrid from "@/components/FeatureGrid.astro";
+import GameCard from "@/components/GameCard.astro";
+import Hero from "@/components/Hero.astro";
+import TiSimulatorExports from "@/components/TiSimulatorExports.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { games } from "@/data/games";
+import { site } from "@/data/site";
+
+const locale = "en";
+const featuredGame = games[locale][0];
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${site.name[locale]} - Indie Game Releases`}
+  description={site.description[locale]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.name[locale],
+    description: site.description[locale],
+    url: `${site.baseUrl}/en`,
+  }}
+>
+  <Hero
+    eyebrow="Personal indie game releases"
+    title="Simulators, small games, and playable experiments from Nido."
+    subtitle="The current featured project is TI Simulator. This site will collect downloads, devlogs, testing notes, and future games."
+    primaryLabel="View TI Simulator"
+    primaryHref="/en/games/ti-simulator"
+    secondaryLabel="Playtest downloads"
+    secondaryHref="/en/download"
+    placeholderLabel="TODO: Replace home media"
+    placeholderNote="Future media should use original screenshots, captures, or generated assets, not real event or team branding."
+  />
+
+  <section id="games" class="container-page section-space">
+    <div class="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="eyebrow">Featured Game</p>
+        <h2 class="mt-3 text-4xl font-semibold md:text-5xl">Current project</h2>
+      </div>
+      <p class="max-w-xl leading-7 text-muted">The home page reads from game data. Adding another game should not require rewriting this page structure.</p>
+    </div>
+    <GameCard game={featuredGame} />
+  </section>
+
+  <TiSimulatorExports locale={locale} />
+
+  <section class="bg-white/62 py-20">
+    <div class="container-page">
+      <div class="mb-10 max-w-2xl">
+        <p class="eyebrow">Direction</p>
+        <h2 class="mt-3 text-4xl font-semibold md:text-5xl">Clean, maintainable, and ready for more games.</h2>
+      </div>
+      <FeatureGrid
+        features={[
+          { title: "Bilingual by structure", description: "Chinese pages support domestic promotion; English pages serve international players and testers." },
+          { title: "Release data first", description: "Versions, mirrors, checksums, and known issues come from download data, not scattered page copy." },
+          { title: "Portfolio-ready", description: "The site is shaped around multiple projects rather than a one-off landing page." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="container-page section-space text-center">
+    <p class="eyebrow">Next</p>
+    <h2 class="balance mx-auto mt-3 max-w-3xl text-4xl font-semibold md:text-5xl">Looking for the first test build?</h2>
+    <p class="mx-auto mt-5 max-w-2xl leading-8 text-muted">The download page already reserves Global and China mirrors. Real artifacts can be attached by updating release data.</p>
+    <div class="mt-8">
+      <CTAButton href="/en/download" label="Open download page" />
+    </div>
+  </section>
+</BaseLayout>

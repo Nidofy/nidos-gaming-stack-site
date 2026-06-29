@@ -1,0 +1,43 @@
+---
+import CTAButton from "@/components/CTAButton.astro";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  placeholderLabel: string;
+  placeholderNote: string;
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref,
+  placeholderLabel,
+  placeholderNote,
+} = Astro.props;
+---
+
+<section class="container-page section-space pb-12 text-center">
+  <p class="eyebrow">{eyebrow}</p>
+  <h1 class="balance mx-auto mt-5 max-w-5xl text-5xl font-semibold leading-[1.04] tracking-normal md:text-7xl">{title}</h1>
+  <p class="balance mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted md:text-2xl md:leading-9">{subtitle}</p>
+  <div class="mt-8 flex flex-wrap justify-center gap-3">
+    <CTAButton href={primaryHref} label={primaryLabel} />
+    {secondaryLabel && secondaryHref && <CTAButton href={secondaryHref} label={secondaryLabel} variant="secondary" />}
+  </div>
+  <div class="media-placeholder mt-14 grid place-items-center overflow-hidden p-6 text-left">
+    <div class="max-w-lg rounded-2xl border border-line bg-white/82 p-6 shadow-soft backdrop-blur">
+      <p class="text-sm font-semibold text-ink">{placeholderLabel}</p>
+      <p class="mt-2 text-sm leading-6 text-muted">{placeholderNote}</p>
+    </div>
+  </div>
+</section>

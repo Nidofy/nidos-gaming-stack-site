@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { site } from "@/data/site";
+---
+
+<BaseLayout title={site.name["zh-CN"]} description={site.description["zh-CN"]} showHeader={false}>
+  <section class="container-page grid min-h-screen place-items-center py-16 text-center">
+    <div>
+      <p class="eyebrow">Nido's Gaming Stack</p>
+      <h1 class="mt-5 text-5xl font-semibold md:text-7xl">Nido的游戏小栈</h1>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted">
+        请选择语言。页面会默认尝试跳转到中文首页；英文用户可以进入 English site。
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a class="rounded-full bg-ink px-6 py-3 font-semibold text-white" href="/zh-CN">进入中文站</a>
+        <a class="rounded-full border border-line bg-white px-6 py-3 font-semibold" href="/en">English site</a>
+      </div>
+    </div>
+  </section>
+  <script is:inline>
+    const language = navigator.language || "";
+    const target = language.toLowerCase().startsWith("zh") ? "/zh-CN" : "/en";
+    window.location.replace(target);
+  </script>
+</BaseLayout>

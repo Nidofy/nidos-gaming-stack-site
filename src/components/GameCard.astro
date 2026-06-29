@@ -1,0 +1,30 @@
+---
+import CTAButton from "@/components/CTAButton.astro";
+import type { GameContent } from "@/data/games";
+
+interface Props {
+  game: GameContent;
+}
+
+const { game } = Astro.props;
+---
+
+<article class="grid gap-8 rounded-[28px] border border-line bg-panel p-6 shadow-soft md:grid-cols-[0.9fr_1.1fr] md:p-8">
+  <div class="media-placeholder min-h-[260px] rounded-[22px] p-5">
+    <div class="flex h-full items-end">
+      <p class="rounded-2xl bg-white/82 p-4 text-sm leading-6 text-muted">{game.hero.placeholderLabel}</p>
+    </div>
+  </div>
+  <div class="flex flex-col justify-center">
+    <p class="eyebrow">{game.statusLabel}</p>
+    <h3 class="mt-3 text-3xl font-semibold md:text-4xl">{game.title}</h3>
+    <p class="mt-4 text-lg leading-8 text-muted">{game.summary}</p>
+    <div class="mt-5 flex flex-wrap gap-2">
+      {game.tags.map((tag) => <span class="rounded-full border border-line px-3 py-1 text-sm text-muted">{tag}</span>)}
+    </div>
+    <div class="mt-7 flex flex-wrap gap-3">
+      <CTAButton href={game.primaryCta.href} label={game.primaryCta.label} compact />
+      <CTAButton href={`/${game.locale}/games/${game.slug}`} label={game.locale === "zh-CN" ? "查看详情" : "Details"} variant="secondary" compact />
+    </div>
+  </div>
+</article>
