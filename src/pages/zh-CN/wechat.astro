@@ -11,10 +11,15 @@ const release = getLatestRelease("ti-simulator");
 if (!game || !release) throw new Error("Missing WeChat page data.");
 ---
 
-<BaseLayout locale={locale} title="微信测试入口 - Nido的游戏小栈" description="TI 模拟器微信公众号测试入口，包含下载、镜像、反馈问卷和测试群说明。">
+<BaseLayout
+  locale={locale}
+  title="微信测试入口 - Nido的游戏小栈"
+  description="TI 模拟器微信公众号测试入口，包含下载、镜像、反馈问卷和测试群说明。"
+  alternatePaths={{ "zh-CN": "/zh-CN/wechat", en: "/en" }}
+>
   <section class="container-page py-12 md:py-16">
     <p class="eyebrow">微信测试入口</p>
-    <h1 class="mt-4 text-4xl font-semibold leading-tight md:text-6xl">TI 模拟器测试版入口</h1>
+    <h1 class="mt-4 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">TI 模拟器测试版入口</h1>
     <p class="mt-5 text-lg leading-8 text-muted">{game.summary}</p>
     <div class="mt-7 flex flex-col gap-3 sm:flex-row">
       <CTAButton href="/zh-CN/download" label="查看下载与备用镜像" />
@@ -39,9 +44,9 @@ if (!game || !release) throw new Error("Missing WeChat page data.");
       <h2 class="text-2xl font-semibold">测试群说明</h2>
       <p class="mt-3 leading-7 text-muted">测试群二维码暂未放出。公众号文章发布时可在这里补充入群方式、反馈格式和测试注意事项。</p>
     </article>
-    <article class="rounded-[22px] border border-line bg-panel p-5">
+    <article id="feedback-coming-soon" class="rounded-[22px] border border-line bg-panel p-5">
       <h2 class="text-2xl font-semibold">公众号引导</h2>
-      <p class="mt-3 leading-7 text-muted">如果你是从公众号文章点进来的，可以先收藏本页。后续测试版本、更新日志和反馈入口都会从这里汇总。</p>
+      <p class="mt-3 leading-7 text-muted">如果你是从公众号文章点进来的，可以先收藏本页。后续测试版本、更新日志和反馈入口都会从这里汇总；反馈问卷未开放前不会跳转到占位外链。</p>
     </article>
   </section>
 </BaseLayout>

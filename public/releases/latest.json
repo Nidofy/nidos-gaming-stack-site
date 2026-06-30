@@ -10,8 +10,8 @@
       "filename": "ti-simulator-0.1.0-playtest-win-x64.zip",
       "size": "TODO",
       "sha256": "TODO-SHA256-WINDOWS",
-      "globalMirror": "https://example.com/releases/ti-simulator/windows",
-      "chinaMirror": "https://example.cn/releases/ti-simulator/windows",
+      "globalMirror": "",
+      "chinaMirror": "",
       "available": false
     },
     {
@@ -19,8 +19,8 @@
       "filename": "ti-simulator-0.1.0-playtest-macos-universal.zip",
       "size": "TODO",
       "sha256": "TODO-SHA256-MACOS",
-      "globalMirror": "https://example.com/releases/ti-simulator/macos",
-      "chinaMirror": "https://example.cn/releases/ti-simulator/macos",
+      "globalMirror": "",
+      "chinaMirror": "",
       "available": false
     },
     {
@@ -28,8 +28,8 @@
       "filename": "ti-simulator-0.1.0-playtest-linux-x64.tar.gz",
       "size": "TODO",
       "sha256": "TODO-SHA256-LINUX",
-      "globalMirror": "https://example.com/releases/ti-simulator/linux",
-      "chinaMirror": "https://example.cn/releases/ti-simulator/linux",
+      "globalMirror": "",
+      "chinaMirror": "",
       "available": false
     }
   ],

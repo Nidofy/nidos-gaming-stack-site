@@ -8,7 +8,7 @@ interface Props {
 
 const { href, label, variant = "primary", compact = false } = Astro.props;
 const base =
-  "inline-flex items-center justify-center rounded-full font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent";
+  "inline-flex min-h-11 w-full items-center justify-center rounded-full text-center font-semibold leading-tight transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:w-auto";
 const sizes = compact ? "px-4 py-2 text-sm" : "px-6 py-3 text-base shadow-sm";
 const variants = {
   primary: "bg-ink text-white hover:bg-ink/88",

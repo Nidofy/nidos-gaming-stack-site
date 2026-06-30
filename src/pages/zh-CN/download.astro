@@ -13,8 +13,11 @@ if (!game || !release) throw new Error("Missing download data.");
 <BaseLayout locale={locale} title="下载 - Nido的游戏小栈" description="下载 TI 模拟器测试版，查看 Global Mirror、China Mirror、校验值、更新日志和已知问题。">
   <section class="container-page section-space">
     <p class="eyebrow">Downloads</p>
-    <h1 class="balance mt-4 max-w-4xl text-5xl font-semibold md:text-7xl">测试版下载与镜像。</h1>
+    <h1 class="balance mt-4 max-w-4xl text-4xl font-semibold sm:text-5xl lg:text-6xl">测试版下载与镜像。</h1>
     <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">{release.summary[locale]}</p>
+    <p class="mt-4 max-w-3xl rounded-2xl border border-dashed border-line bg-white/76 p-4 text-sm leading-6 text-muted">
+      当前版本为 Coming Soon 状态。手机端下载按钮会在真实安装包、文件大小和 SHA-256 校验值补齐后开放。
+    </p>
   </section>
 
   <section class="container-page pb-16">

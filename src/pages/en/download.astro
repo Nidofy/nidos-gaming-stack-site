@@ -13,8 +13,11 @@ if (!game || !release) throw new Error("Missing download data.");
 <BaseLayout locale={locale} title="Download - Nido's Gaming Stack" description="Download the TI Simulator playtest and review mirrors, checksums, changelog, and known issues.">
   <section class="container-page section-space">
     <p class="eyebrow">Downloads</p>
-    <h1 class="balance mt-4 max-w-4xl text-5xl font-semibold md:text-7xl">Playtest builds and mirrors.</h1>
+    <h1 class="balance mt-4 max-w-4xl text-4xl font-semibold sm:text-5xl lg:text-6xl">Playtest builds and mirrors.</h1>
     <p class="mt-6 max-w-3xl text-lg leading-8 text-muted">{release.summary[locale]}</p>
+    <p class="mt-4 max-w-3xl rounded-2xl border border-dashed border-line bg-white/76 p-4 text-sm leading-6 text-muted">
+      This build is marked Coming Soon. Mobile download buttons will open only after real artifacts, file sizes, and SHA-256 checksums are attached.
+    </p>
   </section>
 
   <section class="container-page pb-16">

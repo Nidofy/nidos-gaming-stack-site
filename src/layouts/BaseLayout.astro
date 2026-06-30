@@ -10,20 +10,21 @@ interface Props {
   description: string;
   showHeader?: boolean;
   jsonLd?: Record<string, unknown>;
+  alternatePaths?: Partial<Record<Locale, string>>;
 }
 
-const { locale = "zh-CN", title, description, showHeader = true, jsonLd } = Astro.props;
+const { locale = "zh-CN", title, description, showHeader = true, jsonLd, alternatePaths = {} } = Astro.props;
 const currentPath = Astro.url.pathname;
 const canonical = new URL(currentPath, site.baseUrl).toString();
-const zhPath = currentPath.startsWith("/en") ? currentPath.replace(/^\/en/, "/zh-CN") : currentPath;
-const enPath = currentPath.startsWith("/zh-CN") ? currentPath.replace(/^\/zh-CN/, "/en") : currentPath;
+const zhPath = alternatePaths["zh-CN"] ?? (currentPath.startsWith("/en") ? currentPath.replace(/^\/en/, "/zh-CN") : currentPath);
+const enPath = alternatePaths.en ?? (currentPath.startsWith("/zh-CN") ? currentPath.replace(/^\/zh-CN/, "/en") : currentPath);
 ---
 
 <!doctype html>
 <html lang={locale}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />

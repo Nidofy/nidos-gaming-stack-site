@@ -9,8 +9,8 @@ interface Props {
 
 type ExportedAsset = {
   id?: string;
-  filename: string;
-  sourcePath?: string;
+  filename?: string;
+  sourcePath: string;
   type: string;
   role: string;
   title: string;
@@ -29,8 +29,15 @@ type ExportManifest = {
   assets: ExportedAsset[];
 };
 
+type GalleryLabelKey = "decision" | "strategy" | "achievement" | "summary" | "fallback";
+
+type GalleryAsset = {
+  id: string;
+  labelKey: GalleryLabelKey;
+  asset: ExportedAsset;
+};
+
 const manifestPath = join(process.cwd(), "public", "generated", "ti-simulator", "manifest.json");
-const legacyManifestPath = join(process.cwd(), "public", "generated", "ti-simulator", "asset-manifest.json");
 const assetBase = "/generated/ti-simulator";
 const { locale } = Astro.props;
 let manifest: ExportManifest | null = null;
@@ -64,171 +71,137 @@ if (existsSync(manifestPath)) {
   }
 }
 
-if (!manifest && existsSync(legacyManifestPath)) {
-  try {
-    const parsed = JSON.parse(readFileSync(legacyManifestPath, "utf8")) as Partial<ExportManifest>;
-    if (parsed.project === "ti-simulator" && Array.isArray(parsed.assets)) {
-      manifest = {
-        schemaVersion: Number(parsed.schemaVersion ?? 1),
-        project: parsed.project,
-        generatedAt: String(parsed.generatedAt ?? ""),
-        assets: parsed.assets.filter((asset) => asset && typeof asset.filename === "string") as ExportedAsset[],
-      };
-    }
-  } catch {
-    manifest = null;
-  }
-}
-
 const imageAssets = manifest?.assets.filter((asset) => asset.type.startsWith("image/")) ?? [];
 const byId = new Map(imageAssets.map((asset) => [asset.id, asset]));
 const previewAsset = byId.get("hero-gameplay") ?? imageAssets[0];
-const screenshotAssets = ["decision-screen", "match-summary"]
-  .map((id) => byId.get(id))
-  .filter((asset): asset is ExportedAsset => Boolean(asset));
-const strategyAsset = byId.get("strategy-map");
-const achievementAsset = byId.get("achievement-screen");
+const featureAssets = [
+  { id: "decision-screen", labelKey: "decision" },
+  { id: "strategy-map", labelKey: "strategy" },
+  { id: "achievement-screen", labelKey: "achievement" },
+  { id: "match-summary", labelKey: "summary" },
+] satisfies ReadonlyArray<{ id: string; labelKey: GalleryLabelKey }>;
+const visibleFeatureAssets: GalleryAsset[] = featureAssets.flatMap((item) => {
+    const asset = byId.get(item.id);
+    return asset ? [{ id: item.id, labelKey: item.labelKey, asset }] : [];
+  });
+const fallbackFeatureAssets: GalleryAsset[] = imageAssets
+  .filter((asset) => asset.sourcePath !== previewAsset?.sourcePath)
+  .slice(0, 4)
+  .map((asset, index) => ({
+    id: asset.id || `preview-${index}`,
+    labelKey: "fallback" as const,
+    asset,
+  }));
+const galleryAssets = visibleFeatureAssets.length > 0 ? visibleFeatureAssets : fallbackFeatureAssets;
 
 const copy = {
   "zh-CN": {
-    eyebrow: "TI Simulator Preview",
-    title: "从模拟器项目同步来的真实展示素材。",
-    intro: "这些图片来自上级 TI 模拟器项目导出的 manifest。资源缺失时，本区块会自动降级，不影响网站独立构建。",
-    preview: "TI Simulator Preview",
-    screenshots: "Gameplay Screenshots",
-    strategy: "Strategy & Match Flow",
+    eyebrow: "TI Simulator Screenshots",
+    title: "从决策、地图到赛后总结，展示一局比赛的完整节奏。",
+    intro: "这些截图来自已同步的 TI 模拟器导出 manifest。网站只读取现有资源和推荐替代文本，缺少生成素材时会降级为非阻塞提示。",
+    heroLabel: "Hero Gameplay Preview",
+    heroKicker: "Official preview",
+    galleryTitle: "核心玩法截图",
+    galleryIntro: "五张生成图按官网展示节奏组织：先给出整体玩法印象，再拆分决策、战略、成长和复盘体验。",
+    decision: "Decision Gameplay",
+    strategy: "Strategy Map",
     achievement: "Achievement System",
+    summary: "Match Summary",
+    fallback: "Generated Preview",
     emptyEyebrow: "No export found",
     emptyTitle: "还没有导入 TI 模拟器生成素材。",
-    emptyBody: "先在模拟器项目生成站点素材，再运行 `npm run sync:ti-assets`。导入前，网站仍可独立构建和运行。",
+    emptyBody: "先在模拟器项目生成站点素材，再运行 `npm.cmd run sync:ti-assets`。导入前，网站仍可独立构建和运行。",
   },
   en: {
-    eyebrow: "TI Simulator Preview",
-    title: "Website assets synced from the simulator project.",
-    intro: "This section reads the synced TI Simulator manifest. If generated assets are missing, it falls back without blocking the independent website build.",
-    preview: "TI Simulator Preview",
-    screenshots: "Gameplay Screenshots",
-    strategy: "Strategy & Match Flow",
+    eyebrow: "TI Simulator Screenshots",
+    title: "From draft choices to postgame reports, see the match flow at a glance.",
+    intro: "These screenshots come from the synced TI Simulator export manifest. The website reads the current assets and recommended alt text, then falls back gracefully if the generated export is absent.",
+    heroLabel: "Hero Gameplay Preview",
+    heroKicker: "Official preview",
+    galleryTitle: "Core gameplay screens",
+    galleryIntro: "The generated images are organized for a landing-page read: first the broad gameplay promise, then decisions, map strategy, progression, and match summary.",
+    decision: "Decision Gameplay",
+    strategy: "Strategy Map",
     achievement: "Achievement System",
+    summary: "Match Summary",
+    fallback: "Generated Preview",
     emptyEyebrow: "No export found",
     emptyTitle: "Generated TI Simulator assets are not imported yet.",
-    emptyBody: "Run the simulator export, then `npm run sync:ti-assets` in the website. Until then, the website remains independently runnable.",
+    emptyBody: "Run the simulator export, then `npm.cmd run sync:ti-assets` in the website. Until then, the website remains independently runnable.",
   },
 }[locale];
 
-const imageSrc = (asset: ExportedAsset) => `${assetBase}/${asset.sourcePath ?? asset.filename}`;
+const imageSrc = (asset: ExportedAsset) => `${assetBase}/${asset.sourcePath}`;
+const imageAlt = (asset: ExportedAsset) => asset.recommendedAltText || asset.alt || asset.title;
+const galleryLabel = (labelKey: GalleryLabelKey) => copy[labelKey];
 ---
 
-<section class="bg-white/70 py-20">
+<section class="bg-white py-20 md:py-28">
   <div class="container-page">
-    <div class="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-      <div>
-        <p class="eyebrow">{copy.eyebrow}</p>
-        <h2 class="mt-3 text-4xl font-semibold md:text-5xl">{copy.title}</h2>
-      </div>
-      <p class="max-w-xl leading-7 text-muted">
+    <div class="mx-auto mb-12 max-w-4xl text-center">
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h2 class="balance mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">{copy.title}</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted">
         {copy.intro}
       </p>
     </div>
 
     {
       imageAssets.length > 0 ? (
-        <div class="grid gap-5">
+        <div class="space-y-10">
           {previewAsset && (
-            <article class="overflow-hidden rounded-[22px] border border-line bg-panel shadow-soft">
-              <img
-                src={imageSrc(previewAsset)}
-                alt={previewAsset.alt}
-                loading="lazy"
-                class="aspect-[16/9] w-full bg-paper object-cover"
-              />
-              <div class="p-6 md:p-7">
-                <p class="eyebrow">{copy.preview}</p>
-                <h3 class="mt-2 text-2xl font-semibold md:text-3xl">{previewAsset.title}</h3>
-                <p class="mt-3 max-w-3xl leading-7 text-muted">{previewAsset.description}</p>
+            <article class="overflow-hidden rounded-lg border border-line bg-panel shadow-soft">
+              <div class="bg-ink p-2">
+                <img
+                  src={imageSrc(previewAsset)}
+                  alt={imageAlt(previewAsset)}
+                  loading="lazy"
+                  class="aspect-[16/9] w-full rounded-md bg-paper object-cover"
+                />
+              </div>
+              <div class="grid gap-5 p-6 md:grid-cols-[1fr_1.5fr] md:p-8">
+                <div>
+                  <p class="eyebrow">{copy.heroLabel}</p>
+                  <h3 class="mt-3 text-2xl font-semibold md:text-3xl">{previewAsset.title}</h3>
+                </div>
+                <p class="leading-7 text-muted">{previewAsset.description}</p>
               </div>
             </article>
           )}
 
-          <div class="grid gap-5 lg:grid-cols-3">
-            {screenshotAssets.length > 0 && (
-              <article class="rounded-[20px] border border-line bg-panel p-5 shadow-sm lg:col-span-2">
-                <p class="eyebrow">{copy.screenshots}</p>
-                <div class="mt-5 grid gap-4 md:grid-cols-2">
-                  {screenshotAssets.map((asset) => (
-                    <figure class="overflow-hidden rounded-2xl border border-line bg-paper">
-                      <img
-                        src={imageSrc(asset)}
-                        alt={asset.alt}
-                        loading="lazy"
-                        class="aspect-[16/10] w-full object-cover"
-                      />
-                      <figcaption class="p-4">
-                        <h3 class="font-semibold">{asset.title}</h3>
-                        <p class="mt-2 text-sm leading-6 text-muted">{asset.description}</p>
-                      </figcaption>
-                    </figure>
-                  ))}
-                </div>
-              </article>
-            )}
-
-            {strategyAsset && (
-              <article class="overflow-hidden rounded-[20px] border border-line bg-panel shadow-sm">
-                <img
-                  src={imageSrc(strategyAsset)}
-                  alt={strategyAsset.alt}
-                  loading="lazy"
-                  class="aspect-[16/11] w-full bg-paper object-cover"
-                />
-                <div class="p-5">
-                  <p class="eyebrow">{copy.strategy}</p>
-                  <h3 class="mt-2 text-xl font-semibold">{strategyAsset.title}</h3>
-                  <p class="mt-3 leading-7 text-muted">{strategyAsset.description}</p>
-                </div>
-              </article>
-            )}
-
-            {achievementAsset && (
-              <article class="overflow-hidden rounded-[20px] border border-line bg-panel shadow-sm lg:col-span-3">
-                <img
-                  src={imageSrc(achievementAsset)}
-                  alt={achievementAsset.alt}
-                  loading="lazy"
-                  class="aspect-[16/7] w-full bg-paper object-cover"
-                />
-                <div class="p-5 md:p-6">
-                  <p class="eyebrow">{copy.achievement}</p>
-                  <h3 class="mt-2 text-2xl font-semibold">{achievementAsset.title}</h3>
-                  <p class="mt-3 max-w-3xl leading-7 text-muted">{achievementAsset.description}</p>
-                </div>
-              </article>
-            )}
-
-            {imageAssets.length > 0 && !strategyAsset && !achievementAsset && screenshotAssets.length === 0 && (
-              imageAssets.slice(0, 3).map((asset) => (
-                <article class="overflow-hidden rounded-[20px] border border-line bg-panel shadow-sm">
-                  <img
-                    src={imageSrc(asset)}
-                alt={asset.alt}
-                loading="lazy"
-                class="aspect-[16/10] w-full bg-paper object-cover"
-              />
-              <div class="p-5">
-                <p class="eyebrow">{asset.role}</p>
-                <h3 class="mt-2 text-xl font-semibold">{asset.title}</h3>
-                <p class="mt-3 leading-7 text-muted">{asset.description}</p>
+          {galleryAssets.length > 0 && (
+            <div class="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+              <div class="lg:sticky lg:top-8">
+                <p class="eyebrow">{copy.heroKicker}</p>
+                <h3 class="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">{copy.galleryTitle}</h3>
+                <p class="mt-4 leading-7 text-muted">{copy.galleryIntro}</p>
               </div>
-            </article>
-              ))
-            )}
-          </div>
+
+              <div class="grid gap-5 md:grid-cols-2">
+                {galleryAssets.map(({ asset, labelKey }) => (
+                  <figure class="overflow-hidden rounded-lg border border-line bg-panel shadow-sm">
+                    <img
+                      src={imageSrc(asset)}
+                      alt={imageAlt(asset)}
+                      loading="lazy"
+                      class="aspect-[16/10] w-full bg-paper object-cover"
+                    />
+                    <figcaption class="p-5">
+                      <p class="eyebrow">{galleryLabel(labelKey)}</p>
+                      <h4 class="mt-2 text-xl font-semibold">{asset.title}</h4>
+                      <p class="mt-3 text-sm leading-6 text-muted">{asset.description}</p>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ) : (
-        <div class="rounded-lg border border-dashed border-line bg-panel p-8">
+        <div class="mx-auto max-w-3xl rounded-lg border border-dashed border-line bg-panel p-8 text-center">
           <p class="eyebrow">{copy.emptyEyebrow}</p>
           <h3 class="mt-3 text-2xl font-semibold">{copy.emptyTitle}</h3>
-          <p class="mt-3 max-w-2xl leading-7 text-muted">
+          <p class="mx-auto mt-3 max-w-2xl leading-7 text-muted">
             {copy.emptyBody}
           </p>
         </div>
