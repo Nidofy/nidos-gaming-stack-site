@@ -4,6 +4,7 @@ import CTAButton from "@/components/CTAButton.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getLatestRelease } from "@/data/downloads";
 import { getGame } from "@/data/games";
+import { tiSimulatorPreviewMedia } from "@/data/media";
 import { getFeedbackLink } from "@/data/social";
 import { t } from "@/i18n/utils";
 
@@ -12,9 +13,10 @@ const game = getGame(locale, "ti-simulator");
 const release = getLatestRelease("ti-simulator");
 if (!game || !release) throw new Error("Missing download data.");
 const feedbackLink = getFeedbackLink(locale);
+const previewMedia = tiSimulatorPreviewMedia[locale];
 ---
 
-<BaseLayout locale={locale} title={t(locale, "download.title")} description={t(locale, "download.description")}>
+<BaseLayout locale={locale} title={t(locale, "download.title")} description={t(locale, "download.description")} ogImage={previewMedia.og}>
   <section class="container-page section-space">
     <p class="eyebrow">{t(locale, "download.eyebrow")}</p>
     <h1 class="balance mt-4 max-w-4xl text-4xl font-semibold sm:text-5xl lg:text-6xl">{t(locale, "download.heading")}</h1>

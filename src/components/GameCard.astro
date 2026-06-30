@@ -5,17 +5,29 @@ import { t } from "@/i18n/utils";
 
 interface Props {
   game: GameContent;
+  imageSrc?: string;
+  imageAlt?: string;
+  imageDisclaimer?: string;
 }
 
-const { game } = Astro.props;
+const { game, imageSrc, imageAlt = "", imageDisclaimer } = Astro.props;
 ---
 
 <article class="grid gap-8 rounded-[28px] border border-line bg-panel p-6 shadow-soft md:grid-cols-[0.9fr_1.1fr] md:p-8">
-  <div class="media-placeholder min-h-[260px] rounded-[22px] p-5">
-    <div class="flex h-full items-end">
-      <p class="rounded-2xl bg-white/82 p-4 text-sm leading-6 text-muted">{game.hero.placeholderLabel}</p>
-    </div>
-  </div>
+  {
+    imageSrc ? (
+      <figure class="relative min-h-[260px] overflow-hidden rounded-[22px] border border-line bg-paper">
+        <img src={imageSrc} alt={imageAlt} loading="lazy" class="h-full min-h-[260px] w-full object-contain" />
+        {imageDisclaimer && <figcaption class="absolute bottom-3 right-3 rounded-full bg-white/82 px-3 py-1 text-[11px] font-medium text-muted shadow-sm backdrop-blur">{imageDisclaimer}</figcaption>}
+      </figure>
+    ) : (
+      <div class="media-placeholder min-h-[260px] rounded-[22px] p-5">
+        <div class="flex h-full items-end">
+          <p class="rounded-2xl bg-white/82 p-4 text-sm leading-6 text-muted">{game.hero.placeholderLabel}</p>
+        </div>
+      </div>
+    )
+  }
   <div class="flex flex-col justify-center">
     <p class="eyebrow">{game.statusLabel}</p>
     <h3 class="mt-3 text-3xl font-semibold md:text-4xl">{game.title}</h3>

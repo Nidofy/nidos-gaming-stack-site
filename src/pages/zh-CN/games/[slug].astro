@@ -5,6 +5,7 @@ import Hero from "@/components/Hero.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getLatestRelease, type GameRelease } from "@/data/downloads";
 import { games, type GameContent } from "@/data/games";
+import { tiSimulatorPreviewMedia } from "@/data/media";
 import { site } from "@/data/site";
 import { t } from "@/i18n/utils";
 
@@ -22,12 +23,14 @@ export function getStaticPaths() {
 
 const locale = "zh-CN";
 const { game, release } = Astro.props;
+const previewMedia = tiSimulatorPreviewMedia[locale];
 ---
 
 <BaseLayout
   locale={locale}
   title={game.seo.title}
   description={game.seo.description}
+  ogImage={previewMedia.og}
   jsonLd={{
     "@context": "https://schema.org",
     "@type": "VideoGame",
@@ -49,6 +52,9 @@ const { game, release } = Astro.props;
     secondaryHref={game.secondaryCta.href}
     placeholderLabel={game.hero.placeholderLabel}
     placeholderNote={game.hero.placeholderNote}
+    imageSrc={previewMedia.hero}
+    imageAlt={t(locale, "media.tiSimulatorPreviewAlt")}
+    imageDisclaimer={t(locale, "media.entertainmentDisclaimer")}
   />
 
   <section class="container-page section-space">

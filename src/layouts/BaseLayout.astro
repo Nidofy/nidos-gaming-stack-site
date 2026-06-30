@@ -11,13 +11,15 @@ interface Props {
   showHeader?: boolean;
   jsonLd?: Record<string, unknown>;
   alternatePaths?: Partial<Record<Locale, string>>;
+  ogImage?: string;
 }
 
-const { locale = "zh-CN", title, description, showHeader = true, jsonLd, alternatePaths = {} } = Astro.props;
+const { locale = "zh-CN", title, description, showHeader = true, jsonLd, alternatePaths = {}, ogImage } = Astro.props;
 const currentPath = Astro.url.pathname;
 const canonical = new URL(currentPath, site.baseUrl).toString();
 const zhPath = alternatePaths["zh-CN"] ?? (currentPath.startsWith("/en") ? currentPath.replace(/^\/en/, "/zh-CN") : currentPath);
 const enPath = alternatePaths.en ?? (currentPath.startsWith("/zh-CN") ? currentPath.replace(/^\/zh-CN/, "/en") : currentPath);
+const absoluteOgImage = ogImage ? new URL(ogImage, site.baseUrl).toString() : undefined;
 ---
 
 <!doctype html>
@@ -36,9 +38,11 @@ const enPath = alternatePaths.en ?? (currentPath.startsWith("/zh-CN") ? currentP
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    {absoluteOgImage && <meta property="og:image" content={absoluteOgImage} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {absoluteOgImage && <meta name="twitter:image" content={absoluteOgImage} />}
     {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
