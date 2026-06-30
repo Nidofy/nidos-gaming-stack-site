@@ -1,3 +1,5 @@
+import type { Locale } from "./site";
+
 export const socialLinks = [
   {
     label: "Email",
@@ -9,13 +11,24 @@ export const socialLinks = [
   },
 ];
 
-export const feedbackLinks = {
-  "zh-CN": {
-    label: "反馈问卷（暂未开放）",
-    href: "#feedback-coming-soon",
+export const feedbackConfig = {
+  feedbackFormUrl: "",
+  labels: {
+    "zh-CN": "反馈问卷",
+    en: "Feedback form",
   },
-  en: {
-    label: "Feedback form (coming soon)",
-    href: "#feedback-coming-soon",
+  comingSoonLabels: {
+    "zh-CN": "反馈问卷即将开放",
+    en: "Feedback form coming soon",
   },
 };
+
+export function getFeedbackLink(locale: Locale) {
+  const available = feedbackConfig.feedbackFormUrl.length > 0;
+
+  return {
+    available,
+    href: available ? feedbackConfig.feedbackFormUrl : "#feedback-coming-soon",
+    label: available ? feedbackConfig.labels[locale] : feedbackConfig.comingSoonLabels[locale],
+  };
+}

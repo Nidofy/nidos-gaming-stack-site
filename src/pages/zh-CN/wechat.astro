@@ -3,12 +3,13 @@ import CTAButton from "@/components/CTAButton.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getLatestRelease } from "@/data/downloads";
 import { getGame } from "@/data/games";
-import { feedbackLinks } from "@/data/social";
+import { getFeedbackLink } from "@/data/social";
 
 const locale = "zh-CN";
 const game = getGame(locale, "ti-simulator");
 const release = getLatestRelease("ti-simulator");
 if (!game || !release) throw new Error("Missing WeChat page data.");
+const feedbackLink = getFeedbackLink(locale);
 ---
 
 <BaseLayout
@@ -23,7 +24,7 @@ if (!game || !release) throw new Error("Missing WeChat page data.");
     <p class="mt-5 text-lg leading-8 text-muted">{game.summary}</p>
     <div class="mt-7 flex flex-col gap-3 sm:flex-row">
       <CTAButton href="/zh-CN/download" label="查看下载与备用镜像" />
-      <CTAButton href={feedbackLinks[locale].href} label={feedbackLinks[locale].label} variant="secondary" />
+      <CTAButton href={feedbackLink.href} label={feedbackLink.label} variant="secondary" />
     </div>
   </section>
 
@@ -46,7 +47,11 @@ if (!game || !release) throw new Error("Missing WeChat page data.");
     </article>
     <article id="feedback-coming-soon" class="rounded-[22px] border border-line bg-panel p-5">
       <h2 class="text-2xl font-semibold">公众号引导</h2>
-      <p class="mt-3 leading-7 text-muted">如果你是从公众号文章点进来的，可以先收藏本页。后续测试版本、更新日志和反馈入口都会从这里汇总；反馈问卷未开放前不会跳转到占位外链。</p>
+      <p class="mt-3 leading-7 text-muted">
+        {feedbackLink.available
+          ? "如果你是从公众号文章点进来的，可以先收藏本页。后续测试版本、更新日志和反馈入口都会从这里汇总。"
+          : "如果你是从公众号文章点进来的，可以先收藏本页。后续测试版本、更新日志和反馈入口都会从这里汇总；反馈问卷即将开放，未配置真实链接前不会跳转到占位外链。"}
+      </p>
     </article>
   </section>
 </BaseLayout>
