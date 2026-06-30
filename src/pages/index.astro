@@ -1,19 +1,22 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { site } from "@/data/site";
+import { t } from "@/i18n/utils";
+
+const locale = "zh-CN";
 ---
 
-<BaseLayout title={site.name["zh-CN"]} description={site.description["zh-CN"]} showHeader={false}>
+<BaseLayout locale={locale} title={site.name[locale]} description={site.description[locale]} showHeader={false}>
   <section class="container-page grid min-h-screen place-items-center py-16 text-center">
     <div>
-      <p class="eyebrow">Nido's Gaming Stack</p>
-      <h1 class="mt-5 text-4xl font-semibold sm:text-5xl lg:text-6xl">Nido的游戏小栈</h1>
+      <p class="eyebrow">{t(locale, "root.eyebrow")}</p>
+      <h1 class="mt-5 text-4xl font-semibold sm:text-5xl lg:text-6xl">{t(locale, "root.title")}</h1>
       <p class="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted">
-        请选择语言。页面会默认尝试跳转到中文首页；英文用户可以进入 English site。
+        {t(locale, "root.description")}
       </p>
       <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-        <a class="inline-flex min-h-11 items-center justify-center rounded-full bg-ink px-6 py-3 font-semibold text-white" href="/zh-CN">进入中文站</a>
-        <a class="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-white px-6 py-3 font-semibold" href="/en">English site</a>
+        <a class="inline-flex min-h-11 items-center justify-center rounded-full bg-ink px-6 py-3 font-semibold text-white" href="/zh-CN">{t(locale, "root.zhCta")}</a>
+        <a class="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-white px-6 py-3 font-semibold" href="/en">{t(locale, "root.enCta")}</a>
       </div>
     </div>
   </section>

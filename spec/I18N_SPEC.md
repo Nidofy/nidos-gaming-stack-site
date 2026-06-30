@@ -1,30 +1,43 @@
 # I18N Spec
 
-## 目标
+## Scope
 
-定义中英文内容和界面的国际化方式，让中文读者、微信公众号读者、国际玩家和媒体都能获得结构一致但表达适配的体验。
+All user-visible website content must support `zh-CN` and `en`. This includes navigation, buttons, page headings, descriptions, alt text, aria labels, SEO metadata, download labels, release notes, feedback prompts, game content, and public JSON release metadata.
 
-## 约束
+Development-facing names stay English: file names, variable names, type names, spec names, skills, subagents, scripts, and commit messages.
 
-- 中文和英文内容结构必须一致。
-- 不以机器翻译结果直接发布为最终文案。
-- 语言切换应保持同一内容上下文。
-- 缺失翻译必须明确处理，不应混杂显示。
+## Locales
 
-## 推荐实现方式
+- Supported locales: `zh-CN`, `en`
+- Default locale: `zh-CN`
+- Public localized routes keep prefixes for both languages: `/zh-CN` and `/en`
+- `/` may remain a language entry or redirect page
 
-- 使用 `/zh/` 和 `/en/` 路由前缀。
-- 使用 locale 字段区分内容文件，如 `ti-simulator.zh.mdx` 和 `ti-simulator.en.mdx`。
-- UI 字符串集中管理，例如 `src/i18n/ui.ts`。
-- 内容字段保持一致，语气可区别：
-  - 中文：适合公众号传播、读者关系、项目故事、下载引导。
-  - 英文：适合产品介绍、平台说明、媒体引用、技术和版本信息。
-- 语言切换组件根据 slug 查找对应语言内容。
+## Data Rules
 
-## 后续 Codex 修改代码时必须遵守的检查项
+Short UI copy lives in `src/i18n/dictionary.ts`.
 
-- 是否新增了中英文对应内容。
-- 是否保持字段结构一致。
-- 是否正确生成 hreflang。
-- 是否避免中文页面混入英文 UI 或英文页面混入中文 UI，专有名词除外。
-- 是否为缺失翻译提供明确状态。
+Structured content lives in typed data files:
+
+- `src/data/site.ts`
+- `src/data/games.ts`
+- `src/data/downloads.ts`
+- `src/data/social.ts`
+
+User-visible fields use `LocalizedString` or `LocalizedStringArray`. Non-language fields such as slugs, versions, dates, file names, file sizes, SHA-256 values, booleans, and URLs stay as single values.
+
+Release JSON under `public/releases/latest.json` must expose `localized.zh-CN` and `localized.en` for display date, summary, changelog, and known issues.
+
+## Missing Copy
+
+If final English copy is not ready, an English draft placeholder is still required. Missing localized fields are not allowed. Draft text should be explicit and should not imply a real download or released feature.
+
+## Validation
+
+Run:
+
+```bash
+npm run check:i18n
+```
+
+The check validates dictionary key parity, localized data coverage, `latest.json` localized release notes, and absence of `example.com` / `example.cn` fake links.

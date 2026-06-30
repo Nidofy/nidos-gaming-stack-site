@@ -1,6 +1,10 @@
-export type Locale = "zh-CN" | "en";
+import { getLocalizedPath } from "@/i18n/routing";
+import { t } from "@/i18n/utils";
+import { defaultLocale, locales, type Locale } from "@/i18n/locales";
+import type { LocalizedString } from "@/types/i18n";
 
-export const locales: Locale[] = ["zh-CN", "en"];
+export type { Locale };
+export { defaultLocale, locales };
 
 export const site = {
   name: {
@@ -9,25 +13,31 @@ export const site = {
   },
   shortName: "Nido",
   baseUrl: "https://games.nido.dev",
-  defaultLocale: "zh-CN" satisfies Locale,
+  defaultLocale,
   description: {
     "zh-CN": "一个长期维护的个人独立游戏发布站，展示模拟器、小游戏和实验性游戏项目。",
     en: "A long-running personal indie game release site for simulators, small games, and experimental projects.",
   },
   author: "Nido",
   email: "hello@nido.dev",
+} satisfies {
+  name: LocalizedString;
+  shortName: string;
+  baseUrl: string;
+  defaultLocale: Locale;
+  description: LocalizedString;
+  author: string;
+  email: string;
 };
 
-export const navItems = {
-  "zh-CN": [
-    { label: "作品", href: "/zh-CN/#games" },
-    { label: "下载", href: "/zh-CN/download" },
-    { label: "开发日志", href: "/zh-CN/devlog" },
-    { label: "微信", href: "/zh-CN/wechat" },
-  ],
-  en: [
-    { label: "Games", href: "/en/#games" },
-    { label: "Download", href: "/en/download" },
-    { label: "Devlog", href: "/en/devlog" },
-  ],
-} satisfies Record<Locale, Array<{ label: string; href: string }>>;
+export const navItems = Object.fromEntries(
+  locales.map((locale) => [
+    locale,
+    [
+      { label: t(locale, "nav.games"), href: getLocalizedPath(locale, "games") },
+      { label: t(locale, "nav.download"), href: getLocalizedPath(locale, "download") },
+      { label: t(locale, "nav.devlog"), href: getLocalizedPath(locale, "devlog") },
+      ...(locale === "zh-CN" ? [{ label: t(locale, "nav.wechat"), href: getLocalizedPath(locale, "wechat") }] : []),
+    ],
+  ])
+) as Record<Locale, Array<{ label: string; href: string }>>;

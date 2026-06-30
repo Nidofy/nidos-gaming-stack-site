@@ -1,6 +1,7 @@
 ---
 import CTAButton from "@/components/CTAButton.astro";
 import type { GameContent } from "@/data/games";
+import { t } from "@/i18n/utils";
 
 interface Props {
   game: GameContent;
@@ -24,7 +25,7 @@ const { game } = Astro.props;
     </div>
     <div class="mt-7 flex flex-wrap gap-3">
       <CTAButton href={game.primaryCta.href} label={game.primaryCta.label} compact />
-      <CTAButton href={`/${game.locale}/games/${game.slug}`} label={game.locale === "zh-CN" ? "查看详情" : "Details"} variant="secondary" compact />
+      <CTAButton href={`/${game.locale}/games/${game.slug}`} label={t(game.locale, "game.detailsCta")} variant="secondary" compact />
     </div>
   </div>
 </article>

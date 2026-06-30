@@ -1,28 +1,25 @@
 ---
 import { site, type Locale } from "@/data/site";
 import { socialLinks } from "@/data/social";
+import { t } from "@/i18n/utils";
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const footerText =
-  locale === "zh-CN"
-    ? "个人独立游戏发布站。所有项目页面会标注开发状态、下载来源和素材边界。"
-    : "A personal indie game release site. Project pages document development status, download sources, and asset boundaries.";
 ---
 
 <footer class="border-t border-line bg-white/70">
   <div class="container-page grid gap-8 py-10 md:grid-cols-[1.2fr_0.8fr]">
     <div>
       <p class="font-semibold">{site.name[locale]}</p>
-      <p class="mt-3 max-w-xl text-sm leading-6 text-muted">{footerText}</p>
+      <p class="mt-3 max-w-xl text-sm leading-6 text-muted">{t(locale, "footer.description")}</p>
     </div>
     <div class="flex flex-wrap items-start gap-x-5 gap-y-3 text-sm text-muted md:justify-end">
       {socialLinks.map((item) => <a class="hover:text-ink" href={item.href}>{item.label}</a>)}
-      <a class="hover:text-ink" href="/privacy">{locale === "zh-CN" ? "隐私" : "Privacy"}</a>
-      <a class="hover:text-ink" href="/terms">{locale === "zh-CN" ? "条款" : "Terms"}</a>
+      <a class="hover:text-ink" href="/privacy">{t(locale, "footer.privacy")}</a>
+      <a class="hover:text-ink" href="/terms">{t(locale, "footer.terms")}</a>
     </div>
   </div>
 </footer>

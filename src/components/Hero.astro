@@ -1,5 +1,7 @@
 ---
 import CTAButton from "@/components/CTAButton.astro";
+import type { Locale } from "@/data/site";
+import { t } from "@/i18n/utils";
 
 interface Props {
   eyebrow: string;
@@ -14,6 +16,7 @@ interface Props {
   metaItems?: string[];
   previewLabel?: string;
   assetPolicyLabel?: string;
+  locale?: Locale;
 }
 
 const {
@@ -27,8 +30,9 @@ const {
   placeholderLabel,
   placeholderNote,
   metaItems = [],
-  previewLabel = "Preview Slot",
-  assetPolicyLabel = "Original Assets Only",
+  locale = "en",
+  previewLabel = t(locale, "home.hero.previewLabel"),
+  assetPolicyLabel = t(locale, "home.hero.assetPolicyLabel"),
 } = Astro.props;
 ---
 

@@ -1,5 +1,6 @@
 ---
 import type { Locale } from "@/data/site";
+import { t } from "@/i18n/utils";
 
 interface Props {
   locale: Locale;
@@ -11,7 +12,7 @@ const zhHref = path.startsWith("/en") ? path.replace(/^\/en/, "/zh-CN") : "/zh-C
 const enHref = path === "/zh-CN/wechat" || path === "/zh-CN/wechat/" ? "/en" : path.startsWith("/zh-CN") ? path.replace(/^\/zh-CN/, "/en") : "/en";
 ---
 
-<nav aria-label={locale === "zh-CN" ? "语言切换" : "Language switcher"} class="flex items-center rounded-full border border-line bg-white/70 p-1 text-sm shadow-sm backdrop-blur">
+<nav aria-label={t(locale, "language.aria")} class="flex items-center rounded-full border border-line bg-white/70 p-1 text-sm shadow-sm backdrop-blur">
   <a
     class:list={[
       "rounded-full px-3 py-1.5 transition",

@@ -7,6 +7,7 @@ import TiSimulatorExports from "@/components/TiSimulatorExports.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { games } from "@/data/games";
 import { site } from "@/data/site";
+import { t } from "@/i18n/utils";
 
 const locale = "zh-CN";
 const featuredGame = games[locale][0];
@@ -14,7 +15,7 @@ const featuredGame = games[locale][0];
 
 <BaseLayout
   locale={locale}
-  title={`${site.name[locale]} - 个人独立游戏发布站`}
+  title={`${site.name[locale]} - ${t(locale, "home.titleSuffix")}`}
   description={site.description[locale]}
   jsonLd={{
     "@context": "https://schema.org",
@@ -25,27 +26,28 @@ const featuredGame = games[locale][0];
   }}
 >
   <Hero
-    eyebrow="个人独立游戏发布站"
-    title="展示模拟器、小游戏和正在发生的开发实验。"
-    subtitle="当前重点项目是 TI 模拟器。这里会逐步沉淀下载、开发日志、测试反馈和未来更多小游戏。"
-    primaryLabel="查看 TI 模拟器"
+    locale={locale}
+    eyebrow={t(locale, "home.hero.eyebrow")}
+    title={t(locale, "home.hero.title")}
+    subtitle={t(locale, "home.hero.subtitle")}
+    primaryLabel={t(locale, "home.hero.primary")}
     primaryHref="/zh-CN/games/ti-simulator"
-    secondaryLabel="下载测试版"
+    secondaryLabel={t(locale, "home.hero.secondary")}
     secondaryHref="/zh-CN/download"
-    placeholderLabel="原创主视觉待接入"
-    placeholderNote="后续使用原创截图、录屏或生成视觉；不使用未经授权的真实赛事、战队或官方素材。"
-    metaItems={["当前重点：TI 模拟器", "未来扩展：更多小游戏", "中英双语发布"]}
-    previewLabel="素材预览位"
-    assetPolicyLabel="仅使用原创资产"
+    placeholderLabel={t(locale, "home.hero.placeholderLabel")}
+    placeholderNote={t(locale, "home.hero.placeholderNote")}
+    metaItems={[t(locale, "home.hero.metaFeatured"), t(locale, "home.hero.metaFuture"), t(locale, "home.hero.metaBilingual")]}
+    previewLabel={t(locale, "home.hero.previewLabel")}
+    assetPolicyLabel={t(locale, "home.hero.assetPolicyLabel")}
   />
 
   <section id="games" class="container-page section-space">
     <div class="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
-        <p class="eyebrow">Featured Game</p>
-        <h2 class="mt-3 text-3xl font-semibold sm:text-4xl md:text-5xl">当前作品</h2>
+        <p class="eyebrow">{t(locale, "home.games.eyebrow")}</p>
+        <h2 class="mt-3 text-3xl font-semibold sm:text-4xl md:text-5xl">{t(locale, "home.games.title")}</h2>
       </div>
-      <p class="max-w-xl leading-7 text-muted">首页从游戏数据读取。未来新增第二个游戏时，只需要添加新的数据项和对应详情页入口。</p>
+      <p class="max-w-xl leading-7 text-muted">{t(locale, "home.games.description")}</p>
     </div>
     <GameCard game={featuredGame} />
   </section>
@@ -55,25 +57,25 @@ const featuredGame = games[locale][0];
   <section class="bg-white/62 py-20">
     <div class="container-page">
       <div class="mb-10 max-w-2xl">
-        <p class="eyebrow">Direction</p>
-        <h2 class="mt-3 text-3xl font-semibold sm:text-4xl md:text-5xl">干净、可维护、适合长期发布。</h2>
+        <p class="eyebrow">{t(locale, "home.direction.eyebrow")}</p>
+        <h2 class="mt-3 text-3xl font-semibold sm:text-4xl md:text-5xl">{t(locale, "home.direction.title")}</h2>
       </div>
       <FeatureGrid
         features={[
-          { title: "中英文结构一致", description: "中文更适合公众号传播，英文更适合海外玩家和测试用户理解。" },
-          { title: "下载数据统一维护", description: "版本、镜像、校验值和已知问题从 release 数据读取，避免页面链接散落。" },
-          { title: "为多个项目准备", description: "首页、详情页和下载页都围绕作品集设计，而不是只服务一个项目。" },
+          { title: t(locale, "home.direction.feature1.title"), description: t(locale, "home.direction.feature1.description") },
+          { title: t(locale, "home.direction.feature2.title"), description: t(locale, "home.direction.feature2.description") },
+          { title: t(locale, "home.direction.feature3.title"), description: t(locale, "home.direction.feature3.description") },
         ]}
       />
     </div>
   </section>
 
   <section class="container-page section-space text-center">
-    <p class="eyebrow">Next</p>
-    <h2 class="balance mx-auto mt-3 max-w-3xl text-3xl font-semibold sm:text-4xl md:text-5xl">想先试试当前版本？</h2>
-    <p class="mx-auto mt-5 max-w-2xl leading-8 text-muted">下载页已经预留 Global Mirror 和 China Mirror。真实构建产物准备好后，只需要更新下载数据。</p>
+    <p class="eyebrow">{t(locale, "home.next.eyebrow")}</p>
+    <h2 class="balance mx-auto mt-3 max-w-3xl text-3xl font-semibold sm:text-4xl md:text-5xl">{t(locale, "home.next.title")}</h2>
+    <p class="mx-auto mt-5 max-w-2xl leading-8 text-muted">{t(locale, "home.next.description")}</p>
     <div class="mt-8">
-      <CTAButton href="/zh-CN/download" label="进入下载页" />
+      <CTAButton href="/zh-CN/download" label={t(locale, "home.next.cta")} />
     </div>
   </section>
 </BaseLayout>

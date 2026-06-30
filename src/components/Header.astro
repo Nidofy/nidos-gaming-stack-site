@@ -1,6 +1,7 @@
 ---
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
 import { navItems, site, type Locale } from "@/data/site";
+import { t } from "@/i18n/utils";
 
 interface Props {
   locale: Locale;
@@ -16,13 +17,13 @@ const { locale } = Astro.props;
       <span class="truncate">{site.name[locale]}</span>
     </a>
     <div class="flex items-center gap-3">
-      <nav class="hidden items-center gap-6 text-sm text-muted md:flex" aria-label={locale === "zh-CN" ? "主导航" : "Main navigation"}>
+      <nav class="hidden items-center gap-6 text-sm text-muted md:flex" aria-label={t(locale, "nav.mainAria")}>
         {navItems[locale].map((item) => <a class="transition hover:text-ink" href={item.href}>{item.label}</a>)}
       </nav>
       <LanguageSwitcher locale={locale} />
     </div>
   </div>
-  <nav class="container-page flex gap-2 overflow-x-auto pb-3 text-sm text-muted md:hidden" aria-label={locale === "zh-CN" ? "移动端主导航" : "Mobile main navigation"}>
+  <nav class="container-page flex gap-2 overflow-x-auto pb-3 text-sm text-muted md:hidden" aria-label={t(locale, "nav.mobileMainAria")}>
     {navItems[locale].map((item) => <a class="shrink-0 rounded-full border border-line bg-white/78 px-3 py-2 transition hover:text-ink" href={item.href}>{item.label}</a>)}
   </nav>
 </header>

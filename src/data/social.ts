@@ -1,4 +1,5 @@
-import type { Locale } from "./site";
+import { t } from "@/i18n/utils";
+import type { Locale, LocalizedString } from "@/types/i18n";
 
 export const socialLinks = [
   {
@@ -21,6 +22,10 @@ export const feedbackConfig = {
     "zh-CN": "反馈问卷即将开放",
     en: "Feedback form coming soon",
   },
+} satisfies {
+  feedbackFormUrl: string;
+  labels: LocalizedString;
+  comingSoonLabels: LocalizedString;
 };
 
 export function getFeedbackLink(locale: Locale) {
@@ -29,6 +34,6 @@ export function getFeedbackLink(locale: Locale) {
   return {
     available,
     href: available ? feedbackConfig.feedbackFormUrl : "#feedback-coming-soon",
-    label: available ? feedbackConfig.labels[locale] : feedbackConfig.comingSoonLabels[locale],
+    label: available ? feedbackConfig.labels[locale] : t(locale, "feedback.comingSoonLabel"),
   };
 }

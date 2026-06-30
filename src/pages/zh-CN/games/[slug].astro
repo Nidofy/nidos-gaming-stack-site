@@ -6,6 +6,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getLatestRelease, type GameRelease } from "@/data/downloads";
 import { games, type GameContent } from "@/data/games";
 import { site } from "@/data/site";
+import { t } from "@/i18n/utils";
 
 type Props = {
   game: GameContent;
@@ -38,6 +39,7 @@ const { game, release } = Astro.props;
   }}
 >
   <Hero
+    locale={locale}
     eyebrow={game.hero.eyebrow}
     title={game.hero.title}
     subtitle={game.hero.subtitle}
@@ -83,17 +85,17 @@ const { game, release } = Astro.props;
 
   <section class="container-page pb-24">
     <div class="rounded-[28px] border border-line bg-panel p-8 shadow-soft md:p-10">
-      <p class="eyebrow">Playtest</p>
+      <p class="eyebrow">{t(locale, "game.playtestEyebrow")}</p>
       <h2 class="mt-3 text-3xl font-semibold">
-        {release ? `当前测试版本：${release.version}` : "下载信息待补充"}
+        {release ? t(locale, "game.currentBuild", { version: release.version }) : t(locale, "game.downloadPending")}
       </h2>
       <p class="mt-4 leading-8 text-muted">
-        {release ? release.summary[locale] : "该作品尚未配置 release 数据。"}
+        {release ? release.summary[locale] : t(locale, "game.noReleaseData")}
       </p>
       <p class="mt-4 text-sm leading-6 text-muted">{game.legalNotes}</p>
       <div class="mt-7 flex flex-wrap gap-3">
-        <CTAButton href="/zh-CN/download" label="查看下载与镜像" />
-        <CTAButton href="/zh-CN/devlog" label="查看开发日志" variant="secondary" />
+        <CTAButton href="/zh-CN/download" label={t(locale, "game.downloadsCta")} />
+        <CTAButton href="/zh-CN/devlog" label={t(locale, "game.devlogCta")} variant="secondary" />
       </div>
     </div>
   </section>

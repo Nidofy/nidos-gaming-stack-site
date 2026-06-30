@@ -1,6 +1,7 @@
 ---
 import type { DownloadFile, GameRelease } from "@/data/downloads";
 import type { Locale } from "@/data/site";
+import { getLocalized, t } from "@/i18n/utils";
 
 interface Props {
   file: DownloadFile;
@@ -9,41 +10,31 @@ interface Props {
 }
 
 const { file, release, locale } = Astro.props;
-const labels = {
-  version: locale === "zh-CN" ? "版本" : "Version",
-  date: locale === "zh-CN" ? "日期" : "Date",
-  size: locale === "zh-CN" ? "大小" : "Size",
-  checksum: locale === "zh-CN" ? "校验" : "Checksum",
-  global: locale === "zh-CN" ? "Global Mirror" : "Global Mirror",
-  china: locale === "zh-CN" ? "China Mirror" : "China Mirror",
-  unavailable: locale === "zh-CN" ? "Coming Soon" : "Coming Soon",
-  unavailableNote: locale === "zh-CN" ? "安装包尚未发布，镜像入口将在上传后开放。" : "The build is not published yet. Mirror buttons will open after artifacts are attached.",
-};
 ---
 
 <article class="rounded-[22px] border border-line bg-panel p-5 shadow-sm">
   <div class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-3 gap-y-2">
     <div class="min-w-0">
-      <h3 class="text-2xl font-semibold">{file.platform}</h3>
+      <h3 class="text-2xl font-semibold">{getLocalized(file.displayName, locale)}</h3>
     </div>
     <span class="rounded-full bg-ink px-3 py-1 text-xs font-semibold text-white">{release.channel}</span>
     <p class="col-span-2 break-all text-sm text-muted">{file.filename}</p>
   </div>
   <dl class="mt-5 grid gap-3 text-sm">
     <div class="flex justify-between gap-4 border-t border-line pt-3">
-      <dt class="text-muted">{labels.version}</dt>
+      <dt class="text-muted">{t(locale, "download.version")}</dt>
       <dd class="break-all text-right font-medium">{release.version}</dd>
     </div>
     <div class="flex justify-between gap-4 border-t border-line pt-3">
-      <dt class="text-muted">{labels.date}</dt>
+      <dt class="text-muted">{t(locale, "download.date")}</dt>
       <dd class="text-right font-medium">{release.displayDate[locale]}</dd>
     </div>
     <div class="flex justify-between gap-4 border-t border-line pt-3">
-      <dt class="text-muted">{labels.size}</dt>
+      <dt class="text-muted">{t(locale, "download.size")}</dt>
       <dd class="font-medium">{file.size}</dd>
     </div>
     <div class="grid gap-1 border-t border-line pt-3">
-      <dt class="text-muted">{labels.checksum}</dt>
+      <dt class="text-muted">{t(locale, "download.checksum")}</dt>
       <dd class="break-all font-mono text-xs text-ink">{file.sha256}</dd>
     </div>
   </dl>
@@ -51,16 +42,16 @@ const labels = {
     file.available ? (
       <div class="mt-5 grid gap-2 sm:grid-cols-2">
         <a class="rounded-full bg-ink px-4 py-2 text-center text-sm font-semibold text-white" href={file.globalMirror}>
-          {labels.global}
+          {t(locale, "download.globalMirror")}
         </a>
         <a class="rounded-full border border-line bg-white px-4 py-2 text-center text-sm font-semibold text-ink" href={file.chinaMirror}>
-          {labels.china}
+          {t(locale, "download.chinaMirror")}
         </a>
       </div>
     ) : (
       <div class="mt-5 rounded-2xl border border-dashed border-line bg-paper p-4">
-        <p class="text-sm font-semibold text-ink">{labels.unavailable}</p>
-        <p class="mt-2 text-sm leading-6 text-muted">{labels.unavailableNote}</p>
+        <p class="text-sm font-semibold text-ink">{t(locale, "download.comingSoon")}</p>
+        <p class="mt-2 text-sm leading-6 text-muted">{t(locale, "download.unavailableNote")}</p>
       </div>
     )
   }

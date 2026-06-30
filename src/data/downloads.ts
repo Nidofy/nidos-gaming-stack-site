@@ -1,10 +1,11 @@
-import type { Locale } from "./site";
+import type { LocalizedString, LocalizedStringArray } from "@/types/i18n";
 
-export type DownloadPlatform = "Windows" | "macOS" | "Linux";
+export type DownloadPlatform = "windows" | "macos" | "linux";
 export type ReleaseChannel = "alpha" | "beta" | "stable";
 
 export type DownloadFile = {
   platform: DownloadPlatform;
+  displayName: LocalizedString;
   filename: string;
   size: string;
   sha256: string;
@@ -18,11 +19,11 @@ export type GameRelease = {
   version: string;
   channel: ReleaseChannel;
   releasedAt: string;
-  displayDate: Record<Locale, string>;
-  summary: Record<Locale, string>;
+  displayDate: LocalizedString;
+  summary: LocalizedString;
   files: DownloadFile[];
-  changelog: Record<Locale, string[]>;
-  knownIssues: Record<Locale, string[]>;
+  changelog: LocalizedStringArray;
+  knownIssues: LocalizedStringArray;
   latest: boolean;
 };
 
@@ -42,7 +43,8 @@ export const releases: GameRelease[] = [
     },
     files: [
       {
-        platform: "Windows",
+        platform: "windows",
+        displayName: { "zh-CN": "Windows", en: "Windows" },
         filename: "ti-simulator-0.1.0-playtest-win-x64.zip",
         size: "TODO",
         sha256: "TODO-SHA256-WINDOWS",
@@ -51,7 +53,8 @@ export const releases: GameRelease[] = [
         available: false,
       },
       {
-        platform: "macOS",
+        platform: "macos",
+        displayName: { "zh-CN": "macOS", en: "macOS" },
         filename: "ti-simulator-0.1.0-playtest-macos-universal.zip",
         size: "TODO",
         sha256: "TODO-SHA256-MACOS",
@@ -60,7 +63,8 @@ export const releases: GameRelease[] = [
         available: false,
       },
       {
-        platform: "Linux",
+        platform: "linux",
+        displayName: { "zh-CN": "Linux", en: "Linux" },
         filename: "ti-simulator-0.1.0-playtest-linux-x64.tar.gz",
         size: "TODO",
         sha256: "TODO-SHA256-LINUX",

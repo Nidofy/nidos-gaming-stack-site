@@ -1,15 +1,25 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { t } from "@/i18n/utils";
+
+const locale = "en";
 ---
 
-<BaseLayout locale="en" title="Privacy - Nido's Gaming Stack" description="Privacy notes for Nido's Gaming Stack.">
+<BaseLayout locale={locale} title={t(locale, "privacy.title")} description={t(locale, "privacy.description")}>
   <section class="container-page section-space">
-    <p class="eyebrow">Privacy</p>
-    <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">Privacy</h1>
+    <p class="eyebrow">{t(locale, "privacy.eyebrow")}</p>
+    <h1 class="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">{t(locale, "privacy.heading")}</h1>
     <div class="mt-8 max-w-3xl space-y-6 text-lg leading-8 text-muted">
-      <p>Nido's Gaming Stack is currently a static website. It does not use a database or account system.</p>
-      <p>Download mirrors, feedback forms, analytics, or embedded media may be hosted by third-party services in future versions. When those services are added, this page should be updated with clear details.</p>
-      <p>中文说明：本站当前为静态网站，不提供账号系统，不主动收集个人信息。后续如果接入反馈问卷、统计或第三方媒体服务，应在此页面补充说明。</p>
+      <section>
+        <h2 class="text-2xl font-semibold text-ink">{t(locale, "privacy.enHeading")}</h2>
+        <p class="mt-4">{t(locale, "privacy.enBody1")}</p>
+        <p class="mt-4">{t(locale, "privacy.enBody2")}</p>
+      </section>
+      <section lang="zh-CN">
+        <h2 class="text-2xl font-semibold text-ink">{t(locale, "privacy.zhHeading")}</h2>
+        <p class="mt-4">{t(locale, "privacy.zhBody1")}</p>
+        <p class="mt-4">{t(locale, "privacy.zhBody2")}</p>
+      </section>
     </div>
   </section>
 </BaseLayout>
