@@ -1,6 +1,5 @@
 ---
 import CTAButton from "@/components/CTAButton.astro";
-import FeatureGrid from "@/components/FeatureGrid.astro";
 import GameCard from "@/components/GameCard.astro";
 import Hero from "@/components/Hero.astro";
 import TiSimulatorExports from "@/components/TiSimulatorExports.astro";
@@ -62,22 +61,6 @@ const homepageOgImage = getHomepageOgImage(locale);
   </section>
 
   <TiSimulatorExports locale={locale} />
-
-  <section class="bg-white/62 py-20">
-    <div class="container-page">
-      <div class="mb-10 max-w-2xl">
-        <p class="eyebrow">{t(locale, "home.direction.eyebrow")}</p>
-        <h2 class="mt-3 text-3xl font-semibold sm:text-4xl md:text-5xl">{t(locale, "home.direction.title")}</h2>
-      </div>
-      <FeatureGrid
-        features={[
-          { title: t(locale, "home.direction.feature1.title"), description: t(locale, "home.direction.feature1.description") },
-          { title: t(locale, "home.direction.feature2.title"), description: t(locale, "home.direction.feature2.description") },
-          { title: t(locale, "home.direction.feature3.title"), description: t(locale, "home.direction.feature3.description") },
-        ]}
-      />
-    </div>
-  </section>
 
   <section class="container-page section-space text-center">
     <p class="eyebrow">{t(locale, "home.next.eyebrow")}</p>
