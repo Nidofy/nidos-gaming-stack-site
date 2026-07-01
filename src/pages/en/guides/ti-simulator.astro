@@ -1,0 +1,12 @@
+---
+import GuideDocument from "@/components/GuideDocument.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const locale = "en";
+const title = "TI15 Simulator English Play Guide";
+const description = "English play guide for the TI15 Simulator Windows internal playtest package, including download, extraction, startup, and first-run notes.";
+---
+
+<BaseLayout locale={locale} title={`${title} - Nido's Gaming Stack`} description={description}>
+  <GuideDocument filename="PLAYER_GUIDE_EN_US.md" title={title} downloadLabel="Open Markdown source" />
+</BaseLayout>

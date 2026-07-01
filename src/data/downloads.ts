@@ -7,6 +7,8 @@ export type DownloadFile = {
   platform: DownloadPlatform;
   displayName: LocalizedString;
   filename: string;
+  globalFilename?: string;
+  chinaFilename?: string;
   size: string;
   sha256: string;
   globalMirror: string;
@@ -30,7 +32,7 @@ export type GameRelease = {
 export const releases: GameRelease[] = [
   {
     gameSlug: "ti-simulator",
-    version: "0.1.0-preview.20260701",
+    version: "0.1.1-preview.20260701-r3",
     channel: "alpha",
     releasedAt: "2026-07-01",
     displayDate: {
@@ -38,31 +40,33 @@ export const releases: GameRelease[] = [
       en: "2026-07-01",
     },
     summary: {
-      "zh-CN": "TI15 模拟器 Windows 内部试玩测试包。当前仅面向朋友小范围测试，提供便携版 zip 和校验值，下载后可解压运行。",
-      en: "TI15 Simulator Windows internal playtest build. This preview is shared with a small group of friends as a portable zip with checksum information.",
+      "zh-CN": "TI15 模拟器 Windows 内部试玩测试包。当前仅面向朋友小范围测试，提供便携版 zip 下载镜像，下载后可解压运行。",
+      en: "TI15 Simulator Windows internal playtest build. This preview is shared with a small group of friends as portable zip download mirrors.",
     },
     files: [
       {
         platform: "windows",
         displayName: { "zh-CN": "Windows x64 便携版", en: "Windows x64 Portable" },
-        filename: "TI15Simulator-portable-windows-x64-20260701-preview.zip",
-        size: "151.1 MiB",
-        sha256: "5689117721d1e4bccd05400e103d737c095304a3467c5b3a354af61a962b6790",
+        filename: "TI15Simulator Windows x64 portable preview zip",
+        globalFilename: "TI15Simulator-portable-windows-x64-20260701-preview-r3.zip",
+        chinaFilename: "TI15Simulator-portable-windows-x64-20260701-preview-r3.zip",
+        size: "",
+        sha256: "",
         globalMirror:
-          "https://github.com/Nidofy/nidos-gaming-stack-site/releases/download/preview-0.1.0/TI15Simulator-portable-windows-x64-20260701-preview.zip",
-        chinaMirror: "https://pan.baidu.com/s/1JD2bZ-4MLOUrytGzI6WyXg?pwd=99ku",
+          "https://github.com/Nidofy/nidos-gaming-stack-site/releases/download/preview-0.1.1/TI15Simulator-portable-windows-x64-20260701-preview-r3.zip",
+        chinaMirror: "https://pan.baidu.com/s/1VtsDP0PGqyfVUQVPvZ0iRQ?pwd=naqa",
         available: true,
       },
     ],
     changelog: {
       "zh-CN": [
         "提供 Windows x64 便携版内部试玩包。",
-        "保留文件大小和 SHA-256 校验值，方便下载后核对完整性。",
+        "提供 GitHub Release 与百度网盘两个下载镜像。",
         "当前测试范围为朋友内部试玩，暂不发布 macOS、Linux 或正式安装包。",
       ],
       en: [
         "Provide a Windows x64 portable internal playtest package.",
-        "Include file size and SHA-256 checksum for download verification.",
+        "Provide both GitHub Release and Baidu Netdisk download mirrors.",
         "Limit this build to a small internal playtest; macOS, Linux, and formal installers are not published yet.",
       ],
     },

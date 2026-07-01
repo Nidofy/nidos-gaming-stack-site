@@ -8,28 +8,16 @@ This guide is for playtesters who receive the Windows preview package. It explai
 - Teams, players, tournament context, and story beats are fictional and do not represent real TI15 participants.
 - The game does not simulate real-time Dota combat. It uses an abstract statistical model based on draft, heroes, item-build archetypes, team strategy, map decisions, morale, and seeded randomness.
 - Some hero names and common shorthand use a Dota-like vocabulary, but the project does not include official team logos, official images, Valve branding, or Dota branding assets.
-- The current preview package is unsigned. Windows SmartScreen may show a warning. Only run a package that you received from the developer and verified with SHA256.
+- The current preview package is unsigned. Windows SmartScreen may show a warning. Only run a package downloaded from this site's download page or provided directly by the developer.
 
-## Download And Verify
+## Download And Extract
 
-You will usually receive two files:
+The download page provides two mirrors. Use the filename shown on the download page:
 
-- `TI15Simulator-portable-windows-x64-20260701-preview.zip`
-- `TI15Simulator-portable-windows-x64-20260701-preview.zip.sha256`
+- GitHub Release: `TI15Simulator-portable-windows-x64-20260701-preview-r3.zip`
+- Baidu Netdisk: `TI15Simulator-portable-windows-x64-20260701-preview-r3.zip`
 
-Current preview package SHA256:
-
-```text
-5689117721D1E4BCCD05400E103D737C095304A3467C5B3A354AF61A962B6790
-```
-
-You can verify it in Windows PowerShell:
-
-```powershell
-Get-FileHash .\TI15Simulator-portable-windows-x64-20260701-preview.zip -Algorithm SHA256
-```
-
-Only extract and run the package if the printed `Hash` matches the value above.
+Download the ZIP, extract it fully, and then start the game. Do not run the game from the ZIP preview window.
 
 ## Start The Game
 
@@ -41,7 +29,7 @@ Only extract and run the package if the printed `Hash` matches the value above.
 
 If Windows SmartScreen appears:
 
-1. Confirm that the ZIP SHA256 matches the value provided by the developer.
+1. Confirm that the ZIP came from this site's download page or a mirror provided directly by the developer.
 2. Click "More info".
 3. If you trust the package source, choose "Run anyway".
 
@@ -302,7 +290,7 @@ Seeded determinism makes bugs and balance changes reproducible. The same seed an
 
 ### Why does Windows show a security warning?
 
-The current preview package is unsigned. For small friend playtests, SHA256 verification is the integrity check. Public distribution should use proper code signing and publisher reputation.
+The current preview package is unsigned. For small friend playtests, only use the mirrors on this site's download page or files provided directly by the developer. Public distribution should use proper code signing and publisher reputation.
 
 ### Can I play offline?
 
@@ -311,5 +299,5 @@ Yes. The Windows portable preview package is designed to run offline. It does no
 ## Short Message For Playtesters
 
 ```text
-This is an unsigned internal preview package for small playtests only. Please verify the SHA256 first, extract the full ZIP, and run Start-Game.bat. The game is a fictional-data abstract tournament RPG, not a real-time Dota combat simulator. After playing, please export playtest notes and tell me what was confusing and what was memorable.
+This is an unsigned internal preview package for small playtests only. Download the ZIP from this site's download page, extract it fully, and run Start-Game.bat. The game is a fictional-data abstract tournament RPG, not a real-time Dota combat simulator. After playing, please export playtest notes and tell me what was confusing and what was memorable.
 ```

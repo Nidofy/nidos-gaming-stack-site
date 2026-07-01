@@ -1,0 +1,12 @@
+---
+import GuideDocument from "@/components/GuideDocument.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const locale = "zh-CN";
+const title = "TI15 Simulator 中文游玩指引";
+const description = "TI15 Simulator Windows 内部试玩包的中文新手指引，包含下载、解压、启动和第一局游玩建议。";
+---
+
+<BaseLayout locale={locale} title={`${title} - Nido的游戏小栈`} description={description}>
+  <GuideDocument filename="PLAYER_GUIDE_ZH_CN.md" title={title} downloadLabel="打开 Markdown 原文" />
+</BaseLayout>

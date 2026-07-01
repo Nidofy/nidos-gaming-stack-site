@@ -2,7 +2,19 @@ import { gameEntries } from "@/data/games";
 import { site } from "@/data/site";
 import { locales } from "@/i18n/locales";
 
-const staticPaths = ["/", "/zh-CN", "/en", "/zh-CN/download", "/en/download", "/zh-CN/devlog", "/en/devlog", "/privacy", "/terms"];
+const staticPaths = [
+  "/",
+  "/zh-CN",
+  "/en",
+  "/zh-CN/download",
+  "/en/download",
+  "/zh-CN/devlog",
+  "/en/devlog",
+  "/zh-CN/guides/ti-simulator",
+  "/en/guides/ti-simulator",
+  "/privacy",
+  "/terms",
+];
 
 const gamePaths = gameEntries.flatMap((game) => locales.map((locale) => `/${locale}/games/${game.slug}`));
 

@@ -1,0 +1,42 @@
+---
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+
+interface Props {
+  filename: string;
+  title: string;
+  downloadLabel: string;
+}
+
+const { filename, title, downloadLabel } = Astro.props;
+const guidePath = join(process.cwd(), "public", "guides", "ti-simulator", filename);
+const guideText = existsSync(guidePath) ? readFileSync(guidePath, "utf8") : "";
+const rawHref = `/guides/ti-simulator/${filename}`;
+---
+
+<section class="container-page section-space">
+  <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="eyebrow">TI Simulator</p>
+      <h1 class="mt-4 text-4xl font-semibold tracking-normal sm:text-5xl lg:text-6xl">{title}</h1>
+    </div>
+    <a
+      class="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-white px-5 py-2 text-sm font-semibold text-ink"
+      href={rawHref}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {downloadLabel}
+    </a>
+  </div>
+
+  <article class="rounded-[24px] border border-line bg-panel p-5 shadow-sm md:p-8">
+    {
+      guideText ? (
+        <pre class="whitespace-pre-wrap break-words font-sans text-base leading-8 text-ink">{guideText}</pre>
+      ) : (
+        <p class="leading-7 text-muted">Guide file is missing.</p>
+      )
+    }
+  </article>
+</section>
