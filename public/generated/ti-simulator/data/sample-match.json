@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "project": "ti-simulator",
+  "productLine": "Nido's Gaming Stack",
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "match": {
+    "id": "sample-match-001",
+    "scenarioId": "ti15_mock",
+    "format": "BO3",
+    "seed": 15015,
+    "patchName": "Patch 7.38 Mock",
+    "radiant": {
+      "id": "aster-harbor",
+      "name": "Aster Harbor",
+      "style": "Aggressive tempo",
+      "players": [
+        "Anchor",
+        "Signal",
+        "Vector",
+        "Pulse",
+        "Lantern"
+      ]
+    },
+    "dire": {
+      "id": "northline-five",
+      "name": "Northline Five",
+      "style": "Late-game control",
+      "players": [
+        "Cipher",
+        "Drift",
+        "Quartz",
+        "Ember",
+        "Beacon"
+      ]
+    },
+    "games": [
+      {
+        "gameNumber": 1,
+        "winner": "Aster Harbor",
+        "durationMinutes": 39,
+        "killScore": "31-24",
+        "keyDecision": "Forced mid objective after a successful smoke read."
+      },
+      {
+        "gameNumber": 2,
+        "winner": "Northline Five",
+        "durationMinutes": 46,
+        "killScore": "22-30",
+        "keyDecision": "Delayed high-ground push gave Dire time to recover economy."
+      },
+      {
+        "gameNumber": 3,
+        "winner": "Aster Harbor",
+        "durationMinutes": 34,
+        "killScore": "28-17",
+        "keyDecision": "Converted Roshan timing into a decisive lane pressure split."
+      }
+    ],
+    "seriesResult": {
+      "winner": "Aster Harbor",
+      "score": "2-1",
+      "mvp": "Signal",
+      "winProbability": 0.58,
+      "summary": "Aster Harbor won the sample series through early tempo control and a stronger final-game objective chain."
+    },
+    "websiteHighlights": [
+      "Seeded simulation keeps promotional examples repeatable.",
+      "Tactical decisions are abstract and fictional.",
+      "No real teams, players, logos, or copyrighted game art are included."
+    ]
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "project": "ti-simulator",
+  "productLine": "Nido's Gaming Stack",
+  "sourceProject": "Ti15Simulator",
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "outputRoot": "../shared/exports/ti-simulator",
+  "notes": [
+    "Images are captured from deterministic frontend preview routes when Electron is available.",
+    "Each image is exported in Chinese with the stable base filename and in English with a -en filename suffix.",
+    "Generated placeholder images are used only as a fallback if automated screenshot capture fails.",
+    "Assets use fictional names and original abstract presentation only.",
+    "No real tournament, team, player, Valve, Dota, or The International logos are included."
+  ],
+  "assets": [
+    {
+      "id": "hero-gameplay",
+      "title": "TI Simulator Gameplay Hero (Chinese)",
+      "description": "Deterministic gameplay screenshot for Nido's Gaming Stack showing the TI Simulator match-flow concept. Chinese promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/hero-gameplay.png",
+      "websiteUsage": "Homepage hero and project card artwork.",
+      "recommendedAltText": "Nido's Gaming Stack TI Simulator promotional gameplay panel with fictional match systems."
+    },
+    {
+      "id": "hero-gameplay-en",
+      "title": "TI Simulator Gameplay Hero (English)",
+      "description": "Deterministic gameplay screenshot for Nido's Gaming Stack showing the TI Simulator match-flow concept. English promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/hero-gameplay-en.png",
+      "websiteUsage": "Homepage hero and project card artwork.",
+      "recommendedAltText": "Nido's Gaming Stack TI Simulator promotional gameplay panel with fictional match systems."
+    },
+    {
+      "id": "decision-screen",
+      "title": "Strategy Decision Screen (Chinese)",
+      "description": "Deterministic checkpoint decision screenshot for safe, balanced, and risky tactical choices. Chinese promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/decision-screen.png",
+      "websiteUsage": "Feature section image for strategy decision gameplay.",
+      "recommendedAltText": "TI Simulator strategy decision screen with safe, balanced, and risky tactical options."
+    },
+    {
+      "id": "decision-screen-en",
+      "title": "Strategy Decision Screen (English)",
+      "description": "Deterministic checkpoint decision screenshot for safe, balanced, and risky tactical choices. English promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/decision-screen-en.png",
+      "websiteUsage": "Feature section image for strategy decision gameplay.",
+      "recommendedAltText": "TI Simulator strategy decision screen with safe, balanced, and risky tactical options."
+    },
+    {
+      "id": "strategy-map",
+      "title": "Tactical Map (Chinese)",
+      "description": "Deterministic tactical-map screenshot for lane pressure and objective state. Chinese promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/strategy-map.png",
+      "websiteUsage": "Feature section image for tactical map and macro planning.",
+      "recommendedAltText": "TI Simulator tactical map showing abstract lanes, objective pressure, and team positioning."
+    },
+    {
+      "id": "strategy-map-en",
+      "title": "Tactical Map (English)",
+      "description": "Deterministic tactical-map screenshot for lane pressure and objective state. English promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/strategy-map-en.png",
+      "websiteUsage": "Feature section image for tactical map and macro planning.",
+      "recommendedAltText": "TI Simulator tactical map showing abstract lanes, objective pressure, and team positioning."
+    },
+    {
+      "id": "achievement-screen",
+      "title": "Achievement Unlock (Chinese)",
+      "description": "Deterministic local-profile screenshot for achievements and progression. Chinese promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/achievement-screen.png",
+      "websiteUsage": "Feature section image for progression and profile achievements.",
+      "recommendedAltText": "TI Simulator achievement unlock screen with local profile progress and fictional rewards."
+    },
+    {
+      "id": "achievement-screen-en",
+      "title": "Achievement Unlock (English)",
+      "description": "Deterministic local-profile screenshot for achievements and progression. English promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/achievement-screen-en.png",
+      "websiteUsage": "Feature section image for progression and profile achievements.",
+      "recommendedAltText": "TI Simulator achievement unlock screen with local profile progress and fictional rewards."
+    },
+    {
+      "id": "match-summary",
+      "title": "Match Summary (Chinese)",
+      "description": "Deterministic postgame summary screenshot for website storytelling. Chinese promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/match-summary.png",
+      "websiteUsage": "Feature section image for postgame reports and match summaries.",
+      "recommendedAltText": "TI Simulator match summary screen with fictional score, MVP, and postgame report panels."
+    },
+    {
+      "id": "match-summary-en",
+      "title": "Match Summary (English)",
+      "description": "Deterministic postgame summary screenshot for website storytelling. English promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/match-summary-en.png",
+      "websiteUsage": "Feature section image for postgame reports and match summaries.",
+      "recommendedAltText": "TI Simulator match summary screen with fictional score, MVP, and postgame report panels."
+    },
+    {
+      "id": "wechat-preview-cover",
+      "title": "WeChat Preview Cover (Chinese)",
+      "description": "Portrait release asset for WeChat preview publishing. Chinese promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/wechat-preview-cover.png",
+      "websiteUsage": "Portrait social preview cover for release announcements.",
+      "recommendedAltText": "TI Simulator portrait preview cover with deterministic strategy decision interface."
+    },
+    {
+      "id": "wechat-preview-cover-en",
+      "title": "WeChat Preview Cover (English)",
+      "description": "Portrait release asset for WeChat preview publishing. English promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/wechat-preview-cover-en.png",
+      "websiteUsage": "Portrait social preview cover for release announcements.",
+      "recommendedAltText": "TI Simulator portrait preview cover with deterministic strategy decision interface."
+    },
+    {
+      "id": "homepage-og",
+      "title": "Homepage Open Graph Image (Chinese)",
+      "description": "Horizontal release asset for homepage Open Graph publishing. Chinese promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/homepage-og.png",
+      "websiteUsage": "Homepage OG image for social link previews.",
+      "recommendedAltText": "TI Simulator horizontal Open Graph preview showing deterministic gameplay interface."
+    },
+    {
+      "id": "homepage-og-en",
+      "title": "Homepage Open Graph Image (English)",
+      "description": "Horizontal release asset for homepage Open Graph publishing. English promotional-page version.",
+      "type": "image/png",
+      "sourcePath": "images/homepage-og-en.png",
+      "websiteUsage": "Homepage OG image for social link previews.",
+      "recommendedAltText": "TI Simulator horizontal Open Graph preview showing deterministic gameplay interface."
+    },
+    {
+      "id": "sample-match",
+      "title": "Sample Match Data",
+      "description": "Small fictional match payload for website integration and copy prototyping.",
+      "type": "application/json",
+      "sourcePath": "data/sample-match.json",
+      "websiteUsage": "Website data fixture for project previews and future integration tests.",
+      "recommendedAltText": "Fictional TI Simulator sample match data."
+    }
+  ]
+}

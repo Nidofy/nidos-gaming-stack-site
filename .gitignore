@@ -1,7 +1,9 @@
 node_modules/
 dist/
 .astro/
-public/generated/
+public/generated/*
+!public/generated/ti-simulator/
+!public/generated/ti-simulator/**
 .astro-dev*.log
 .astro-dev*.err
 .astro-dev-start-test.log

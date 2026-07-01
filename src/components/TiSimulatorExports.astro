@@ -87,6 +87,28 @@ const localizedAssetCopy: Record<Locale, Record<GameplayAssetId, { title: string
     },
   },
 };
+localizedAssetCopy["zh-CN"] = {
+  "hero-gameplay": {
+    title: "玩法总览截图",
+    description: "展示 TI 模拟器从赛程推进、比赛状态到关键决策的整体玩法印象。",
+  },
+  "decision-screen": {
+    title: "决策界面",
+    description: "展示检查点选择、风险收益提示，以及安全、均衡、冒险三类行动思路。",
+  },
+  "strategy-map": {
+    title: "战术地图",
+    description: "展示兵线、目标压力和队伍站位，让玩家快速判断下一步的宏观策略。",
+  },
+  "achievement-screen": {
+    title: "成就解锁",
+    description: "展示本地档案、阶段目标和游玩进度，帮助一局比赛形成可追踪的成长反馈。",
+  },
+  "match-summary": {
+    title: "赛后总结",
+    description: "展示比分、关键选手和赛后报告，把一局幻想赛事整理成清晰的复盘结果。",
+  },
+};
 const manifestPath = join(process.cwd(), "public", "generated", "ti-simulator", "manifest.json");
 const assetBase = "/generated/ti-simulator";
 const { locale } = Astro.props;
