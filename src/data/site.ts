@@ -6,13 +6,15 @@ import type { LocalizedString } from "@/types/i18n";
 export type { Locale };
 export { defaultLocale, locales };
 
+const baseUrl = import.meta.env.PUBLIC_SITE_URL ?? "https://games.nido.dev";
+
 export const site = {
   name: {
     "zh-CN": "Nido的游戏小栈",
     en: "Nido's Gaming Stack",
   },
   shortName: "Nido",
-  baseUrl: "https://games.nido.dev",
+  baseUrl,
   defaultLocale,
   description: {
     "zh-CN": "一个长期维护的个人独立游戏发布站，展示模拟器、小游戏和实验性游戏项目。",
@@ -37,7 +39,6 @@ export const navItems = Object.fromEntries(
       { label: t(locale, "nav.games"), href: getLocalizedPath(locale, "games") },
       { label: t(locale, "nav.download"), href: getLocalizedPath(locale, "download") },
       { label: t(locale, "nav.devlog"), href: getLocalizedPath(locale, "devlog") },
-      ...(locale === "zh-CN" ? [{ label: t(locale, "nav.wechat"), href: getLocalizedPath(locale, "wechat") }] : []),
     ],
   ])
 ) as Record<Locale, Array<{ label: string; href: string }>>;

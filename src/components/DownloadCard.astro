@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { file, release, locale } = Astro.props;
+const pendingValue = t(locale, "download.pendingValue");
 ---
 
 <article class="rounded-[22px] border border-line bg-panel p-5 shadow-sm">
@@ -31,11 +32,11 @@ const { file, release, locale } = Astro.props;
     </div>
     <div class="flex justify-between gap-4 border-t border-line pt-3">
       <dt class="text-muted">{t(locale, "download.size")}</dt>
-      <dd class="font-medium">{file.size}</dd>
+      <dd class="font-medium">{file.available && file.size ? file.size : pendingValue}</dd>
     </div>
     <div class="grid gap-1 border-t border-line pt-3">
       <dt class="text-muted">{t(locale, "download.checksum")}</dt>
-      <dd class="break-all font-mono text-xs text-ink">{file.sha256}</dd>
+      <dd class="break-all font-mono text-xs text-ink">{file.available && file.sha256 ? file.sha256 : pendingValue}</dd>
     </div>
   </dl>
   {

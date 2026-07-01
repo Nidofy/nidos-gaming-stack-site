@@ -2,8 +2,10 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 
+const siteUrl = process.env.PUBLIC_SITE_URL ?? "https://games.nido.dev";
+
 export default defineConfig({
-  site: "https://games.nido.dev",
+  site: siteUrl,
   i18n: {
     locales: ["zh-CN", "en"],
     defaultLocale: "zh-CN",

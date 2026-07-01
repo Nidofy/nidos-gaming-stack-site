@@ -7,28 +7,28 @@
   "localized": {
     "zh-CN": {
       "displayDate": "预计 2026-07-15",
-      "summary": "第一轮封闭测试占位版本，用于验证核心模拟流程和下载分发页面。",
+      "summary": "Preview Release 0.1 网站预览版。游戏安装包尚未公开发布，当前用于展示项目介绍、截图和下载状态。",
       "changelog": [
-        "TODO: 接入真实构建产物。",
-        "预留全局镜像和国内镜像入口。",
-        "建立版本号、校验值和已知问题展示结构。"
+        "准备 Preview Release 0.1 网站。",
+        "展示真实宣传图和玩法示意截图。",
+        "下载入口保持待发布状态，避免提供无效安装包链接。"
       ],
       "knownIssues": [
-        "测试版尚未公开下载。",
-        "文件大小和 SHA-256 仍为占位。"
+        "游戏安装包尚未公开下载。",
+        "文件大小和 SHA-256 会在真实构建产物发布时补齐。"
       ]
     },
     "en": {
       "displayDate": "Planned for 2026-07-15",
-      "summary": "Initial closed playtest placeholder for validating the core simulation loop and download distribution page.",
+      "summary": "Preview Release 0.1 website build. Game installers are not publicly released yet; this page currently presents the project, screenshots, and release status.",
       "changelog": [
-        "TODO: Attach real build artifacts.",
-        "Reserve global and China mirror links.",
-        "Add version, checksum, and known issue display structure."
+        "Prepare the Preview Release 0.1 website.",
+        "Show real promotional artwork and gameplay preview screenshots.",
+        "Keep download entries in Coming Soon state to avoid invalid installer links."
       ],
       "knownIssues": [
-        "The playtest build is not publicly downloadable yet.",
-        "File size and SHA-256 values are placeholders."
+        "The game installer is not publicly downloadable yet.",
+        "File size and SHA-256 will be added when real build artifacts are published."
       ]
     }
   },
@@ -40,8 +40,8 @@
         "en": "Windows"
       },
       "filename": "ti-simulator-0.1.0-playtest-win-x64.zip",
-      "size": "TODO",
-      "sha256": "TODO-SHA256-WINDOWS",
+      "size": "",
+      "sha256": "",
       "globalMirror": "",
       "chinaMirror": "",
       "available": false
@@ -53,8 +53,8 @@
         "en": "macOS"
       },
       "filename": "ti-simulator-0.1.0-playtest-macos-universal.zip",
-      "size": "TODO",
-      "sha256": "TODO-SHA256-MACOS",
+      "size": "",
+      "sha256": "",
       "globalMirror": "",
       "chinaMirror": "",
       "available": false
@@ -66,8 +66,8 @@
         "en": "Linux"
       },
       "filename": "ti-simulator-0.1.0-playtest-linux-x64.tar.gz",
-      "size": "TODO",
-      "sha256": "TODO-SHA256-LINUX",
+      "size": "",
+      "sha256": "",
       "globalMirror": "",
       "chinaMirror": "",
       "available": false

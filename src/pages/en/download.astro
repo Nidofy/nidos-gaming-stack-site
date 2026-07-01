@@ -32,20 +32,20 @@ const previewMedia = tiSimulatorPreviewMedia[locale];
     </div>
   </section>
 
-  <section id="feedback-coming-soon" class="container-page pb-16">
-    <div class="rounded-[24px] border border-line bg-panel p-6 shadow-sm">
-      <p class="eyebrow">{t(locale, "feedback.eyebrow")}</p>
-      <h2 class="mt-3 text-2xl font-semibold">{t(locale, "feedback.downloadTitle")}</h2>
-      <p class="mt-3 max-w-2xl leading-7 text-muted">
-        {feedbackLink.available
-          ? t(locale, "feedback.availableBody")
-          : t(locale, "feedback.comingSoonBody")}
-      </p>
-      <div class="mt-5">
-        <CTAButton href={feedbackLink.href} label={feedbackLink.label} variant="secondary" />
-      </div>
-    </div>
-  </section>
+  {
+    feedbackLink.available && (
+      <section id="feedback-coming-soon" class="container-page pb-16">
+        <div class="rounded-[24px] border border-line bg-panel p-6 shadow-sm">
+          <p class="eyebrow">{t(locale, "feedback.eyebrow")}</p>
+          <h2 class="mt-3 text-2xl font-semibold">{t(locale, "feedback.downloadTitle")}</h2>
+          <p class="mt-3 max-w-2xl leading-7 text-muted">{t(locale, "feedback.availableBody")}</p>
+          <div class="mt-5">
+            <CTAButton href={feedbackLink.href} label={feedbackLink.label} variant="secondary" />
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   <section class="container-page grid gap-6 pb-24 md:grid-cols-2">
     <article class="rounded-[24px] border border-line bg-panel p-6">

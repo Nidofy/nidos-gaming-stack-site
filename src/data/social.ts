@@ -6,10 +6,6 @@ export const socialLinks = [
     label: "Email",
     href: "mailto:hello@nido.dev",
   },
-  {
-    label: "GitHub",
-    href: "https://github.com/",
-  },
 ];
 
 export const feedbackConfig = {
@@ -33,7 +29,7 @@ export function getFeedbackLink(locale: Locale) {
 
   return {
     available,
-    href: available ? feedbackConfig.feedbackFormUrl : "#feedback-coming-soon",
+    href: available ? feedbackConfig.feedbackFormUrl : "",
     label: available ? feedbackConfig.labels[locale] : t(locale, "feedback.comingSoonLabel"),
   };
 }

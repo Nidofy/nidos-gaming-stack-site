@@ -143,8 +143,8 @@ export const gameEntries: LocalizedGameContent[] = [
         en: "Original rules, tunable parameters, and clean tournament storytelling for early testers.",
       },
       placeholderLabel: {
-        "zh-CN": "TODO: 替换为原创截图或录屏",
-        en: "TODO: Replace with original screenshots or capture",
+        "zh-CN": "原创媒体正在准备中",
+        en: "Original media in preparation",
       },
       placeholderNote: {
         "zh-CN": "首版先保留干净的产品展示占位区，避免使用未经授权的赛事或战队视觉。",
@@ -207,8 +207,8 @@ export const gameEntries: LocalizedGameContent[] = [
     ],
     primaryCta: {
       label: {
-        "zh-CN": "查看测试版下载",
-        en: "View playtest downloads",
+        "zh-CN": "查看下载状态",
+        en: "View download status",
       },
       href: {
         "zh-CN": "/zh-CN/download",
@@ -217,11 +217,11 @@ export const gameEntries: LocalizedGameContent[] = [
     },
     secondaryCta: {
       label: {
-        "zh-CN": "微信快速入口",
+        "zh-CN": "查看开发日志",
         en: "Read devlog",
       },
       href: {
-        "zh-CN": "/zh-CN/wechat",
+        "zh-CN": "/zh-CN/devlog",
         en: "/en/devlog",
       },
     },
@@ -231,8 +231,8 @@ export const gameEntries: LocalizedGameContent[] = [
         en: "TI Simulator - Nido's Gaming Stack",
       },
       description: {
-        "zh-CN": "TI 模拟器是一款开发中的架空电竞赛事经营与模拟项目，提供 Windows、macOS、Linux 测试版下载占位。",
-        en: "TI Simulator is a fictional esports tournament simulator in development, with placeholder playtest downloads for Windows, macOS, and Linux.",
+        "zh-CN": "TI 模拟器是一款开发中的架空电竞赛事经营与模拟项目，当前展示 Windows、macOS、Linux 待发布下载状态。",
+        en: "TI Simulator is a fictional esports tournament simulator in development, currently showing Coming Soon download status for Windows, macOS, and Linux.",
       },
     },
     legalNotes: {
