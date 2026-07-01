@@ -9,23 +9,23 @@ This checklist prepares Nido's Gaming Stack for a small private preview release.
 - Confirm the current Git working tree contains only intended release changes.
 - Confirm `src/data/downloads.ts` and `public/releases/latest.json` describe the same latest release.
 - Confirm every public release is clearly labeled as `alpha`, `beta`, or `stable`.
-- Confirm unavailable platforms show Coming Soon and do not render download links.
+- Confirm unavailable platforms are omitted or show Coming Soon without download links.
 - Confirm no `example.com`, `example.cn`, or other placeholder external download URLs remain.
 
-## Local Alpha Download Package
+## Internal Playtest Download Package
 
-- Put local preview artifacts under `public/downloads/ti-simulator/`.
-- Windows package naming convention:
-  - `ti-simulator-0.1.0-alpha-win-x64.zip`
-- Keep macOS and Linux as Coming Soon until real packages exist.
-- Do not commit large or unverified files by accident.
+- Do not commit large playtest zip files to this website repository unless intentionally publishing them as static assets.
+- Prefer external mirrors for internal testing:
+  - GitHub Release asset for the global mirror.
+  - Baidu Netdisk share URL for the China mirror.
+- Keep macOS and Linux omitted or Coming Soon until real packages exist.
 - When the Windows zip is ready, update the Windows file entry in `src/data/downloads.ts`:
   - `filename`: exact zip filename.
-  - `size`: human-readable file size, for example `128 MB`.
+  - `size`: human-readable file size, for example `151.1 MiB`.
   - `sha256`: full SHA-256 checksum.
-  - `globalMirror`: `/downloads/ti-simulator/ti-simulator-0.1.0-alpha-win-x64.zip` or a verified external URL.
+  - `globalMirror`: verified GitHub Release asset URL, or leave empty until available.
   - `chinaMirror`: verified China mirror URL, or leave empty until available.
-  - `available`: `true` only after the referenced file or URL works.
+  - `available`: `true` only after at least one referenced mirror works.
 - Sync `public/releases/latest.json` manually from `src/data/downloads.ts` until a generation script exists.
 
 ## How To Fill File Size
@@ -33,7 +33,7 @@ This checklist prepares Nido's Gaming Stack for a small private preview release.
 - On Windows PowerShell:
 
 ```powershell
-Get-Item public/downloads/ti-simulator/ti-simulator-0.1.0-alpha-win-x64.zip | Select-Object Name,Length
+Get-Item "<local-path-to>\TI15Simulator-portable-windows-x64-20260701-preview.zip" | Select-Object Name,Length
 ```
 
 - Convert bytes to a readable value such as `128 MB`.
@@ -44,7 +44,7 @@ Get-Item public/downloads/ti-simulator/ti-simulator-0.1.0-alpha-win-x64.zip | Se
 - On Windows PowerShell:
 
 ```powershell
-Get-FileHash public/downloads/ti-simulator/ti-simulator-0.1.0-alpha-win-x64.zip -Algorithm SHA256
+Get-FileHash "<local-path-to>\TI15Simulator-portable-windows-x64-20260701-preview.zip" -Algorithm SHA256
 ```
 
 - Copy the full hash into `sha256`.
@@ -72,8 +72,9 @@ Get-FileHash public/downloads/ti-simulator/ti-simulator-0.1.0-alpha-win-x64.zip 
 ## Download Flow Testing
 
 - If `available` is `false`, verify the card shows Coming Soon and no link is clickable.
-- If `available` is `true`, verify the Global Mirror opens or downloads successfully.
-- If China Mirror is configured, verify it opens independently.
+- If `available` is `true`, verify each rendered mirror opens or downloads successfully.
+- If `globalMirror` is empty, confirm the GitHub Release button is not rendered.
+- If `chinaMirror` is configured, verify it opens independently and includes any required extraction code.
 - Confirm platform, version, date, file size, and SHA-256 are visible on mobile.
 - Confirm the file checksum shown on the page matches the artifact.
 
@@ -89,7 +90,7 @@ Get-FileHash public/downloads/ti-simulator/ti-simulator-0.1.0-alpha-win-x64.zip 
 - Build command: `npm run build`.
 - Output directory: `dist`.
 - Confirm `public/releases/latest.json` is included in the deployed output.
-- Confirm `public/downloads/ti-simulator/` artifacts are included only when intentionally released.
+- Confirm local zip artifacts are not committed to the website repository unless intentionally released as static assets.
 - Confirm no secrets, tokens, or unpublished private URLs are committed.
 - Confirm canonical and hreflang output are reasonable for `/zh-CN`, `/en`, and `/zh-CN/wechat`.
 

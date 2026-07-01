@@ -103,8 +103,8 @@ export const gameEntries: LocalizedGameContent[] = [
     },
     status: "playtest",
     statusLabel: {
-      "zh-CN": "测试版筹备中",
-      en: "Playtest build planned",
+      "zh-CN": "内部试玩测试",
+      en: "Internal playtest",
     },
     tagline: {
       "zh-CN": "一款架空电竞赛事经营与模拟项目。",
@@ -116,17 +116,13 @@ export const gameEntries: LocalizedGameContent[] = [
     },
     description: {
       "zh-CN":
-        "TI 模拟器是一个仍在开发中的实验性模拟器。它关注赛事节奏、队伍强弱变化、赛程推进和结果叙事，目标是让玩家快速生成一段可信但完全架空的电竞赛事故事。",
-      en: "TI Simulator is an experimental simulator in active development. It focuses on tournament rhythm, fictional team strength, bracket progression, and readable outcomes without relying on real-world teams, players, event branding, or official assets.",
+        "TI 模拟器是一个仍在开发中的实验性模拟器。它关注赛事节奏、队伍强弱变化、赛程推进和结果叙事，目标是让玩家快速生成一段可信但完全架空的电竞赛事故事。当前内部试玩包仅提供 Windows x64 便携版。",
+      en: "TI Simulator is an experimental simulator in active development. It focuses on tournament rhythm, fictional team strength, bracket progression, and readable outcomes without relying on real-world teams, players, event branding, or official assets. The current internal playtest package is Windows x64 portable only.",
     },
-    platforms: [
-      { id: "windows", displayName: { "zh-CN": "Windows", en: "Windows" } },
-      { id: "macos", displayName: { "zh-CN": "macOS", en: "macOS" } },
-      { id: "linux", displayName: { "zh-CN": "Linux", en: "Linux" } },
-    ],
+    platforms: [{ id: "windows", displayName: { "zh-CN": "Windows", en: "Windows" } }],
     tags: {
-      "zh-CN": ["模拟器", "赛事叙事", "独立开发", "测试版"],
-      en: ["Simulator", "Tournament Story", "Indie", "Playtest"],
+      "zh-CN": ["模拟器", "赛事叙事", "独立开发", "内部试玩"],
+      en: ["Simulator", "Tournament Story", "Indie", "Internal Playtest"],
     },
     accent: "#1470f5",
     hero: {
@@ -207,8 +203,8 @@ export const gameEntries: LocalizedGameContent[] = [
     ],
     primaryCta: {
       label: {
-        "zh-CN": "查看下载状态",
-        en: "View download status",
+        "zh-CN": "下载 Windows 内测包",
+        en: "Download Windows playtest",
       },
       href: {
         "zh-CN": "/zh-CN/download",
@@ -231,12 +227,13 @@ export const gameEntries: LocalizedGameContent[] = [
         en: "TI Simulator - Nido's Gaming Stack",
       },
       description: {
-        "zh-CN": "TI 模拟器是一款开发中的架空电竞赛事经营与模拟项目，当前展示 Windows、macOS、Linux 待发布下载状态。",
-        en: "TI Simulator is a fictional esports tournament simulator in development, currently showing Coming Soon download status for Windows, macOS, and Linux.",
+        "zh-CN": "TI 模拟器是一款开发中的架空电竞赛事经营与模拟项目，当前提供 Windows x64 便携版内部试玩包。",
+        en: "TI Simulator is a fictional esports tournament simulator in development, currently providing a Windows x64 portable internal playtest build.",
       },
     },
     legalNotes: {
-      "zh-CN": "本站内容为原创或架空表达，未使用真实赛事、战队、选手、Dota、Valve 或 The International 的授权素材作为核心资产。",
+      "zh-CN":
+        "本站内容为原创或架空表达，未使用真实赛事、战队、选手、Dota、Valve 或 The International 的授权素材作为核心资产。",
       en: "This project uses original and fictional presentation. It is not affiliated with, endorsed by, or built from assets owned by real tournaments, teams, players, Dota, Valve, or The International.",
     },
   },

@@ -1,6 +1,6 @@
 # Deployment
 
-This site is a static Astro build for Nido's Gaming Stack. Preview Release 0.1 does not ship real game installers; download entries must stay in Coming Soon state until verified artifacts exist.
+This site is a static Astro build for Nido's Gaming Stack. Preview Release 0.1 currently exposes a Windows-only internal playtest package through verified external mirrors.
 
 ## Cloudflare Pages
 
@@ -24,7 +24,7 @@ Use Cloudflare Pages preview deployments for branch or pull request checks. Befo
 
 - `/`, `/zh-CN`, and `/en` render.
 - `/zh-CN/games/ti-simulator` and `/en/games/ti-simulator` render.
-- `/zh-CN/download` and `/en/download` show Coming Soon and no clickable fake download links.
+- `/zh-CN/download` and `/en/download` show the Windows internal playtest package and only render verified mirror links.
 - `/robots.txt` allows crawling and points to `/sitemap.xml`.
 - `/sitemap.xml` contains the public localized routes.
 
@@ -43,7 +43,7 @@ After binding the production domain:
 - Confirm hero images, OG images, and synced TI Simulator screenshots load.
 - Confirm there is no horizontal scroll on mobile.
 - Confirm `public/releases/latest.json` is reachable.
-- Confirm download cards show Pending/Coming Soon while artifacts are unavailable.
+- Confirm download cards show the Windows package size, SHA-256 checksum, and only the mirror links that are configured.
 - Confirm no `localhost`, `example.com`, `example.cn`, private URLs, or secrets appear in generated HTML.
 
 ## Vercel Alternative
