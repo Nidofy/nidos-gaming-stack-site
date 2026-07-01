@@ -8,6 +8,24 @@ const projectRoot = resolve(scriptDir, "..");
 const workspaceRoot = resolve(projectRoot, "..");
 const sourceDir = resolve(workspaceRoot, "shared", "exports", "ti-simulator");
 const targetDir = resolve(projectRoot, "public", "generated", "ti-simulator");
+const shareImageCopies = [
+  {
+    source: resolve(sourceDir, "images", "wechat-preview-cover.png"),
+    target: resolve(projectRoot, "public", "images", "wechat", "ti-simulator-preview-cover.png"),
+  },
+  {
+    source: resolve(sourceDir, "images", "wechat-preview-cover-en.png"),
+    target: resolve(projectRoot, "public", "images", "wechat", "ti-simulator-preview-cover-en.png"),
+  },
+  {
+    source: resolve(sourceDir, "images", "homepage-og.png"),
+    target: resolve(projectRoot, "public", "images", "og", "homepage-og.png"),
+  },
+  {
+    source: resolve(sourceDir, "images", "homepage-og-en.png"),
+    target: resolve(projectRoot, "public", "images", "og", "homepage-og-en.png"),
+  },
+];
 
 if (!existsSync(sourceDir)) {
   console.warn(`No TI Simulator export found at ${sourceDir}`);
@@ -34,6 +52,16 @@ for (const dirname of ["images", "data"]) {
   if (existsSync(sourceSubdir)) {
     await cp(sourceSubdir, targetSubdir, { recursive: true });
   }
+}
+
+for (const { source, target } of shareImageCopies) {
+  if (!existsSync(source)) {
+    console.warn(`Optional TI Simulator share image missing at ${source}`);
+    continue;
+  }
+
+  await mkdir(dirname(target), { recursive: true });
+  await cp(source, target, { force: true });
 }
 
 console.log(`Synced TI Simulator website assets to ${targetDir}`);

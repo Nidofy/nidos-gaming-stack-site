@@ -38,6 +38,55 @@ type GalleryAsset = {
   asset: ExportedAsset;
 };
 
+const gameplayAssetIds = ["hero-gameplay", "decision-screen", "strategy-map", "achievement-screen", "match-summary"] as const;
+type GameplayAssetId = (typeof gameplayAssetIds)[number];
+const gameplayAssetIdSet = new Set<string>(gameplayAssetIds);
+const localizedAssetCopy: Record<Locale, Record<GameplayAssetId, { title: string; description: string }>> = {
+  "zh-CN": {
+    "hero-gameplay": {
+      title: "玩法总览截图",
+      description: "展示 TI 模拟器从赛程推进、比赛状态到关键决策的整体玩法印象。",
+    },
+    "decision-screen": {
+      title: "决策界面",
+      description: "展示检查点选择、风险收益提示，以及安全、均衡、冒险三类行动思路。",
+    },
+    "strategy-map": {
+      title: "战术地图",
+      description: "展示兵线、目标压力和队伍站位，让玩家快速判断下一步的宏观策略。",
+    },
+    "achievement-screen": {
+      title: "成就解锁",
+      description: "展示本地档案、阶段目标和游玩进度，帮助一局比赛形成可追踪的成长反馈。",
+    },
+    "match-summary": {
+      title: "赛后总结",
+      description: "展示比分、关键选手和赛后报告，把一局幻想赛事整理成清晰的复盘结果。",
+    },
+  },
+  en: {
+    "hero-gameplay": {
+      title: "Gameplay overview",
+      description: "Shows the broad match-flow concept across schedule progress, match state, and key decisions.",
+    },
+    "decision-screen": {
+      title: "Decision screen",
+      description: "Shows checkpoint choices, risk-reward hints, and safe, balanced, or risky tactical options.",
+    },
+    "strategy-map": {
+      title: "Tactical map",
+      description: "Shows lane pressure, objective state, and team positioning for macro planning.",
+    },
+    "achievement-screen": {
+      title: "Achievement unlock",
+      description: "Shows local profile progress, milestone goals, and progression feedback.",
+    },
+    "match-summary": {
+      title: "Match summary",
+      description: "Shows score, key performers, and postgame report panels for a clear match recap.",
+    },
+  },
+};
 const manifestPath = join(process.cwd(), "public", "generated", "ti-simulator", "manifest.json");
 const assetBase = "/generated/ti-simulator";
 const { locale } = Astro.props;
@@ -74,18 +123,23 @@ if (existsSync(manifestPath)) {
 
 const imageAssets = manifest?.assets.filter((asset) => asset.type.startsWith("image/")) ?? [];
 const byId = new Map(imageAssets.map((asset) => [asset.id, asset]));
-const previewAsset = byId.get("hero-gameplay") ?? imageAssets[0];
-const featureAssets = [
+const screenshotAssets = imageAssets.filter((asset) => gameplayAssetIdSet.has((asset.id ?? "").replace(/-en$/, "")));
+const getLocalizedAsset = (id: GameplayAssetId) => {
+  if (locale === "en") return byId.get(`${id}-en`) ?? byId.get(id);
+  return byId.get(id) ?? byId.get(`${id}-en`);
+};
+const previewAsset = getLocalizedAsset("hero-gameplay") ?? screenshotAssets[0];
+const featureAssets: ReadonlyArray<{ id: GameplayAssetId; labelKey: GalleryLabelKey }> = [
   { id: "decision-screen", labelKey: "decision" },
   { id: "strategy-map", labelKey: "strategy" },
   { id: "achievement-screen", labelKey: "achievement" },
   { id: "match-summary", labelKey: "summary" },
-] satisfies ReadonlyArray<{ id: string; labelKey: GalleryLabelKey }>;
+];
 const visibleFeatureAssets: GalleryAsset[] = featureAssets.flatMap((item) => {
-    const asset = byId.get(item.id);
+    const asset = getLocalizedAsset(item.id);
     return asset ? [{ id: item.id, labelKey: item.labelKey, asset }] : [];
   });
-const fallbackFeatureAssets: GalleryAsset[] = imageAssets
+const fallbackFeatureAssets: GalleryAsset[] = screenshotAssets
   .filter((asset) => asset.sourcePath !== previewAsset?.sourcePath)
   .slice(0, 4)
   .map((asset, index) => ({
@@ -97,6 +151,9 @@ const galleryAssets = visibleFeatureAssets.length > 0 ? visibleFeatureAssets : f
 
 const imageSrc = (asset: ExportedAsset) => `${assetBase}/${asset.sourcePath}`;
 const imageAlt = (asset: ExportedAsset) => asset.recommendedAltText || asset.alt || asset.title;
+const assetBaseId = (asset: ExportedAsset) => (asset.id ?? "").replace(/-en$/, "") as GameplayAssetId;
+const assetTitle = (asset: ExportedAsset) => localizedAssetCopy[locale][assetBaseId(asset)]?.title ?? asset.title;
+const assetDescription = (asset: ExportedAsset) => localizedAssetCopy[locale][assetBaseId(asset)]?.description ?? asset.description;
 const galleryLabel = (labelKey: GalleryLabelKey) => t(locale, `tiAssets.${labelKey}`);
 ---
 
@@ -111,7 +168,7 @@ const galleryLabel = (labelKey: GalleryLabelKey) => t(locale, `tiAssets.${labelK
     </div>
 
     {
-      imageAssets.length > 0 ? (
+      screenshotAssets.length > 0 ? (
         <div class="space-y-10">
           {previewAsset && (
             <article class="overflow-hidden rounded-lg border border-line bg-panel shadow-soft">
@@ -126,9 +183,9 @@ const galleryLabel = (labelKey: GalleryLabelKey) => t(locale, `tiAssets.${labelK
               <div class="grid gap-5 p-6 md:grid-cols-[1fr_1.5fr] md:p-8">
                 <div>
                   <p class="eyebrow">{t(locale, "tiAssets.heroLabel")}</p>
-                  <h3 class="mt-3 text-2xl font-semibold md:text-3xl">{previewAsset.title}</h3>
+                  <h3 class="mt-3 text-2xl font-semibold md:text-3xl">{assetTitle(previewAsset)}</h3>
                 </div>
-                <p class="leading-7 text-muted">{previewAsset.description}</p>
+                <p class="leading-7 text-muted">{assetDescription(previewAsset)}</p>
               </div>
             </article>
           )}
@@ -152,8 +209,8 @@ const galleryLabel = (labelKey: GalleryLabelKey) => t(locale, `tiAssets.${labelK
                     />
                     <figcaption class="p-5">
                       <p class="eyebrow">{galleryLabel(labelKey)}</p>
-                      <h4 class="mt-2 text-xl font-semibold">{asset.title}</h4>
-                      <p class="mt-3 text-sm leading-6 text-muted">{asset.description}</p>
+                      <h4 class="mt-2 text-xl font-semibold">{assetTitle(asset)}</h4>
+                      <p class="mt-3 text-sm leading-6 text-muted">{assetDescription(asset)}</p>
                     </figcaption>
                   </figure>
                 ))}

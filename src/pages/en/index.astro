@@ -6,7 +6,7 @@ import Hero from "@/components/Hero.astro";
 import TiSimulatorExports from "@/components/TiSimulatorExports.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { games } from "@/data/games";
-import { tiSimulatorPreviewMedia } from "@/data/media";
+import { getHomepageOgImage, tiSimulatorPreviewMedia } from "@/data/media";
 import { site } from "@/data/site";
 import { t } from "@/i18n/utils";
 
@@ -15,13 +15,14 @@ const featuredGame = games[locale][0];
 const previewMedia = tiSimulatorPreviewMedia[locale];
 const previewAlt = t(locale, "media.tiSimulatorPreviewAlt");
 const previewDisclaimer = t(locale, "media.entertainmentDisclaimer");
+const homepageOgImage = getHomepageOgImage(locale);
 ---
 
 <BaseLayout
   locale={locale}
   title={`${site.name[locale]} - ${t(locale, "home.titleSuffix")}`}
   description={site.description[locale]}
-  ogImage={previewMedia.og}
+  ogImage={homepageOgImage}
   jsonLd={{
     "@context": "https://schema.org",
     "@type": "WebSite",
