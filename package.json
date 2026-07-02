@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "node scripts/astro.mjs dev",
     "build": "npm run check && node scripts/astro.mjs build",
-    "preview": "node scripts/astro.mjs preview",
+    "preview": "npm run build && wrangler dev",
     "check": "npm run check:i18n && node scripts/astro.mjs check",
     "check:i18n": "node --experimental-strip-types scripts/check-i18n.ts",
     "sync:ti-assets": "node scripts/sync-ti-assets.mjs",
-    "assets:import": "node scripts/import-ti-assets.mjs"
+    "assets:import": "node scripts/import-ti-assets.mjs",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "12",
     "@astrojs/mdx": "^4.3.0",
     "@astrojs/tailwind": "^6.0.2",
     "astro": "^5.9.0",
@@ -20,6 +23,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "wrangler": "^4.106.0"
   }
 }
