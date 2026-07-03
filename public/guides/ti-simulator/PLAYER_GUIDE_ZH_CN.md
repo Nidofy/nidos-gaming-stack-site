@@ -14,8 +14,8 @@
 
 当前下载页提供两个镜像，文件名以下载页显示为准：
 
-- GitHub Release：`TI15Simulator-portable-windows-x64-20260701-preview-r3.zip`
-- 百度网盘：`TI15Simulator-portable-windows-x64-20260701-preview-r3.zip`
+- GitHub Release：`TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip`
+- 百度网盘：`TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip`
 
 下载后先完整解压，再启动游戏。不要直接在 ZIP 预览窗口中运行。
 

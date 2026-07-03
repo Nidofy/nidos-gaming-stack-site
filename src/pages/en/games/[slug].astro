@@ -50,6 +50,8 @@ const previewMedia = getGamePreviewMedia(game.slug, locale);
     primaryHref={game.primaryCta.href}
     secondaryLabel={game.secondaryCta.label}
     secondaryHref={game.secondaryCta.href}
+    tertiaryLabel={release ? t(locale, "game.backToGamesCta") : undefined}
+    tertiaryHref={release ? "/en/#games" : undefined}
     placeholderLabel={game.hero.placeholderLabel}
     placeholderNote={game.hero.placeholderNote}
     imageSrc={previewMedia.hero}
@@ -125,6 +127,7 @@ const previewMedia = getGamePreviewMedia(game.slug, locale);
             <>
               <CTAButton href="/en/download" label={t(locale, "game.downloadsCta")} />
               <CTAButton href="/en/devlog" label={t(locale, "game.devlogCta")} variant="secondary" />
+              <CTAButton href="/en/#games" label={t(locale, "game.backToGamesCta")} variant="secondary" />
             </>
           ) : (
             <>

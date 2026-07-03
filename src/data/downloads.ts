@@ -32,12 +32,12 @@ export type GameRelease = {
 export const releases: GameRelease[] = [
   {
     gameSlug: "ti-simulator",
-    version: "0.1.1-preview.20260701-r3",
+    version: "0.2.0-preview.20260703-alpha02-test-fix4",
     channel: "alpha",
-    releasedAt: "2026-07-01",
+    releasedAt: "2026-07-03",
     displayDate: {
-      "zh-CN": "2026-07-01",
-      en: "2026-07-01",
+      "zh-CN": "2026-07-03",
+      en: "2026-07-03",
     },
     summary: {
       "zh-CN": "TI15 模拟器 Windows 内部试玩测试包。当前仅面向朋友小范围测试，提供便携版 zip 下载镜像，下载后可解压运行。",
@@ -48,13 +48,13 @@ export const releases: GameRelease[] = [
         platform: "windows",
         displayName: { "zh-CN": "Windows x64 便携版", en: "Windows x64 Portable" },
         filename: "TI15Simulator Windows x64 portable preview zip",
-        globalFilename: "TI15Simulator-portable-windows-x64-20260701-preview-r3.zip",
-        chinaFilename: "TI15Simulator-portable-windows-x64-20260701-preview-r3.zip",
+        globalFilename: "TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip",
+        chinaFilename: "TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip",
         size: "",
         sha256: "",
         globalMirror:
-          "https://github.com/Nidofy/nidos-gaming-stack-site/releases/download/preview-0.1.1/TI15Simulator-portable-windows-x64-20260701-preview-r3.zip",
-        chinaMirror: "https://pan.baidu.com/s/1VtsDP0PGqyfVUQVPvZ0iRQ?pwd=naqa",
+          "https://github.com/Nidofy/nidos-gaming-stack-site/releases/download/preview-0.2.0/TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip",
+        chinaMirror: "https://pan.baidu.com/s/1nwIHNlCjkk5ZeeoT09Wj8w?pwd=cxaf",
         available: true,
       },
     ],

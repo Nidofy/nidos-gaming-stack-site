@@ -14,8 +14,8 @@ This guide is for playtesters who receive the Windows preview package. It explai
 
 The download page provides two mirrors. Use the filename shown on the download page:
 
-- GitHub Release: `TI15Simulator-portable-windows-x64-20260701-preview-r3.zip`
-- Baidu Netdisk: `TI15Simulator-portable-windows-x64-20260701-preview-r3.zip`
+- GitHub Release: `TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip`
+- Baidu Netdisk: `TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip`
 
 Download the ZIP, extract it fully, and then start the game. Do not run the game from the ZIP preview window.
 

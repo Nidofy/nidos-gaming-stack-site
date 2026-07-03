@@ -11,6 +11,8 @@ interface Props {
   primaryHref: string;
   secondaryLabel?: string;
   secondaryHref?: string;
+  tertiaryLabel?: string;
+  tertiaryHref?: string;
   placeholderLabel: string;
   placeholderNote: string;
   metaItems?: string[];
@@ -30,6 +32,8 @@ const {
   primaryHref,
   secondaryLabel,
   secondaryHref,
+  tertiaryLabel,
+  tertiaryHref,
   placeholderLabel,
   placeholderNote,
   metaItems = [],
@@ -58,6 +62,7 @@ const {
   <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
     <CTAButton href={primaryHref} label={primaryLabel} />
     {secondaryLabel && secondaryHref && <CTAButton href={secondaryHref} label={secondaryLabel} variant="secondary" />}
+    {tertiaryLabel && tertiaryHref && <CTAButton href={tertiaryHref} label={tertiaryLabel} variant="secondary" />}
   </div>
   {
     imageSrc ? (

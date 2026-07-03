@@ -53,7 +53,7 @@ const untitledActionRpgCard = gameCards.find(({ game }) => game.slug === "untitl
     )
   }
 
-  <section class="container-page section-space text-center">
+  <section class="container-page section-space text-center" data-home-project-detail="ti-simulator" hidden={!tiSimulatorCard}>
     <p class="eyebrow">{t(locale, "home.next.eyebrow")}</p>
     <h2 class="balance mx-auto mt-3 max-w-3xl text-3xl font-semibold sm:text-4xl md:text-5xl">{t(locale, "home.next.title")}</h2>
     <p class="mx-auto mt-5 max-w-2xl leading-8 text-muted">{t(locale, "home.next.description")}</p>

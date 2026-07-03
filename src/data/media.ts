@@ -27,12 +27,77 @@ export const tiSimulatorPreviewMedia = {
     og: "/images/og/ti-simulator-zh.png",
     alt: "TI15 模拟器娱乐向宣传示意图，展示模拟比赛界面和策略决策面板。",
     disclaimer: "临时娱乐向预览图，非商业展示。",
+    gallery: {
+      eyebrow: "宣传示意图",
+      title: "从玩法总览到赛后复盘的关键界面。",
+      description: "这些示意图补充展示当前预览包里的玩法总览、关键决策、战术地图、成就目标和赛后总结流程。",
+      images: [
+        {
+          src: "/generated/ti-simulator/images/hero-gameplay.png",
+          alt: "TI 模拟器玩法总览示意图，展示选人、比赛进程、地图和数据面板。",
+          caption: "玩法总览",
+        },
+        {
+          src: "/generated/ti-simulator/images/decision-screen.png",
+          alt: "TI 模拟器决策界面示意图，展示比赛阶段中的策略选择。",
+          caption: "关键决策",
+        },
+        {
+          src: "/generated/ti-simulator/images/strategy-map.png",
+          alt: "TI 模拟器战术地图示意图，展示路线、资源点和局势推进。",
+          caption: "战术地图",
+        },
+        {
+          src: "/generated/ti-simulator/images/achievement-screen.png",
+          alt: "TI 模拟器成就界面示意图，展示阶段目标和完成状态。",
+          caption: "成就目标",
+        },
+        {
+          src: "/generated/ti-simulator/images/match-summary.png",
+          alt: "TI 模拟器赛后总结示意图，展示比赛结果、关键数据和复盘信息。",
+          caption: "赛后总结",
+        },
+      ],
+    },
   },
   en: {
     hero: "/images/hero/ti-simulator-en.png",
     og: "/images/og/ti-simulator-en.png",
     alt: "Entertainment preview illustration for TI15 Simulator showing a simulated match interface and strategy panels.",
     disclaimer: "Temporary non-commercial preview illustration.",
+    gallery: {
+      eyebrow: "Promotional Screens",
+      title: "Key screens from gameplay overview to post-match review.",
+      description:
+        "These images add a closer look at the current preview package: gameplay overview, tactical choices, strategy map, achievement goals, and match summary.",
+      images: [
+        {
+          src: "/generated/ti-simulator/images/hero-gameplay-en.png",
+          alt: "TI Simulator gameplay overview mockup showing draft, match flow, map, and data panels.",
+          caption: "Gameplay overview",
+        },
+        {
+          src: "/generated/ti-simulator/images/decision-screen-en.png",
+          alt: "TI Simulator decision screen mockup showing tactical choices during a match stage.",
+          caption: "Key decisions",
+        },
+        {
+          src: "/generated/ti-simulator/images/strategy-map-en.png",
+          alt: "TI Simulator strategy map mockup showing lanes, resource points, and match pressure.",
+          caption: "Strategy map",
+        },
+        {
+          src: "/generated/ti-simulator/images/achievement-screen-en.png",
+          alt: "TI Simulator achievement screen mockup showing stage goals and completion status.",
+          caption: "Achievement goals",
+        },
+        {
+          src: "/generated/ti-simulator/images/match-summary-en.png",
+          alt: "TI Simulator match summary mockup showing match result, key stats, and review information.",
+          caption: "Match summary",
+        },
+      ],
+    },
   },
 } satisfies Record<Locale, GamePreviewMedia>;
 
