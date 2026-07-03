@@ -1,0 +1,126 @@
+---
+import GameCard from "@/components/GameCard.astro";
+import type { GameContent } from "@/data/games";
+import type { GamePreviewMedia } from "@/data/media";
+import type { Locale } from "@/data/site";
+import { t } from "@/i18n/utils";
+
+type GameCardEntry = {
+  game: GameContent;
+  media: GamePreviewMedia;
+};
+
+interface Props {
+  locale: Locale;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  metaItems?: string[];
+  gameCards: GameCardEntry[];
+}
+
+const { locale, eyebrow, title, subtitle, metaItems = [], gameCards } = Astro.props;
+const defaultSlug = gameCards[0]?.game.slug;
+---
+
+<section class="container-page pt-20 pb-14 text-center md:pt-28 md:pb-16" data-home-project-tabs>
+  <p class="eyebrow">{eyebrow}</p>
+  <h1 class="balance mx-auto mt-5 max-w-4xl text-4xl font-semibold leading-[1.12] tracking-normal sm:text-5xl lg:text-6xl">{title}</h1>
+  <p class="balance mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted md:text-xl md:leading-9">{subtitle}</p>
+  {
+    metaItems.length > 0 && (
+      <div class="mx-auto mt-7 flex max-w-3xl flex-wrap justify-center gap-2">
+        {metaItems.map((item) => (
+          <span class="rounded-full border border-line bg-white/78 px-3 py-1.5 text-sm font-medium text-muted shadow-sm">{item}</span>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="mx-auto mt-8 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-line bg-white/82 p-1.5 shadow-soft" role="tablist" aria-label={t(locale, "home.tabs.aria")}>
+    {
+      gameCards.map(({ game }) => (
+        <button
+          type="button"
+          class="home-project-tab rounded-full px-5 py-3 text-sm font-semibold text-muted transition hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/30 sm:text-base"
+          role="tab"
+          aria-selected={game.slug === defaultSlug ? "true" : "false"}
+          aria-controls={`home-project-panel-${game.slug}`}
+          id={`home-project-tab-${game.slug}`}
+          data-tab-target={game.slug}
+        >
+          {game.shortTitle}
+        </button>
+      ))
+    }
+  </div>
+
+  <div id="games" class="mt-12 grid gap-6 text-left md:mt-12">
+    {
+      gameCards.map(({ game, media }) => (
+        <div
+          id={`home-project-panel-${game.slug}`}
+          role="tabpanel"
+          aria-labelledby={`home-project-tab-${game.slug}`}
+          data-tab-panel={game.slug}
+          hidden={game.slug !== defaultSlug}
+        >
+          <GameCard game={game} imageSrc={media.hero} imageAlt={media.alt} imageDisclaimer={media.disclaimer} />
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const roots = document.querySelectorAll("[data-home-project-tabs]");
+
+  roots.forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll("[data-tab-target]")).filter((node): node is HTMLElement => node instanceof HTMLElement);
+    const panels = Array.from(root.querySelectorAll("[data-tab-panel]")).filter((node): node is HTMLElement => node instanceof HTMLElement);
+    const detailPanels = Array.from(document.querySelectorAll("[data-home-project-detail]")).filter((node): node is HTMLElement => node instanceof HTMLElement);
+
+    const activate = (slug: string) => {
+      tabs.forEach((tab) => {
+        const isActive = tab.getAttribute("data-tab-target") === slug;
+        tab.setAttribute("aria-selected", String(isActive));
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.getAttribute("data-tab-panel") !== slug;
+      });
+
+      detailPanels.forEach((panel) => {
+        panel.hidden = panel.getAttribute("data-home-project-detail") !== slug;
+      });
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => {
+        const slug = tab.getAttribute("data-tab-target");
+        if (slug) activate(slug);
+      });
+
+      tab.addEventListener("keydown", (event) => {
+        if (!(event instanceof KeyboardEvent)) return;
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        event.preventDefault();
+        const offset = event.key === "ArrowRight" ? 1 : -1;
+        const nextIndex = (index + offset + tabs.length) % tabs.length;
+        const nextTab = tabs[nextIndex];
+        if (!(nextTab instanceof HTMLElement)) return;
+        nextTab.focus();
+        const slug = nextTab.getAttribute("data-tab-target");
+        if (slug) activate(slug);
+      });
+    });
+  });
+</script>
+
+<style>
+  .home-project-tab[aria-selected="true"] {
+    background: rgb(var(--color-ink));
+    color: white;
+    box-shadow: 0 14px 36px rgb(15 23 42 / 0.16);
+  }
+</style>

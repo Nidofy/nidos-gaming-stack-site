@@ -13,11 +13,11 @@ interface Props {
 const { game, imageSrc, imageAlt = "", imageDisclaimer } = Astro.props;
 ---
 
-<article class="grid gap-8 rounded-[28px] border border-line bg-panel p-6 shadow-soft md:grid-cols-[0.9fr_1.1fr] md:p-8">
+<article class="grid gap-8 rounded-[28px] border border-line bg-panel p-6 shadow-soft md:grid-cols-[1.12fr_0.88fr] md:p-8 lg:grid-cols-[1.22fr_0.78fr] lg:p-10">
   {
     imageSrc ? (
-      <figure class="relative min-h-[260px] overflow-hidden rounded-[22px] border border-line bg-paper">
-        <img src={imageSrc} alt={imageAlt} loading="lazy" class="h-full min-h-[260px] w-full object-contain" />
+      <figure class="relative min-h-[300px] overflow-hidden rounded-[22px] border border-line bg-paper lg:min-h-[380px]">
+        <img src={imageSrc} alt={imageAlt} loading="lazy" class="h-full min-h-[300px] w-full object-contain lg:min-h-[380px]" />
         {imageDisclaimer && <figcaption class="absolute bottom-3 right-3 rounded-full bg-white/82 px-3 py-1 text-[11px] font-medium text-muted shadow-sm backdrop-blur">{imageDisclaimer}</figcaption>}
       </figure>
     ) : (
