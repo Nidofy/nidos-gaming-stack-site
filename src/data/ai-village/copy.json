@@ -1,0 +1,246 @@
+{
+  "zh-CN": {
+    "name": "AI 小院",
+    "eyebrow": "DSH 插件 · AI VILLAGE",
+    "headline": "忙碌之间，\n来小院坐一会儿。",
+    "summary": "在 DSH 的一角，和七位 Q 版居民分享慢一点的日常。看他们读书、聊天，陪朋友完成一个小心愿，再把今天的相聚留进手账。想来时来，忙起来就放心离开。",
+    "status": "开发中 · 本地预览",
+    "explore": "认识 AI 小院",
+    "source": "查看开源项目",
+    "install": "了解安装方式",
+    "featuresTitle": "不用赶进度，也能有故事。",
+    "features": [
+      {
+        "title": "七位朋友，把日常过成风景",
+        "description": "有人翻书，有人看花，也有人凑过来打个招呼。居民会按各自的偏好在院里活动。邀请喜欢的朋友，分享茶点、聊聊天，或只是安静地待在一起。"
+      },
+      {
+        "title": "一点小心愿，一段共同经历",
+        "description": "陪蓝鲸找回丢失的白米饭，读完安静的一页，追寻风带来的便笺。也可以找找小鲸鱼、整理书桌、轮流分享茶点。跟朋友走一走、看一看，让故事慢慢发生。"
+      },
+      {
+        "title": "把喜欢的角落，慢慢布置出来",
+        "description": "选一个阅读或花草主题的布局，在预设位置间调整家具，添上配饰与纪念物。从暖阳午后到暮色灯火，先看看效果，满意了再保存。"
+      },
+      {
+        "title": "有些小事，值得留一页",
+        "description": "初次相聚、一起完成的故事，都会成为手账里的回忆。拍下一张真正来自小院的照片，存进本地相册或导出分享；下次回来，还能翻到这些共同经历。"
+      }
+    ],
+    "previewTitle": "风吹来一点小事，\n也带来新的回忆。",
+    "previewDescription": "0.8 预览新增“飞走的留言”和“叶子的来信”。偶遇出现时，邀请两位朋友一起走走、找找，完成后收下一件可以摆进小院的纪念物。手账新增收藏分类，心愿里也有认识朋友、积累共同经历和留下照片的长期目标。有空再做，略过也没关系。",
+    "galleryTitle": "从一场相聚，到一页回忆。",
+    "images": [
+      {
+        "alt": "蓝鲸与橙发朋友在阳光小院里共读一本书的宣传插画",
+        "caption": "主题宣传插画 · 基于现有角色与场景创作，非游戏截图"
+      },
+      {
+        "alt": "蓝鲸在庭院落叶间拾起一张便笺的偶遇主题插画",
+        "caption": "小偶遇主题插画 · 非游戏截图；实际偶遇需邀请两位居民参与"
+      },
+      {
+        "alt": "0.8 预览的真实小院照片，包含两位居民、家具及已摆放的叶子盆纪念物",
+        "caption": "游戏内照片 · 0.8.0-preview.1；完成偶遇后摆放的风信叶子盆"
+      },
+      {
+        "alt": "DSH 中的 AI 小院手账，显示叶子的来信回忆及收藏分类",
+        "caption": "真实桌面界面 · 0.8.0-preview.1 英文测试环境，收藏分类与已保存回忆"
+      },
+      {
+        "alt": "蓝鲸与橙发朋友在小院餐桌上下三连棋的游戏内照片",
+        "caption": "游戏内照片 · 0.7 棋局开发预览，玩法保留于 0.8；非新版截图"
+      }
+    ],
+    "facts": [
+      {
+        "label": "在哪里玩",
+        "value": "DSH 内的小院 · Windows x64"
+      },
+      {
+        "label": "轻松开始",
+        "value": "本地规则运行 · 无需模型 API key"
+      },
+      {
+        "label": "按你的节奏",
+        "value": "隐藏与离线时暂停 · 没有每日打卡"
+      }
+    ],
+    "installTitle": "给 DSH，添一方小院。",
+    "installNote": "目前为本地开发预览，本站暂未提供公开安装包下载。已有对应版本 tgz 安装包的用户可按以下步骤体验；希望从源码构建，请查看项目说明。",
+    "steps": [
+      {
+        "title": "准备 DSH，备份已有小院",
+        "description": "当前验证基线为官方 DSH 0.2.1-rc.2、Windows x64。升级前停止目标 profile 并备份存档；新格式存档不能直接交给旧版插件读取。"
+      },
+      {
+        "title": "安装并启用插件",
+        "description": "在 Plugins → Add plugin 中选择 {packageFile}，安装、启用后完整重启 DSH。GitHub 源码 ZIP 不能作为插件包安装。"
+      },
+      {
+        "title": "打开小院，邀请第一位朋友",
+        "description": "点击右上角的小房子入口。在“居民”邀请朋友，在“心愿”开始活动，用“布置”调整小院，到“手账”回看经历。拍照位于顶部操作区，窄窗中请打开“更多”。"
+      }
+    ],
+    "faqTitle": "进院之前，你可能想知道。",
+    "faq": [
+      {
+        "title": "叫 AI 小院，需要接入大模型吗？",
+        "description": "不需要。小院里的活动、台词与棋局使用本地规则，不消耗模型 API。它是角色陪伴与轻量生活模拟，不提供与居民的自由生成式聊天；DSH 自身的聊天模型配置另行设置。"
+      },
+      {
+        "title": "忙几天不来，会错过什么吗？",
+        "description": "隐藏、暂停或离线时，小院时间会停下，关系不会因为离开而下降。没有强制照顾或每日打卡。开放小院时出现的偶遇可以略过，以后仍会有新的机会；居民的自主活动不会替你完成心愿。"
+      },
+      {
+        "title": "可以直接在网站里玩吗？",
+        "description": "这是一款 DSH 插件，网站用于介绍。安装后可在 DSH 内切换浮卡和展开视图，小院进度跨聊天会话保留。当前兼容范围以列出的宿主版本和 Windows x64 为准。"
+      },
+      {
+        "title": "照片和进度会保存在哪里？",
+        "description": "小院进度保存在 DSH profile 下的 nidofy-ai-village 目录中，显示设置和相册另行保存。游戏内照片可导出为 720 × 960 PNG；插件不会把照片发送到主聊天或网络。停用插件保留数据。"
+      },
+      {
+        "title": "可以自由装修或去其他场景吗？",
+        "description": "当前支持三个布局模板、家具预设位置、两套环境和可选配饰及挂饰。暂不支持自由网格装修，第二场景尚未交付。页面中的宣传插画表达氛围，实际界面请看游戏截图。"
+      },
+      {
+        "title": "三连棋还在吗？",
+        "description": "在。它仍是可选的开发预览：先在“布置”启用棋局桌面，再从“心愿”邀请两位居民。你执 ○，朋友执 ×，支持点击和键盘落子。输赢没有惩罚，用餐或茶会时棋盘会暂时收起。"
+      },
+      {
+        "title": "能与其他插件共用吗？升级后能回退吗？",
+        "description": "可与 Git/Hg 面板上下共存；与 Live2D 互斥显示。升级前请备份。需要回退时，在另一个隔离 profile 中恢复升级前备份，不要用旧版覆盖新存档。"
+      }
+    ],
+    "sourcesTitle": "看看小院是怎样做出来的",
+    "sourcesNote": "本页介绍以 2026 年 10 月 23 日核对的本地 0.8.0-preview.1 为准，公开仓库内容可能稍晚更新。配图分别标注宣传插画、游戏照片与开发界面。",
+    "license": "独立开发的 DSH 插件，非任何模型提供方的官方产品。代码采用 MIT 许可，美术及第三方资源请参阅项目中的来源与许可说明。",
+    "seo": {
+      "title": "AI 小院 — 七位朋友，一方离线小院 | Nido的游戏小栈",
+      "description": "给忙碌的 DSH 添一方小院。与七位 Q 版居民分享日常，体验故事、小偶遇与小游戏，布置家具、收藏回忆、拍照留念。本地运行，无需模型 API key。"
+    }
+  },
+  "en": {
+    "name": "AI Village",
+    "eyebrow": "DSH PLUGIN · AI VILLAGE",
+    "headline": "A little courtyard.\nA moment to slow down.",
+    "summary": "Share a quieter day with seven chibi residents in a corner of DSH. Watch friends read and chat, help with a small wish, and keep a journal of time spent together. Drop in when you like. Step away when you need to.",
+    "status": "In development · Local preview",
+    "explore": "Meet AI Village",
+    "source": "Explore the source",
+    "install": "How to install",
+    "featuresTitle": "Small stories. No rush.",
+    "features": [
+      {
+        "title": "Seven friends, everyday moments",
+        "description": "A book to read, a plant to admire, a neighbor stopping by. Residents follow their own preferences as they spend time in the courtyard. Invite your favorites for snacks, a conversation, or a little quiet company."
+      },
+      {
+        "title": "A small wish becomes a shared story",
+        "description": "Help Bluewhale find some missing rice, share a quiet page, or follow a note on the breeze. Look for a little whale, tidy a desk, and take turns sharing snacks. Walk, look around, and let each story unfold."
+      },
+      {
+        "title": "Make a corner feel like yours",
+        "description": "Start with a reading or garden layout, move furniture between preset positions, and add accessories and keepsakes. Try warm afternoon light or an evening glow. Preview your changes, then save what you love."
+      },
+      {
+        "title": "Some moments deserve a page",
+        "description": "First meetings and stories finished together become journal memories. Take a photo of your actual courtyard, keep it in the local album, or export it to share. Your shared moments will be there when you return."
+      }
+    ],
+    "previewTitle": "A passing breeze.\nA new memory to keep.",
+    "previewDescription": "The 0.8 preview adds two chance encounters: a windblown note and a letter from the leaves. When one appears, invite two friends to help, follow the little trail, and earn a keepsake to place in your courtyard. New journal collections and optional long-term wishes celebrate friends met, moments shared, and photos saved. Join in when you feel like it. It is fine to pass.",
+    "galleryTitle": "A moment together. A memory to keep.",
+    "images": [
+      {
+        "alt": "Promotional illustration of Bluewhale and an orange-haired friend sharing a book in a sunlit courtyard",
+        "caption": "Promotional illustration · Based on existing characters and scenery; not a gameplay screenshot"
+      },
+      {
+        "alt": "Encounter-themed illustration of Bluewhale picking up a note among windblown courtyard leaves",
+        "caption": "Encounter-themed illustration · Not a screenshot; actual encounters involve two invited residents"
+      },
+      {
+        "alt": "Actual courtyard photo from the 0.8 preview showing two residents, furniture and the placed leaf-pot keepsake",
+        "caption": "In-game photo · 0.8.0-preview.1; a Breeze-leaf pot placed after an encounter"
+      },
+      {
+        "alt": "AI Village inside DSH showing journal collections and the saved memory A letter from the leaves",
+        "caption": "Desktop capture · 0.8.0-preview.1 in an English test environment; collections and saved memories"
+      },
+      {
+        "alt": "In-game photo of Bluewhale and an orange-haired friend playing tic-tac-toe at the courtyard table",
+        "caption": "In-game photo · Captured during the 0.7 table-game preview; gameplay retained in 0.8, not a new-version capture"
+      }
+    ],
+    "facts": [
+      {
+        "label": "Where it lives",
+        "value": "Inside DSH · Windows x64"
+      },
+      {
+        "label": "Easy to start",
+        "value": "Local simulation · No model API key"
+      },
+      {
+        "label": "At your pace",
+        "value": "Pauses while hidden or offline · No daily check-ins"
+      }
+    ],
+    "installTitle": "Make room for a courtyard in DSH.",
+    "installNote": "This is a local development preview. There is no public package download on this site yet. If you already have the matching tgz package, follow the steps below. For a source build, see the project documentation.",
+    "steps": [
+      {
+        "title": "Prepare DSH and back up your courtyard",
+        "description": "The verified baseline is official DSH 0.2.1-rc.2 on Windows x64. Stop the target profile and back up its saves before upgrading. Older plugin versions cannot directly read the new save format."
+      },
+      {
+        "title": "Install and enable the plugin",
+        "description": "In Plugins → Add plugin, select {packageFile}. Install, enable, then fully restart DSH. A GitHub source ZIP is not an installable plugin package."
+      },
+      {
+        "title": "Open the courtyard and invite a friend",
+        "description": "Click the house icon at the top right. Invite friends in Residents, begin activities in Wishes, arrange your space in Decor, and revisit memories in Journal. Photo is in the top actions, or under More in narrow windows."
+      }
+    ],
+    "faqTitle": "Before you step inside.",
+    "faq": [
+      {
+        "title": "Does AI Village need a language model?",
+        "description": "No. Activities, dialogue and board-game moves use local rules, with no model API usage. This is a character companion and light life simulation; it does not offer open-ended, AI-generated conversations with residents. DSH's own chat-model settings are separate."
+      },
+      {
+        "title": "What if I am away for a few days?",
+        "description": "Courtyard time stops while hidden, paused or offline, and relationships do not decay while you are away. There is no mandatory care or daily check-in. Encounters that appear while the courtyard is open can be skipped; new opportunities will come later. Autonomous routines do not finish wishes for you."
+      },
+      {
+        "title": "Can I play on this website?",
+        "description": "This is a DSH plugin; the website is an introduction. Once installed, switch between floating-card and expanded views inside DSH. Progress persists across chat sessions. Current compatibility is limited to the listed host version and Windows x64."
+      },
+      {
+        "title": "Where do my photos and progress go?",
+        "description": "Courtyard saves live in nidofy-ai-village under your DSH profile, with preferences and the album stored separately. Export in-game photos as 720 × 960 PNG files. The plugin does not send photos to chat or the network. Disabling it keeps your data."
+      },
+      {
+        "title": "Can I freely build or visit other locations?",
+        "description": "The current preview offers three layout templates, preset furniture positions, two lighting environments, and optional accessories and hangings. Free-grid building and a second location are not available. Promotional illustrations convey the mood; gameplay captures show the actual interface."
+      },
+      {
+        "title": "Is tic-tac-toe still included?",
+        "description": "Yes, as an optional development preview. Enable the game tabletop in Decor, then invite two residents through Wishes. Play as ○ against your friend's × with mouse or keyboard controls. There is no penalty for losing. The board is put away temporarily for meals and tea."
+      },
+      {
+        "title": "Can I use other plugins or roll back an update?",
+        "description": "AI Village can share the side area with Git/Hg. Its view and Live2D are mutually exclusive. Back up before updating. To roll back, restore a pre-upgrade backup in a separate isolated profile; do not overwrite new saves with an older plugin."
+      }
+    ],
+    "sourcesTitle": "See how the courtyard is made",
+    "sourcesNote": "Based on local version 0.8.0-preview.1 inspected on October 23, 2026. Public repository updates may follow later. Media are labeled as promotional illustrations, in-game photos or development captures.",
+    "license": "An independently developed DSH plugin, not an official product of any model provider. Code is MIT licensed. See the project notices for artwork and third-party resource terms.",
+    "seo": {
+      "title": "AI Village — Seven friends, a quieter corner | Nido's Gaming Stack",
+      "description": "A cozy courtyard inside DSH. Meet seven chibi residents, follow stories and chance encounters, arrange furniture, collect memories and take photos. Runs locally with no model API key."
+    }
+  }
+}

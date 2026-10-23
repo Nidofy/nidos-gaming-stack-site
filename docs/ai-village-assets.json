@@ -1,0 +1,111 @@
+{
+  "generation": "Built-in image_gen; prompts in prompts.json",
+  "processing": "Originals preserved byte-for-byte; WebP compression only. No cropping, screenshot retouching or translated UI.",
+  "assets": [
+    {
+      "file": "assets/hero-reading.webp",
+      "original": "originals/hero-reading.png",
+      "source": "C:/Users/enxi1/.codex/generated_images/01a1667a-e76d-7fc1-b9cc-d0626400c163/exec-d26d9af1-6f8c-4f22-80c9-7f8094b8b18f.png",
+      "kind": "generated-promotional-illustration",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 317880,
+      "sha256": "1364b298ead57554a2711cf70cfac1a65b0c629f76f2937d480791b705a2aa3e",
+      "sourceSha256": "80c67caca0ef6f66c411c15f50eed659bf47cc19fec76b2eb0420d277482b590",
+      "locales": {
+        "zh-CN": {
+          "alt": "蓝鲸与橙发朋友在阳光小院里共读一本书的宣传插画",
+          "caption": "主题宣传插画 · 基于现有角色与场景创作，非游戏截图"
+        },
+        "en": {
+          "alt": "Promotional illustration of Bluewhale and an orange-haired friend sharing a book in a sunlit courtyard",
+          "caption": "Promotional illustration · Based on existing characters and scenery; not a gameplay screenshot"
+        }
+      }
+    },
+    {
+      "file": "assets/encounter-breeze.webp",
+      "original": "originals/encounter-breeze.png",
+      "source": "C:/Users/enxi1/.codex/generated_images/01a1667a-e76d-7fc1-b9cc-d0626400c163/exec-998ac857-bd0d-46f9-aa52-71c39d28cb05.png",
+      "kind": "generated-promotional-illustration",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 266434,
+      "sha256": "9afce84fb7978586a6acedb56f62cff529ef9fde078d44549f727292d93e1b97",
+      "sourceSha256": "36020f0eca94626c65ddccff676f5108915370fa348e18f0ffe4878033695e99",
+      "locales": {
+        "zh-CN": {
+          "alt": "蓝鲸在庭院落叶间拾起一张便笺的偶遇主题插画",
+          "caption": "小偶遇主题插画 · 非游戏截图；实际偶遇需邀请两位居民参与"
+        },
+        "en": {
+          "alt": "Encounter-themed illustration of Bluewhale picking up a note among windblown courtyard leaves",
+          "caption": "Encounter-themed illustration · Not a screenshot; actual encounters involve two invited residents"
+        }
+      }
+    },
+    {
+      "file": "assets/courtyard-keepsake-v08.webp",
+      "original": "originals/courtyard-keepsake-v08.png",
+      "source": "D:\\Documents\\FeiyangChen\\devApps\\dsh_plugin\\docs\\ai-village\\v08-v09\\native\\check-01\\native-keepsake-photo.png",
+      "kind": "in-game-photo-v08",
+      "width": 720,
+      "height": 960,
+      "bytes": 119042,
+      "sha256": "77fdcaaa02e1a770e7a64517863132de38303246e7b8e9ceb9f78447bb62fd18",
+      "sourceSha256": "5ee908a2e07722ce719966b090ae1ddba86c64de3d3c1b341e66e327bd1df79c",
+      "locales": {
+        "zh-CN": {
+          "alt": "0.8 预览的真实小院照片，包含两位居民、家具及已摆放的叶子盆纪念物",
+          "caption": "游戏内照片 · 0.8.0-preview.1；完成偶遇后摆放的风信叶子盆"
+        },
+        "en": {
+          "alt": "Actual courtyard photo from the 0.8 preview showing two residents, furniture and the placed leaf-pot keepsake",
+          "caption": "In-game photo · 0.8.0-preview.1; a Breeze-leaf pot placed after an encounter"
+        }
+      }
+    },
+    {
+      "file": "assets/collections-desktop-v08.webp",
+      "original": "originals/collections-desktop-v08.png",
+      "source": "D:\\Documents\\FeiyangChen\\devApps\\dsh_plugin\\docs\\ai-village\\v08-v09\\native\\check-01\\collection-categories.png",
+      "kind": "desktop-capture-v08",
+      "width": 2239,
+      "height": 1437,
+      "bytes": 110486,
+      "sha256": "ff90c4061e88ace0f69d6756318ca96a2be1ec31aec389742d1e765a2f3cefbb",
+      "sourceSha256": "113f684c3ebb64aab7fd9e86d52345d17de580e77634cc8fc450cee97ebd94fd",
+      "locales": {
+        "zh-CN": {
+          "alt": "DSH 中的 AI 小院手账，显示叶子的来信回忆及收藏分类",
+          "caption": "真实桌面界面 · 0.8.0-preview.1 英文测试环境，收藏分类与已保存回忆"
+        },
+        "en": {
+          "alt": "AI Village inside DSH showing journal collections and the saved memory A letter from the leaves",
+          "caption": "Desktop capture · 0.8.0-preview.1 in an English test environment; collections and saved memories"
+        }
+      }
+    },
+    {
+      "file": "assets/table-game-v07.webp",
+      "original": "originals/table-game-v07.png",
+      "source": "D:\\Documents\\FeiyangChen\\devApps\\dsh_plugin\\docs\\ai-village\\table-preview\\native\\check-05\\native-board-postcard.png",
+      "kind": "in-game-photo-v07",
+      "width": 720,
+      "height": 960,
+      "bytes": 116726,
+      "sha256": "5362a5897ecbc4b063987ab985c5fb7ae466339bb0a7bee292c4b6ec10614be0",
+      "sourceSha256": "286760404a6f9e29fb8ae5ab5f01a73fa4beff64b4bdf0eb2e97e29b96b73d96",
+      "locales": {
+        "zh-CN": {
+          "alt": "蓝鲸与橙发朋友在小院餐桌上下三连棋的游戏内照片",
+          "caption": "游戏内照片 · 0.7 棋局开发预览，玩法保留于 0.8；非新版截图"
+        },
+        "en": {
+          "alt": "In-game photo of Bluewhale and an orange-haired friend playing tic-tac-toe at the courtyard table",
+          "caption": "In-game photo · Captured during the 0.7 table-game preview; gameplay retained in 0.8, not a new-version capture"
+        }
+      }
+    }
+  ]
+}

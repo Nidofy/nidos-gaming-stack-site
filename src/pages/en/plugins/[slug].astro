@@ -1,0 +1,9 @@
+---
+import PluginPage from "@/components/PluginPage.astro";
+import { pluginEntries } from "@/data/plugins";
+export function getStaticPaths() {
+  return pluginEntries.map((plugin) => ({ params: { slug: plugin.slug }, props: { plugin } }));
+}
+const { plugin } = Astro.props;
+---
+<PluginPage plugin={plugin} locale="en" />

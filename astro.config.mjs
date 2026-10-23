@@ -4,7 +4,7 @@ import tailwind from "@astrojs/tailwind";
 
 import cloudflare from "@astrojs/cloudflare";
 
-const siteUrl = process.env.PUBLIC_SITE_URL ?? "https://games.nido.dev";
+const siteUrl = process.env.PUBLIC_SITE_URL ?? "https://www.nidogamingstack.com";
 
 export default defineConfig({
   site: siteUrl,

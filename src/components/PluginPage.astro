@@ -1,0 +1,163 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CTAButton from "@/components/CTAButton.astro";
+import { site } from "@/data/site";
+import type { Locale } from "@/i18n/locales";
+import type { PluginEntry } from "@/types/plugin";
+
+interface Props { plugin: PluginEntry; locale: Locale }
+const { plugin, locale } = Astro.props;
+const c = plugin.copy[locale];
+const hero = plugin.media.find((media) => media.role === "hero")!;
+const featureMedia = plugin.media.find((media) => media.role === "feature");
+const gallery = plugin.media.filter((media) => media.role === "gallery");
+const packageFile = `nidofy-dsh-${plugin.slug}-${plugin.release.version}.tgz`;
+---
+
+<BaseLayout locale={locale} title={c.seo.title} description={c.seo.description} ogImage={hero.src}
+  jsonLd={{ "@context": "https://schema.org", "@type": "SoftwareApplication", name: c.name,
+    description: c.seo.description, applicationCategory: "EntertainmentApplication", operatingSystem: plugin.release.platform,
+    softwareVersion: plugin.release.version, softwareRequirements: plugin.release.host,
+    url: new URL(`/${locale}/plugins/${plugin.slug}`, site.baseUrl).toString(), image: new URL(hero.src, site.baseUrl).toString(),
+    author: { "@type": "Person", name: site.author }, isAccessibleForFree: true }}>
+  <article class="plugin-page">
+    <section class="container-page section-space intro">
+      <div class="intro-copy">
+        <p class="eyebrow">{c.eyebrow}</p>
+        <p class="version">{c.status} <span> / {plugin.release.version}</span></p>
+        <h1>{c.headline}</h1>
+        <p class="summary">{c.summary}</p>
+        <div class="actions">
+          <CTAButton href="#installation" label={c.install} />
+          <CTAButton href={plugin.repository} label={c.source} variant="secondary" />
+        </div>
+      </div>
+      <figure class="postcard">
+        <img src={hero.src} width={hero.width} height={hero.height} alt={hero.locales[locale].alt} fetchpriority="high" />
+        <figcaption>{hero.locales[locale].caption}</figcaption>
+      </figure>
+      <dl class="facts">
+        {c.facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="feature-section">
+      <div class="container-page section-space">
+        <p class="eyebrow">{c.name}</p>
+        <h2>{c.featuresTitle}</h2>
+        <div class="features">
+          {c.features.map((feature, index) => <div class="feature"><span class="number" aria-hidden="true">0{index + 1}</span><h3>{feature.title}</h3><p>{feature.description}</p></div>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="container-page section-space story">
+      {featureMedia && <figure>
+        <img src={featureMedia.src} width={featureMedia.width} height={featureMedia.height} alt={featureMedia.locales[locale].alt} loading="lazy" decoding="async" />
+        <figcaption>{featureMedia.locales[locale].caption}</figcaption>
+      </figure>}
+      <div><p class="eyebrow">{plugin.release.version}</p><h2>{c.previewTitle}</h2><p class="story-copy">{c.previewDescription}</p></div>
+    </section>
+
+    <section class="container-page gallery" aria-labelledby="gallery-title">
+      <h2 id="gallery-title">{c.galleryTitle}</h2>
+      <div class="screenshots">
+        {gallery.map((media) => <figure class:list={{ wide: media.width > media.height }}>
+          <a href={media.src} aria-label={media.locales[locale].alt}>
+            <img src={media.src} width={media.width} height={media.height} alt={media.locales[locale].alt} loading="lazy" decoding="async" />
+          </a>
+          <figcaption>{media.locales[locale].caption}</figcaption>
+        </figure>)}
+      </div>
+    </section>
+
+    <section id="installation" class="container-page section-space">
+      <div class="installation">
+        <p class="eyebrow">{plugin.release.host} · {plugin.release.platform}</p>
+        <h2>{c.installTitle}</h2>
+        <p class="install-note">{c.installNote}</p>
+        <ol class="steps">{c.steps.map((step) => <li><h3>{step.title}</h3><p>{step.description.replaceAll("{packageFile}", packageFile)}</p></li>)}</ol>
+        <CTAButton href={plugin.documentation} label={c.source} variant="secondary" />
+      </div>
+    </section>
+
+    <section class="container-page faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">{c.faqTitle}</h2>
+      {c.faq.map((item) => <details><summary>{item.title}</summary><p>{item.description}</p></details>)}
+    </section>
+
+    <section class="container-page section-space sources">
+      <h2>{c.sourcesTitle}</h2>
+      <p>{c.sourcesNote}</p>
+      <div class="source-links">
+        <a href={plugin.repository}>GitHub / Nidofy / dsh_plugin ↗</a>
+        <a href={plugin.documentation}>AI Village README ↗</a>
+        <a href={`${plugin.repository}/blob/main/THIRD_PARTY_NOTICES.md`}>Third-party notices ↗</a>
+      </div>
+      <p>{c.license}</p>
+      <p class="verified">{plugin.release.version} · <time datetime={plugin.release.verifiedAt}>{plugin.release.verifiedAt}</time></p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .plugin-page { --color-accent: 106 78 45; --village-warm: #f3eadb; --village-text: #51483d; }
+  figure { margin: 0; }
+  h1, h2, h3, p { margin: 0; }
+  h1 { white-space: pre-line; font-size: clamp(2.15rem, 3.5vw, 3.4rem); line-height: 1.2; letter-spacing: -.045em; margin: 1.4rem 0; text-wrap: balance; }
+  h2 { font-size: clamp(1.9rem, 3.2vw, 2.8rem); line-height: 1.3; letter-spacing: -.035em; text-wrap: balance; }
+  h3 { font-size: 1.2rem; line-height: 1.5; }
+  p { line-height: 1.9; }
+  .intro { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2.5rem; align-items: center; padding-top: clamp(2.5rem, 6vw, 5rem); }
+  .intro > * { min-width: 0; }
+  .version { font-size: .8rem; color: var(--village-text); margin-top: .75rem; }
+  .version span { display: inline-block; }
+  .summary { color: rgb(var(--color-muted)); font-size: 1.07rem; max-width: 37rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1.8rem 0 2rem; }
+  .facts { margin: 0; display: grid; grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding-top: 2rem; border-top: 1px solid rgb(var(--color-line)); }
+  .facts div { display: grid; gap: .6rem; font-size: .85rem; }
+  dt { color: rgb(var(--color-muted)); } dd { margin: 0; }
+  .postcard img { display: block; border-radius: 1.4rem; width: 100%; box-shadow: 0 24px 60px #664a2720; }
+  figcaption { color: rgb(var(--color-muted)); font-size: .75rem; line-height: 1.7; margin-top: .85rem; }
+  .feature-section { background: var(--village-warm); }
+  .feature-section h2 { margin-top: .7rem; }
+  .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.7rem 4rem; margin-top: 3rem; }
+  .feature { border-top: 1px solid #b8a28370; padding-top: 1.2rem; }
+  .number { color: #735b39; font-size: .8rem; }
+  .feature h3 { margin: .5rem 0; }
+  .feature p, .story-copy { color: var(--village-text); }
+  .story { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; }
+  .story h2 { margin-top: .8rem; white-space: pre-line; }
+  .story-copy { margin-top: 1.5rem; }
+  .story img { display: block; width: 100%; border-radius: 1.4rem; }
+  .screenshots { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+  .screenshots img { border-radius: 1rem; display: block; width: 100%; border: 1px solid rgb(var(--color-line)); }
+  .screenshots figure { max-width: 420px; justify-self: center; }
+  .screenshots .wide { grid-column: 1 / -1; order: -1; max-width: 960px; }
+  .screenshots a { display: block; border-radius: 1rem; }
+  #installation { scroll-margin-top: 8rem; }
+  .installation { border-radius: 1.8rem; padding: clamp(1.4rem, 5vw, 4rem); background: rgb(var(--color-panel)); border: 1px solid rgb(var(--color-line)); }
+  .installation h2 { margin: .75rem 0 1rem; }
+  .install-note { max-width: 52rem; color: rgb(var(--color-muted)); }
+  .steps { padding-left: 1.4rem; margin: 2rem 0; display: grid; gap: 1.5rem; }
+  .steps li { padding-left: .5rem; } .steps p { margin-top: .4rem; color: rgb(var(--color-muted)); }
+  .faq { max-width: 840px; }
+  .faq h2 { margin-bottom: 2rem; }
+  details { padding: 1.25rem 0; border-bottom: 1px solid rgb(var(--color-line)); }
+  summary { cursor: pointer; font-weight: 600; line-height: 1.7; }
+  details p { margin-top: .8rem; color: rgb(var(--color-muted)); }
+  .sources h2 { font-size: 1.4rem; margin-bottom: 1rem; }
+  .sources p { font-size: .85rem; color: rgb(var(--color-muted)); max-width: 54rem; }
+  .source-links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin: 1.25rem 0; font-size: .9rem; }
+  .source-links a { text-decoration: underline; text-underline-offset: .25rem; }
+  .sources .verified { margin-top: 1rem; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid rgb(var(--color-accent)); outline-offset: 5px; }
+  @media (max-width: 760px) {
+    .intro, .story { grid-template-columns: 1fr; gap: 2rem; }
+    .postcard { width: 100%; margin-inline: auto; }
+    .facts { grid-template-columns: 1fr; gap: 1rem; }
+    .facts div { grid-template-columns: 6rem 1fr; gap: .8rem; }
+    .features, .screenshots { grid-template-columns: 1fr; }
+    .features { gap: 1.7rem; }
+  }
+</style>

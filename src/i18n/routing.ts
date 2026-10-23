@@ -3,6 +3,7 @@ import { defaultLocale, type Locale } from "@/i18n/locales";
 export const routePaths = {
   home: { "zh-CN": "/zh-CN", en: "/en" },
   games: { "zh-CN": "/zh-CN/#games", en: "/en/#games" },
+  plugins: { "zh-CN": "/zh-CN/#project-ai-village", en: "/en/#project-ai-village" },
   download: { "zh-CN": "/zh-CN/download", en: "/en/download" },
   devlog: { "zh-CN": "/zh-CN/devlog", en: "/en/devlog" },
   wechat: { "zh-CN": "/zh-CN/wechat", en: "/en" },

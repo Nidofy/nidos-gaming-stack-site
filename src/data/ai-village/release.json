@@ -1,0 +1,8 @@
+{
+  "version": "0.8.0-preview.1",
+  "channel": "internal-preview",
+  "verifiedAt": "2026-10-23",
+  "host": "DSH 0.2.1-rc.2",
+  "platform": "Windows x64",
+  "sourceRevision": "9b4c89632df2644305188d276c45995859cfdc30"
+}

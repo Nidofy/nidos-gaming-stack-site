@@ -1,5 +1,7 @@
 ---
 import GameCard from "@/components/GameCard.astro";
+import PluginHomePromo from "@/components/PluginHomePromo.astro";
+import { pluginEntries } from "@/data/plugins";
 import type { GameContent } from "@/data/games";
 import type { GamePreviewMedia } from "@/data/media";
 import type { Locale } from "@/data/site";
@@ -21,6 +23,10 @@ interface Props {
 
 const { locale, eyebrow, title, subtitle, metaItems = [], gameCards } = Astro.props;
 const defaultSlug = gameCards[0]?.game.slug;
+const projects = [
+  ...gameCards.map(({ game }) => ({ slug: game.slug, label: game.shortTitle })),
+  ...pluginEntries.map((plugin) => ({ slug: plugin.slug, label: plugin.copy[locale].name })),
+];
 ---
 
 <section class="container-page pt-20 pb-14 text-center md:pt-28 md:pb-16" data-home-project-tabs>
@@ -39,17 +45,18 @@ const defaultSlug = gameCards[0]?.game.slug;
 
   <div class="mx-auto mt-8 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-line bg-white/82 p-1.5 shadow-soft" role="tablist" aria-label={t(locale, "home.tabs.aria")}>
     {
-      gameCards.map(({ game }) => (
+      projects.map((project) => (
         <button
           type="button"
           class="home-project-tab rounded-full px-5 py-3 text-sm font-semibold text-muted transition hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/30 sm:text-base"
           role="tab"
-          aria-selected={game.slug === defaultSlug ? "true" : "false"}
-          aria-controls={`home-project-panel-${game.slug}`}
-          id={`home-project-tab-${game.slug}`}
-          data-tab-target={game.slug}
+          aria-selected={project.slug === defaultSlug ? "true" : "false"}
+          aria-controls={`home-project-panel-${project.slug}`}
+          id={`home-project-tab-${project.slug}`}
+          data-tab-target={project.slug}
+          tabindex={project.slug === defaultSlug ? 0 : -1}
         >
-          {game.shortTitle}
+          {project.label}
         </button>
       ))
     }
@@ -69,6 +76,11 @@ const defaultSlug = gameCards[0]?.game.slug;
         </div>
       ))
     }
+    {pluginEntries.map((plugin) => (
+      <div id={`home-project-panel-${plugin.slug}`} role="tabpanel" aria-labelledby={`home-project-tab-${plugin.slug}`} data-tab-panel={plugin.slug} hidden>
+        <PluginHomePromo plugin={plugin} locale={locale} />
+      </div>
+    ))}
   </div>
 </section>
 
@@ -84,6 +96,7 @@ const defaultSlug = gameCards[0]?.game.slug;
       tabs.forEach((tab) => {
         const isActive = tab.getAttribute("data-tab-target") === slug;
         tab.setAttribute("aria-selected", String(isActive));
+        tab.tabIndex = isActive ? 0 : -1;
       });
 
       panels.forEach((panel) => {
@@ -95,29 +108,45 @@ const defaultSlug = gameCards[0]?.game.slug;
       });
     };
 
+    const activateHash = () => {
+      const slug = window.location.hash.replace(/^#project-/, "");
+      if (!tabs.some((tab) => tab.dataset.tabTarget === slug)) return;
+      activate(slug);
+      root.querySelector("#games")?.scrollIntoView({ block: "start" });
+    };
+    window.addEventListener("hashchange", activateHash);
+    activateHash();
+
     tabs.forEach((tab, index) => {
       tab.addEventListener("click", () => {
         const slug = tab.getAttribute("data-tab-target");
-        if (slug) activate(slug);
+        if (slug) {
+          activate(slug);
+          history.replaceState(null, "", `#project-${slug}`);
+        }
       });
 
       tab.addEventListener("keydown", (event) => {
         if (!(event instanceof KeyboardEvent)) return;
-        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
         event.preventDefault();
         const offset = event.key === "ArrowRight" ? 1 : -1;
-        const nextIndex = (index + offset + tabs.length) % tabs.length;
+        const nextIndex = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + offset + tabs.length) % tabs.length;
         const nextTab = tabs[nextIndex];
         if (!(nextTab instanceof HTMLElement)) return;
         nextTab.focus();
         const slug = nextTab.getAttribute("data-tab-target");
-        if (slug) activate(slug);
+        if (slug) {
+          activate(slug);
+          history.replaceState(null, "", `#project-${slug}`);
+        }
       });
     });
   });
 </script>
 
 <style>
+  #games { scroll-margin-top: 9rem; }
   .home-project-tab[aria-selected="true"] {
     background: rgb(var(--color-ink));
     color: white;

@@ -1,5 +1,13 @@
 # Deployment
 
+## Current production workflow (2026-10-23)
+
+- Repository: `https://github.com/Nidofy/nidos-gaming-stack-site`, branch `main`.
+- Deployment is triggered through the existing GitHub integration. Push the reviewed website changes to `main`; do not use a separate local Wrangler login or create another hosting project.
+- Current checked-in configuration is Cloudflare Workers (`wrangler.jsonc`, worker `nidos-gaming-stack-site`), not a Pages workflow. The Pages instructions below describe the earlier hosting recommendation.
+- Production origin and default canonical URL: `https://www.nidogamingstack.com`. `PUBLIC_SITE_URL` can override it; the build environment should use this same production origin.
+- Build with `npm run build`. Verify `/zh-CN/plugins/ai-village/`, `/en/plugins/ai-village/`, the homepage AI Village tab, all five WebP assets, and sitemap after deployment.
+
 This site is a static Astro build for Nido's Gaming Stack. Preview Release 0.1 currently exposes a Windows-only internal playtest package through verified external mirrors.
 
 ## Cloudflare Pages

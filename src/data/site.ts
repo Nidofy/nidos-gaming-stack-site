@@ -1,4 +1,5 @@
 import { getLocalizedPath } from "@/i18n/routing";
+import { pluginEntries } from "@/data/plugins";
 import { t } from "@/i18n/utils";
 import { defaultLocale, locales, type Locale } from "@/i18n/locales";
 import type { LocalizedString } from "@/types/i18n";
@@ -6,7 +7,7 @@ import type { LocalizedString } from "@/types/i18n";
 export type { Locale };
 export { defaultLocale, locales };
 
-const baseUrl = import.meta.env.PUBLIC_SITE_URL ?? "https://games.nido.dev";
+const baseUrl = import.meta.env.PUBLIC_SITE_URL ?? "https://www.nidogamingstack.com";
 
 export const site = {
   name: {
@@ -37,6 +38,7 @@ export const navItems = Object.fromEntries(
     locale,
     [
       { label: t(locale, "nav.games"), href: getLocalizedPath(locale, "games") },
+      ...pluginEntries.map((plugin) => ({ label: plugin.copy[locale].name, href: `/${locale}/#project-${plugin.slug}` })),
       { label: t(locale, "nav.download"), href: getLocalizedPath(locale, "download") },
       { label: t(locale, "nav.devlog"), href: getLocalizedPath(locale, "devlog") },
     ],
