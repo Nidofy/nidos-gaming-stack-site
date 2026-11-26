@@ -1,7 +1,9 @@
 ---
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import { getHomepageOgImage } from "@/data/media";
 import { site, type Locale } from "@/data/site";
+import { getLocalizedPath } from "@/i18n/routing";
 import "@/styles/global.css";
 
 interface Props {
@@ -12,14 +14,27 @@ interface Props {
   jsonLd?: Record<string, unknown>;
   alternatePaths?: Partial<Record<Locale, string>>;
   ogImage?: string;
+  accentRgb?: string;
 }
 
-const { locale = "zh-CN", title, description, showHeader = true, jsonLd, alternatePaths = {}, ogImage } = Astro.props;
+const {
+  locale = "zh-CN",
+  title,
+  description,
+  showHeader = true,
+  jsonLd,
+  alternatePaths = {},
+  ogImage,
+  accentRgb,
+} = Astro.props;
+
 const currentPath = Astro.url.pathname;
 const canonical = new URL(currentPath, site.baseUrl).toString();
-const zhPath = alternatePaths["zh-CN"] ?? (currentPath.startsWith("/en") ? currentPath.replace(/^\/en/, "/zh-CN") : currentPath);
-const enPath = alternatePaths.en ?? (currentPath.startsWith("/zh-CN") ? currentPath.replace(/^\/zh-CN/, "/en") : currentPath);
-const absoluteOgImage = ogImage ? new URL(ogImage, site.baseUrl).toString() : undefined;
+const zhPath = alternatePaths["zh-CN"] ?? (currentPath === "/" ? "/" : getLocalizedPath("zh-CN", currentPath));
+const enPath = alternatePaths.en ?? (currentPath === "/" ? "/" : getLocalizedPath("en", currentPath));
+const resolvedOg = ogImage ?? getHomepageOgImage(locale);
+const absoluteOgImage = resolvedOg ? new URL(resolvedOg, site.baseUrl).toString() : undefined;
+const bodyStyle = accentRgb ? `--color-accent: ${accentRgb};` : undefined;
 ---
 
 <!doctype html>
@@ -33,6 +48,7 @@ const absoluteOgImage = ogImage ? new URL(ogImage, site.baseUrl).toString() : un
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="zh-CN" href={new URL(zhPath, site.baseUrl).toString()} />
     <link rel="alternate" hreflang="en" href={new URL(enPath, site.baseUrl).toString()} />
+    <link rel="alternate" hreflang="x-default" href={new URL(zhPath, site.baseUrl).toString()} />
     <meta property="og:site_name" content={site.name[locale]} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -45,7 +61,7 @@ const absoluteOgImage = ogImage ? new URL(ogImage, site.baseUrl).toString() : un
     {absoluteOgImage && <meta name="twitter:image" content={absoluteOgImage} />}
     {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
-  <body>
+  <body style={bodyStyle}>
     {showHeader && <Header locale={locale} />}
     <main>
       <slot />

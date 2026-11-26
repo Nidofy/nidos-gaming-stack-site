@@ -1,4 +1,5 @@
 ---
+import CTAButton from "@/components/CTAButton.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { site } from "@/data/site";
 import { t } from "@/i18n/utils";
@@ -6,17 +7,23 @@ import { t } from "@/i18n/utils";
 const locale = "zh-CN";
 ---
 
-<BaseLayout locale={locale} title={site.name[locale]} description={site.description[locale]} showHeader={false}>
-  <section class="container-page grid min-h-screen place-items-center py-16 text-center">
-    <div>
+<BaseLayout
+  locale={locale}
+  title={site.name[locale]}
+  description={site.description[locale]}
+  showHeader={false}
+  alternatePaths={{ "zh-CN": "/zh-CN", en: "/en" }}
+>
+  <section class="container-page grid min-h-[82vh] place-items-center py-16 text-center">
+    <div class="max-w-2xl rounded-[28px] border border-line bg-panel px-8 py-12 shadow-soft sm:px-12">
       <p class="eyebrow">{t(locale, "root.eyebrow")}</p>
-      <h1 class="mt-5 text-4xl font-semibold sm:text-5xl lg:text-6xl">{t(locale, "root.title")}</h1>
-      <p class="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted">
+      <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">{t(locale, "root.title")}</h1>
+      <p class="mx-auto mt-4 max-w-xl text-base leading-8 text-muted sm:text-lg">
         {t(locale, "root.description")}
       </p>
-      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
-        <a class="inline-flex min-h-11 items-center justify-center rounded-full bg-ink px-6 py-3 font-semibold text-white" href="/zh-CN">{t(locale, "root.zhCta")}</a>
-        <a class="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-white px-6 py-3 font-semibold" href="/en">{t(locale, "root.enCta")}</a>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <CTAButton href="/zh-CN" label={t(locale, "root.zhCta")} />
+        <CTAButton href="/en" label={t(locale, "root.enCta")} variant="secondary" />
       </div>
     </div>
   </section>

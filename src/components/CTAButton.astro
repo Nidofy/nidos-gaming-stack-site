@@ -4,17 +4,26 @@ interface Props {
   label: string;
   variant?: "primary" | "secondary" | "ghost";
   compact?: boolean;
+  external?: boolean;
 }
 
-const { href, label, variant = "primary", compact = false } = Astro.props;
+const { href, label, variant = "primary", compact = false, external } = Astro.props;
+const isExternal = external ?? /^https?:\/\//i.test(href);
 const base =
   "inline-flex min-h-11 w-full items-center justify-center rounded-full text-center font-semibold leading-tight transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:w-auto";
 const sizes = compact ? "px-4 py-2 text-sm" : "px-6 py-3 text-base shadow-sm";
 const variants = {
   primary: "bg-ink text-white hover:bg-ink/88",
-  secondary: "border border-line bg-white/82 text-ink hover:border-ink/30 hover:bg-white",
+  secondary: "border border-line bg-white/88 text-ink hover:border-ink/30 hover:bg-white",
   ghost: "text-ink hover:text-accent",
 };
 ---
 
-<a class={`${base} ${sizes} ${variants[variant]}`} href={href}>{label}</a>
+<a
+  class={`${base} ${sizes} ${variants[variant]}`}
+  href={href}
+  target={isExternal ? "_blank" : undefined}
+  rel={isExternal ? "noreferrer" : undefined}
+>
+  {label}
+</a>

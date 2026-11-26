@@ -1,5 +1,4 @@
 import { getLocalizedPath } from "@/i18n/routing";
-import { pluginEntries } from "@/data/plugins";
 import { t } from "@/i18n/utils";
 import { defaultLocale, locales, type Locale } from "@/i18n/locales";
 import type { LocalizedString } from "@/types/i18n";
@@ -18,8 +17,8 @@ export const site = {
   baseUrl,
   defaultLocale,
   description: {
-    "zh-CN": "一个长期维护的个人独立游戏发布站，展示模拟器、小游戏和实验性游戏项目。",
-    en: "A long-running personal indie game release site for simulators, small games, and experimental projects.",
+    "zh-CN": "Nido 的个人独立游戏小站，收录网页经营游戏《Out of Tokens · 开源万事屋》、DSH 插件《AI 小院》、横版动作 RPG 与《TI 模拟器》。",
+    en: "Nido's personal indie game site featuring the browser studio sim Out of Tokens, the AI Village DSH plugin, a side-scrolling action RPG, and TI Simulator.",
   },
   author: "Nido",
   email: "hello@nido.dev",
@@ -38,7 +37,6 @@ export const navItems = Object.fromEntries(
     locale,
     [
       { label: t(locale, "nav.games"), href: getLocalizedPath(locale, "games") },
-      ...pluginEntries.map((plugin) => ({ label: plugin.copy[locale].name, href: `/${locale}/#project-${plugin.slug}` })),
       { label: t(locale, "nav.download"), href: getLocalizedPath(locale, "download") },
       { label: t(locale, "nav.devlog"), href: getLocalizedPath(locale, "devlog") },
     ],

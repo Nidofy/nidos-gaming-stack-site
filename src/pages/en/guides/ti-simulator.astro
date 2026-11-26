@@ -1,12 +1,19 @@
 ---
 import GuideDocument from "@/components/GuideDocument.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { tiSimulatorPreviewMedia } from "@/data/media";
 
 const locale = "en";
-const title = "TI15 Simulator English Play Guide";
-const description = "English play guide for the TI15 Simulator Windows internal playtest package, including download, extraction, startup, and first-run notes.";
+const title = "TI Simulator Starter Play Guide";
+const description = "Starter play guide for the TI Simulator Windows x64 portable playtest build, covering extraction, launch, and first-run tips.";
 ---
 
-<BaseLayout locale={locale} title={`${title} - Nido's Gaming Stack`} description={description}>
-  <GuideDocument filename="PLAYER_GUIDE_EN_US.md" title={title} downloadLabel="Open Markdown source" />
+<BaseLayout
+  locale={locale}
+  title={`${title} - Nido's Gaming Stack`}
+  description={description}
+  ogImage={tiSimulatorPreviewMedia[locale].og}
+  accentRgb="20 112 245"
+>
+  <GuideDocument locale={locale} filename="PLAYER_GUIDE_EN_US.md" title={title} downloadLabel="Open raw Markdown" />
 </BaseLayout>

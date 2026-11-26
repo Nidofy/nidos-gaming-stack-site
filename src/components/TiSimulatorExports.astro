@@ -41,74 +41,54 @@ type GalleryAsset = {
 const gameplayAssetIds = ["hero-gameplay", "decision-screen", "strategy-map", "achievement-screen", "match-summary"] as const;
 type GameplayAssetId = (typeof gameplayAssetIds)[number];
 const gameplayAssetIdSet = new Set<string>(gameplayAssetIds);
+
 const localizedAssetCopy: Record<Locale, Record<GameplayAssetId, { title: string; description: string }>> = {
   "zh-CN": {
     "hero-gameplay": {
-      title: "玩法总览截图",
-      description: "展示 TI 模拟器从赛程推进、比赛状态到关键决策的整体玩法印象。",
+      title: "杯赛与对局总览",
+      description: "查看赛程推进、队伍状态和当前对局的整体态势。",
     },
     "decision-screen": {
-      title: "决策界面",
-      description: "展示检查点选择、风险收益提示，以及安全、均衡、冒险三类行动思路。",
+      title: "关键回合拍板",
+      description: "在比赛节点对比稳健、均衡与搏命方案的风险收益。",
     },
     "strategy-map": {
-      title: "战术地图",
-      description: "展示兵线、目标压力和队伍站位，让玩家快速判断下一步的宏观策略。",
+      title: "三路兵线与资源图",
+      description: "通过简明地图看清兵线压力、资源争夺与场面经济差。",
     },
     "achievement-screen": {
-      title: "成就解锁",
-      description: "展示本地档案、阶段目标和游玩进度，帮助一局比赛形成可追踪的成长反馈。",
+      title: "本地档案与里程碑",
+      description: "记录单机档案里的阶段目标和杯赛达成记录。",
     },
     "match-summary": {
-      title: "赛后总结",
-      description: "展示比分、关键选手和赛后报告，把一局幻想赛事整理成清晰的复盘结果。",
+      title: "赛后数据复盘",
+      description: "汇总比分、关键选手表现与系列赛走势摘要。",
     },
   },
   en: {
     "hero-gameplay": {
-      title: "Gameplay overview",
-      description: "Shows the broad match-flow concept across schedule progress, match state, and key decisions.",
+      title: "Match & bracket overview",
+      description: "Track schedule progress, team form, and overall series momentum.",
     },
     "decision-screen": {
-      title: "Decision screen",
-      description: "Shows checkpoint choices, risk-reward hints, and safe, balanced, or risky tactical options.",
+      title: "Checkpoint tactical calls",
+      description: "Compare safe, balanced, and high-risk options with clear odds at pivotal turns.",
     },
     "strategy-map": {
-      title: "Tactical map",
-      description: "Shows lane pressure, objective state, and team positioning for macro planning.",
+      title: "Lane & objective map",
+      description: "Check lane pressure, map objectives, and gold swings before your next decision.",
     },
     "achievement-screen": {
-      title: "Achievement unlock",
-      description: "Shows local profile progress, milestone goals, and progression feedback.",
+      title: "Local milestones",
+      description: "Follow profile achievements and completed tournament goals.",
     },
     "match-summary": {
-      title: "Match summary",
-      description: "Shows score, key performers, and postgame report panels for a clear match recap.",
+      title: "Post-match breakdown",
+      description: "Review final scores, standout players, and series recap stats.",
     },
   },
 };
-localizedAssetCopy["zh-CN"] = {
-  "hero-gameplay": {
-    title: "玩法总览截图",
-    description: "展示 TI 模拟器从赛程推进、比赛状态到关键决策的整体玩法印象。",
-  },
-  "decision-screen": {
-    title: "决策界面",
-    description: "展示检查点选择、风险收益提示，以及安全、均衡、冒险三类行动思路。",
-  },
-  "strategy-map": {
-    title: "战术地图",
-    description: "展示兵线、目标压力和队伍站位，让玩家快速判断下一步的宏观策略。",
-  },
-  "achievement-screen": {
-    title: "成就解锁",
-    description: "展示本地档案、阶段目标和游玩进度，帮助一局比赛形成可追踪的成长反馈。",
-  },
-  "match-summary": {
-    title: "赛后总结",
-    description: "展示比分、关键选手和赛后报告，把一局幻想赛事整理成清晰的复盘结果。",
-  },
-};
+
 const manifestPath = join(process.cwd(), "public", "generated", "ti-simulator", "manifest.json");
 const assetBase = "/generated/ti-simulator";
 const { locale } = Astro.props;
@@ -158,9 +138,9 @@ const featureAssets: ReadonlyArray<{ id: GameplayAssetId; labelKey: GalleryLabel
   { id: "match-summary", labelKey: "summary" },
 ];
 const visibleFeatureAssets: GalleryAsset[] = featureAssets.flatMap((item) => {
-    const asset = getLocalizedAsset(item.id);
-    return asset ? [{ id: item.id, labelKey: item.labelKey, asset }] : [];
-  });
+  const asset = getLocalizedAsset(item.id);
+  return asset ? [{ id: item.id, labelKey: item.labelKey, asset }] : [];
+});
 const fallbackFeatureAssets: GalleryAsset[] = screenshotAssets
   .filter((asset) => asset.sourcePath !== previewAsset?.sourcePath)
   .slice(0, 4)
@@ -179,33 +159,31 @@ const assetDescription = (asset: ExportedAsset) => localizedAssetCopy[locale][as
 const galleryLabel = (labelKey: GalleryLabelKey) => t(locale, `tiAssets.${labelKey}`);
 ---
 
-<section class="bg-white py-20 md:py-28">
+<section class="bg-white/74 py-16 md:py-24" style="--color-accent: 20 112 245;">
   <div class="container-page">
-    <div class="mx-auto mb-12 max-w-4xl text-center">
+    <div class="mx-auto mb-12 max-w-3xl text-center">
       <p class="eyebrow">{t(locale, "tiAssets.eyebrow")}</p>
-      <h2 class="balance mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">{t(locale, "tiAssets.title")}</h2>
-      <p class="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted">
-        {t(locale, "tiAssets.intro")}
-      </p>
+      <h2 class="balance mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{t(locale, "tiAssets.title")}</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-lg leading-8 text-muted">{t(locale, "tiAssets.intro")}</p>
     </div>
 
     {
       screenshotAssets.length > 0 ? (
         <div class="space-y-10">
           {previewAsset && (
-            <article class="overflow-hidden rounded-lg border border-line bg-panel shadow-soft">
-              <div class="bg-ink p-2">
+            <article class="overflow-hidden rounded-[28px] border border-line bg-panel shadow-soft">
+              <div class="bg-paper p-2">
                 <img
                   src={imageSrc(previewAsset)}
                   alt={imageAlt(previewAsset)}
                   loading="lazy"
-                  class="aspect-[16/9] w-full rounded-md bg-paper object-cover"
+                  class="aspect-[16/9] w-full rounded-[22px] bg-paper object-contain"
                 />
               </div>
-              <div class="grid gap-5 p-6 md:grid-cols-[1fr_1.5fr] md:p-8">
+              <div class="grid gap-5 border-t border-line p-6 md:grid-cols-[1fr_1.5fr] md:p-8">
                 <div>
                   <p class="eyebrow">{t(locale, "tiAssets.heroLabel")}</p>
-                  <h3 class="mt-3 text-2xl font-semibold md:text-3xl">{assetTitle(previewAsset)}</h3>
+                  <h3 class="mt-2 text-2xl font-semibold">{assetTitle(previewAsset)}</h3>
                 </div>
                 <p class="leading-7 text-muted">{assetDescription(previewAsset)}</p>
               </div>
@@ -213,40 +191,32 @@ const galleryLabel = (labelKey: GalleryLabelKey) => t(locale, `tiAssets.${labelK
           )}
 
           {galleryAssets.length > 0 && (
-            <div class="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-              <div class="lg:sticky lg:top-8">
-                <p class="eyebrow">{t(locale, "tiAssets.heroKicker")}</p>
-                <h3 class="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">{t(locale, "tiAssets.galleryTitle")}</h3>
-                <p class="mt-4 leading-7 text-muted">{t(locale, "tiAssets.galleryIntro")}</p>
-              </div>
-
-              <div class="grid gap-5 md:grid-cols-2">
-                {galleryAssets.map(({ asset, labelKey }) => (
-                  <figure class="overflow-hidden rounded-lg border border-line bg-panel shadow-sm">
+            <div class="grid gap-5 md:grid-cols-2">
+              {galleryAssets.map(({ asset, labelKey }) => (
+                <figure class="m-0 overflow-hidden rounded-[24px] border border-line bg-panel shadow-sm">
+                  <div class="bg-paper p-2">
                     <img
                       src={imageSrc(asset)}
                       alt={imageAlt(asset)}
                       loading="lazy"
-                      class="aspect-[16/10] w-full bg-paper object-cover"
+                      class="aspect-[16/10] w-full rounded-2xl bg-paper object-contain"
                     />
-                    <figcaption class="p-5">
-                      <p class="eyebrow">{galleryLabel(labelKey)}</p>
-                      <h4 class="mt-2 text-xl font-semibold">{assetTitle(asset)}</h4>
-                      <p class="mt-3 text-sm leading-6 text-muted">{assetDescription(asset)}</p>
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
+                  </div>
+                  <figcaption class="border-t border-line p-5">
+                    <p class="eyebrow">{galleryLabel(labelKey)}</p>
+                    <h4 class="mt-1.5 text-xl font-semibold">{assetTitle(asset)}</h4>
+                    <p class="mt-2 text-sm leading-6 text-muted">{assetDescription(asset)}</p>
+                  </figcaption>
+                </figure>
+              ))}
             </div>
           )}
         </div>
       ) : (
-        <div class="mx-auto max-w-3xl rounded-lg border border-dashed border-line bg-panel p-8 text-center">
+        <div class="mx-auto max-w-3xl rounded-[24px] border border-dashed border-line bg-panel p-8 text-center">
           <p class="eyebrow">{t(locale, "tiAssets.emptyEyebrow")}</p>
           <h3 class="mt-3 text-2xl font-semibold">{t(locale, "tiAssets.emptyTitle")}</h3>
-          <p class="mx-auto mt-3 max-w-2xl leading-7 text-muted">
-            {t(locale, "tiAssets.emptyBody")}
-          </p>
+          <p class="mx-auto mt-3 max-w-2xl leading-7 text-muted">{t(locale, "tiAssets.emptyBody")}</p>
         </div>
       )
     }

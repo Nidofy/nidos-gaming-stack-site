@@ -4,11 +4,11 @@
 
 :root {
   --color-ink: 18 24 38;
-  --color-muted: 92 101 116;
+  --color-muted: 88 97 112;
   --color-line: 220 225 232;
   --color-paper: 247 248 250;
   --color-panel: 255 255 255;
-  --color-accent: 20 112 245;
+  --color-accent: 61 107 82;
 }
 
 * {
@@ -24,7 +24,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgb(20 112 245 / 0.055), transparent 30rem),
+    radial-gradient(circle at top left, rgb(var(--color-accent) / 0.065), transparent 34rem),
     linear-gradient(180deg, rgb(255 255 255), rgb(var(--color-paper)) 42rem);
   color: rgb(var(--color-ink));
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
@@ -61,7 +61,7 @@ select {
 }
 
 .section-space {
-  padding-block: clamp(56px, 9vw, 120px);
+  padding-block: clamp(56px, 8vw, 108px);
 }
 
 .eyebrow {
@@ -82,8 +82,47 @@ select {
   border-radius: 28px;
   background:
     linear-gradient(145deg, rgb(255 255 255 / 0.88), rgb(239 242 247 / 0.94)),
-    linear-gradient(120deg, rgb(20 112 245 / 0.08), rgb(15 23 42 / 0.04));
+    linear-gradient(120deg, rgb(var(--color-accent) / 0.08), rgb(15 23 42 / 0.04));
   box-shadow: 0 28px 100px rgb(15 23 42 / 0.10);
+}
+
+.faq-accordion details {
+  border-bottom: 1px solid rgb(var(--color-line));
+  padding-block: 1.15rem;
+}
+
+.faq-accordion details:first-child {
+  border-top: 1px solid rgb(var(--color-line));
+}
+
+.faq-accordion summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.faq-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-accordion summary::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: rgb(var(--color-muted));
+  transition: transform 0.15s ease;
+}
+
+.faq-accordion details[open] summary::after {
+  content: "−";
+  color: rgb(var(--color-accent));
 }
 
 @media (max-width: 720px) {
@@ -92,10 +131,10 @@ select {
   }
 
   .media-placeholder {
-    border-radius: 18px;
+    border-radius: 20px;
   }
 
   .section-space {
-    padding-block: 56px;
+    padding-block: 52px;
   }
 }

@@ -1,5 +1,4 @@
-import { gameEntries } from "@/data/games";
-import { pluginEntries } from "@/data/plugins";
+import { getPortfolioItems } from "@/data/portfolio";
 import { site } from "@/data/site";
 import { locales } from "@/i18n/locales";
 
@@ -13,15 +12,18 @@ const staticPaths = [
   "/en/devlog",
   "/zh-CN/guides/ti-simulator",
   "/en/guides/ti-simulator",
+  "/zh-CN/wechat",
+  "/zh-CN/privacy",
+  "/en/privacy",
+  "/zh-CN/terms",
+  "/en/terms",
   "/privacy",
   "/terms",
 ];
 
-const gamePaths = gameEntries.flatMap((game) => locales.map((locale) => `/${locale}/games/${game.slug}`));
-
 export function GET() {
-  const pluginPaths = pluginEntries.flatMap((plugin) => locales.map((locale) => `/${locale}/plugins/${plugin.slug}`));
-  const urls = [...staticPaths, ...gamePaths, ...pluginPaths].map((path) => new URL(path, site.baseUrl).toString());
+  const projectPaths = locales.flatMap((locale) => getPortfolioItems(locale).map((item) => item.detailHref));
+  const urls = [...new Set([...staticPaths, ...projectPaths])].map((path) => new URL(path, site.baseUrl).toString());
   const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
     .map((url) => `  <url><loc>${url}</loc></url>`)
     .join("\n")}\n</urlset>\n`;

@@ -3,6 +3,10 @@ import type { Locale, LocalizedString } from "@/types/i18n";
 
 export const socialLinks = [
   {
+    label: "GitHub",
+    href: "https://github.com/Nidofy",
+  },
+  {
     label: "Email",
     href: "mailto:hello@nido.dev",
   },
@@ -11,12 +15,12 @@ export const socialLinks = [
 export const feedbackConfig = {
   feedbackFormUrl: "",
   labels: {
-    "zh-CN": "反馈问卷",
-    en: "Feedback form",
+    "zh-CN": "填写反馈问卷",
+    en: "Open feedback form",
   },
   comingSoonLabels: {
-    "zh-CN": "反馈问卷即将开放",
-    en: "Feedback form coming soon",
+    "zh-CN": "反馈表整理中",
+    en: "Feedback form pending",
   },
 } satisfies {
   feedbackFormUrl: string;

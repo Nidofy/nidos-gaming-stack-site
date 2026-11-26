@@ -1,0 +1,77 @@
+---
+import { getPortfolioItems } from "@/data/portfolio";
+import type { Locale } from "@/data/site";
+import { t } from "@/i18n/utils";
+
+interface Props {
+  locale: Locale;
+  activeSlug?: string;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+}
+
+const {
+  locale,
+  activeSlug,
+  eyebrow = t(locale, "game.moreProjectsEyebrow"),
+  title = t(locale, "game.moreProjectsTitle"),
+  description,
+} = Astro.props;
+
+const items = getPortfolioItems(locale);
+---
+
+<section class="container-page section-space">
+  <div class="max-w-3xl">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 class="balance mt-3 text-3xl font-semibold sm:text-4xl">{title}</h2>
+    {description && <p class="mt-4 leading-8 text-muted">{description}</p>}
+  </div>
+
+  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      items.map((item, idx) => {
+        const isCurrent = item.slug === activeSlug;
+        return (
+          <a
+            href={item.detailHref}
+            aria-current={isCurrent ? "page" : undefined}
+            style={`--color-accent: ${item.accentRgb};`}
+            class:list={[
+              "group flex flex-col justify-between rounded-[24px] border bg-panel p-5 shadow-sm transition",
+              isCurrent
+                ? "border-ink/35 ring-1 ring-ink/15"
+                : "border-line hover:-translate-y-0.5 hover:border-ink/25 hover:shadow-soft",
+            ]}
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold tracking-wider text-accent">0{idx + 1}</span>
+                <span class="rounded-full border border-line bg-paper px-2.5 py-0.5 text-xs font-medium text-muted">
+                  {item.statusLabel}
+                </span>
+              </div>
+              <div class="mt-4 overflow-hidden rounded-2xl border border-line bg-paper">
+                <img
+                  src={item.heroMedia.src}
+                  alt={item.heroMedia.alt}
+                  width={item.heroMedia.width}
+                  height={item.heroMedia.height}
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[16/10] w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                />
+              </div>
+              <h3 class="mt-4 text-lg font-semibold leading-snug">{item.title}</h3>
+              <p class="mt-2 line-clamp-3 text-sm leading-6 text-muted">{item.summary}</p>
+            </div>
+            <p class="mt-4 text-sm font-semibold text-accent group-hover:underline">
+              {t(locale, "game.detailsCta")} →
+            </p>
+          </a>
+        );
+      })
+    }
+  </div>
+</section>

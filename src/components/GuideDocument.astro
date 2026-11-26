@@ -1,39 +1,142 @@
 ---
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import CTAButton from "@/components/CTAButton.astro";
+import type { Locale } from "@/data/site";
+import { t } from "@/i18n/utils";
 
 interface Props {
   filename: string;
   title: string;
   downloadLabel: string;
+  locale: Locale;
 }
 
-const { filename, title, downloadLabel } = Astro.props;
+type GuideBlock =
+  | { kind: "h1" | "h2" | "h3"; text: string }
+  | { kind: "ul"; items: string[] }
+  | { kind: "ol"; items: string[] }
+  | { kind: "p"; text: string };
+
+const { filename, title, downloadLabel, locale } = Astro.props;
 const guidePath = join(process.cwd(), "public", "guides", "ti-simulator", filename);
 const guideText = existsSync(guidePath) ? readFileSync(guidePath, "utf8") : "";
 const rawHref = `/guides/ti-simulator/${filename}`;
+
+function parseGuideBlocks(markdown: string): GuideBlock[] {
+  const lines = markdown.replace(/\r\n/g, "\n").split("\n");
+  const blocks: GuideBlock[] = [];
+  let paragraph: string[] = [];
+  let ulItems: string[] = [];
+  let olItems: string[] = [];
+
+  const flush = () => {
+    if (paragraph.length > 0) {
+      blocks.push({ kind: "p", text: paragraph.join(" ") });
+      paragraph = [];
+    }
+    if (ulItems.length > 0) {
+      blocks.push({ kind: "ul", items: ulItems });
+      ulItems = [];
+    }
+    if (olItems.length > 0) {
+      blocks.push({ kind: "ol", items: olItems });
+      olItems = [];
+    }
+  };
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line || line === "---") {
+      flush();
+      continue;
+    }
+    if (line.startsWith("# ")) {
+      flush();
+      blocks.push({ kind: "h1", text: line.slice(2).trim() });
+      continue;
+    }
+    if (line.startsWith("## ")) {
+      flush();
+      blocks.push({ kind: "h2", text: line.slice(3).trim() });
+      continue;
+    }
+    if (line.startsWith("### ")) {
+      flush();
+      blocks.push({ kind: "h3", text: line.slice(4).trim() });
+      continue;
+    }
+    const ulMatch = line.match(/^[-*]\s+(.+)$/);
+    if (ulMatch) {
+      if (paragraph.length > 0 || olItems.length > 0) flush();
+      ulItems.push(ulMatch[1]);
+      continue;
+    }
+    const olMatch = line.match(/^\d+\.\s+(.+)$/);
+    if (olMatch) {
+      if (paragraph.length > 0 || ulItems.length > 0) flush();
+      olItems.push(olMatch[1]);
+      continue;
+    }
+    if (ulItems.length > 0 || olItems.length > 0) flush();
+    paragraph.push(line);
+  }
+
+  flush();
+  return blocks;
+}
+
+const blocks = guideText ? parseGuideBlocks(guideText) : [];
 ---
 
-<section class="container-page section-space">
+<section class="container-page section-space" style="--color-accent: 20 112 245;">
   <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
     <div>
       <p class="eyebrow">TI Simulator</p>
-      <h1 class="mt-4 text-4xl font-semibold tracking-normal sm:text-5xl lg:text-6xl">{title}</h1>
+      <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
     </div>
-    <a
-      class="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-white px-5 py-2 text-sm font-semibold text-ink"
-      href={rawHref}
-      target="_blank"
-      rel="noreferrer"
-    >
-      {downloadLabel}
-    </a>
+    <div class="flex flex-wrap gap-2.5">
+      <CTAButton href={`/${locale}/download#ti-simulator`} label={t(locale, "guide.backToDownload")} variant="secondary" compact />
+      <CTAButton href={`/${locale}/games/ti-simulator`} label={t(locale, "guide.backToGame")} variant="secondary" compact />
+      <CTAButton href={rawHref} label={downloadLabel} variant="secondary" compact external />
+    </div>
   </div>
 
-  <article class="rounded-[24px] border border-line bg-panel p-5 shadow-sm md:p-8">
+  <article class="rounded-[28px] border border-line bg-panel p-6 shadow-soft md:p-10">
     {
-      guideText ? (
-        <pre class="whitespace-pre-wrap break-words font-sans text-base leading-8 text-ink">{guideText}</pre>
+      blocks.length > 0 ? (
+        <div class="max-w-3xl space-y-5 leading-8 text-ink">
+          {blocks.map((block) => {
+            if (block.kind === "h1") {
+              return <h2 class="text-2xl font-semibold sm:text-3xl">{block.text}</h2>;
+            }
+            if (block.kind === "h2") {
+              return <h2 class="border-t border-line pt-6 text-2xl font-semibold">{block.text}</h2>;
+            }
+            if (block.kind === "h3") {
+              return <h3 class="pt-2 text-lg font-semibold">{block.text}</h3>;
+            }
+            if (block.kind === "ul") {
+              return (
+                <ul class="list-disc space-y-2 pl-6 text-muted">
+                  {block.items.map((item) => (
+                    <li>{item.replaceAll("`", "")}</li>
+                  ))}
+                </ul>
+              );
+            }
+            if (block.kind === "ol") {
+              return (
+                <ol class="list-decimal space-y-2 pl-6 text-muted">
+                  {block.items.map((item) => (
+                    <li>{item.replaceAll("`", "")}</li>
+                  ))}
+                </ol>
+              );
+            }
+            return <p class="text-muted">{block.text.replaceAll("`", "")}</p>;
+          })}
+        </div>
       ) : (
         <p class="leading-7 text-muted">Guide file is missing.</p>
       )

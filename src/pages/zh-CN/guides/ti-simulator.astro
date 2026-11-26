@@ -1,12 +1,19 @@
 ---
 import GuideDocument from "@/components/GuideDocument.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { tiSimulatorPreviewMedia } from "@/data/media";
 
 const locale = "zh-CN";
-const title = "TI15 Simulator 中文游玩指引";
-const description = "TI15 Simulator Windows 内部试玩包的中文新手指引，包含下载、解压、启动和第一局游玩建议。";
+const title = "TI 模拟器中文游玩指引";
+const description = "TI 模拟器 Windows 便携试玩包的中文上手说明，包含下载校验、完整解压、启动脚本与首局操作提示。";
 ---
 
-<BaseLayout locale={locale} title={`${title} - Nido的游戏小栈`} description={description}>
-  <GuideDocument filename="PLAYER_GUIDE_ZH_CN.md" title={title} downloadLabel="打开 Markdown 原文" />
+<BaseLayout
+  locale={locale}
+  title={`${title} - Nido的游戏小栈`}
+  description={description}
+  ogImage={tiSimulatorPreviewMedia[locale].og}
+  accentRgb="20 112 245"
+>
+  <GuideDocument locale={locale} filename="PLAYER_GUIDE_ZH_CN.md" title={title} downloadLabel="查看 Markdown 原文" />
 </BaseLayout>

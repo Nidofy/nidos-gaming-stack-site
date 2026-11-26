@@ -7,30 +7,30 @@
   "localized": {
     "zh-CN": {
       "displayDate": "2026-07-03",
-      "summary": "TI15 模拟器 Windows 内部试玩测试包。当前仅面向朋友小范围测试，提供便携版 zip 下载镜像，下载后可解压运行。",
+      "summary": "《TI 模拟器》Windows x64 免安装便携测试包，面向小范围试玩体验完整赛程与局内决策，下载 ZIP 解压后即可运行。",
       "changelog": [
-        "提供 Windows x64 便携版内部试玩包。",
-        "提供 GitHub Release 与百度网盘两个下载镜像。",
-        "当前测试范围为朋友内部试玩，暂不发布 macOS、Linux 或正式安装包。"
+        "打包 Windows x64 免安装便携测试版，解压后双击 Start-Game.bat 即可进入。",
+        "同步提供 GitHub Release 直链与百度网盘备用镜像（提取码已附在链接中）。",
+        "附带中英文新手上手说明，整理了首局流程与常见启动提示。"
       ],
       "knownIssues": [
-        "当前仅提供 Windows 版本，macOS 和 Linux 暂未发布。",
-        "这是内部试玩测试包，可能存在启动、显示、存档或玩法流程问题。",
-        "GitHub Release 和百度网盘镜像均已提供；如果某个镜像临时不可用，请切换另一个镜像重试。"
+        "本阶段仅构建了 Windows x64 版本，暂未提供 macOS 与 Linux 包。",
+        "个人测试包未做商业代码签名，Windows 首次启动若弹出保护提示，可点“更多信息 → 仍要运行”。",
+        "测试期数值与界面仍在迭代，如遇某个镜像下载缓慢可切换另一镜像。"
       ]
     },
     "en": {
       "displayDate": "2026-07-03",
-      "summary": "TI15 Simulator Windows internal playtest build. This preview is shared with a small group of friends as portable zip download mirrors.",
+      "summary": "TI Simulator Windows x64 portable playtest archive for trying a full tournament run and checkpoint decisions—just unzip to a normal folder and launch.",
       "changelog": [
-        "Provide a Windows x64 portable internal playtest package.",
-        "Provide both GitHub Release and Baidu Netdisk download mirrors.",
-        "Limit this build to a small internal playtest; macOS, Linux, and formal installers are not published yet."
+        "Packaged the Windows x64 portable playtest zip—extract and launch via Start-Game.bat.",
+        "Provided both GitHub Release and Baidu Netdisk download mirrors.",
+        "Added Chinese and English starter play guides covering setup and first-series tips."
       ],
       "knownIssues": [
-        "Only the Windows build is available for now; macOS and Linux builds are not published.",
-        "This is an internal playtest package and may include startup, display, save, or gameplay-flow issues.",
-        "Both GitHub Release and Baidu Netdisk mirrors are provided; if one mirror is temporarily unavailable, try the other."
+        "Windows x64 only for now; macOS and Linux builds are not available yet.",
+        "Because this indie preview zip is unsigned, Windows SmartScreen may ask for confirmation on first launch.",
+        "Balance and UI are still being tuned; switch mirrors if one download link is slow in your region."
       ]
     }
   },
@@ -41,7 +41,7 @@
         "zh-CN": "Windows x64 便携版",
         "en": "Windows x64 Portable"
       },
-      "filename": "TI15Simulator Windows x64 portable preview zip",
+      "filename": "TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip",
       "globalFilename": "TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip",
       "chinaFilename": "TI15Simulator-portable-windows-x64-20260703-alpha02-test-fix4.zip",
       "size": "",
@@ -51,5 +51,5 @@
       "available": true
     }
   ],
-  "note": "This file is currently maintained manually from src/data/downloads.ts."
+  "note": "This file is maintained in sync with src/data/downloads.ts."
 }

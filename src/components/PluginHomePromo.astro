@@ -2,34 +2,36 @@
 import CTAButton from "@/components/CTAButton.astro";
 import type { PluginEntry } from "@/types/plugin";
 import type { Locale } from "@/i18n/locales";
-interface Props { locale: Locale; plugin: PluginEntry }
+
+interface Props {
+  locale: Locale;
+  plugin: PluginEntry;
+}
+
 const { locale, plugin } = Astro.props;
 const c = plugin.copy[locale];
 const media = plugin.media.find((item) => item.role === "hero")!;
 ---
-    <article class="promo" id={`project-${plugin.slug}`}>
-      <figure>
-        <img src={media.src} width={media.width} height={media.height} alt={media.locales[locale].alt} loading="lazy" decoding="async" />
-        <figcaption>{media.locales[locale].caption}</figcaption>
-      </figure>
-      <div>
-        <p class="eyebrow">{c.eyebrow}</p>
-        <h2>{c.name}</h2>
-        <p class="status">{c.status} · {plugin.release.version}</p>
-        <p class="summary">{c.summary}</p>
-        <CTAButton href={`/${locale}/plugins/${plugin.slug}`} label={c.explore} />
-      </div>
-    </article>
-<style>
-  .promo { scroll-margin-top: 9rem; }
-  .promo { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; padding: clamp(1.25rem, 3vw, 2rem); background: #f3eadb; border-radius: 1.8rem; }
-  .promo > * { min-width: 0; }
-  figure { margin: 0; }
-  figcaption { font-size: .75rem; color: #655844; margin-top: .75rem; line-height: 1.7; }
-  img { width: 100%; display: block; border-radius: 1rem; }
-  .eyebrow { color: #6a4e2d; }
-  h2 { font-size: clamp(2rem, 4vw, 3rem); margin: .5rem 0; }
-  .status { color: #655844; font-size: .8rem; }
-  .summary { line-height: 1.9; color: #51483d; margin: 1.25rem 0 1.5rem; }
-  @media(max-width: 760px) { .promo { grid-template-columns: 1fr; } }
-</style>
+
+<article
+  id={`project-${plugin.slug}`}
+  style="--color-accent: 124 90 56;"
+  class="grid scroll-mt-28 gap-8 rounded-[28px] border border-line bg-panel p-6 shadow-soft md:grid-cols-[1.16fr_0.84fr] md:items-center md:p-8 lg:grid-cols-[1.22fr_0.78fr] lg:p-10"
+>
+  <figure class="m-0 overflow-hidden rounded-[22px] border border-line bg-paper">
+    <img src={media.src} width={media.width} height={media.height} alt={media.locales[locale].alt} loading="lazy" decoding="async" class="aspect-[16/10] w-full object-cover" />
+    <figcaption class="border-t border-line bg-white/80 px-4 py-2.5 text-xs leading-5 text-muted">
+      {media.locales[locale].caption}
+    </figcaption>
+  </figure>
+  <div class="flex flex-col justify-center">
+    <p class="eyebrow">{c.eyebrow}</p>
+    <p class="mt-2 text-xs font-medium text-muted">{c.status} · {plugin.release.version}</p>
+    <h2 class="mt-3 text-3xl font-semibold sm:text-4xl">{c.name}</h2>
+    <p class="mt-4 text-base leading-8 text-muted sm:text-lg">{c.summary}</p>
+    <div class="mt-7 flex flex-wrap gap-3">
+      <CTAButton href={`/${locale}/plugins/${plugin.slug}`} label={c.explore} compact />
+      <CTAButton href={plugin.repository} label={c.source} variant="secondary" compact external />
+    </div>
+  </div>
+</article>

@@ -1,0 +1,62 @@
+---
+import CTAButton from "@/components/CTAButton.astro";
+import HomeProjectTabs from "@/components/HomeProjectTabs.astro";
+import PortfolioNav from "@/components/PortfolioNav.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getHomepageOgImage } from "@/data/media";
+import { site, type Locale } from "@/data/site";
+import { t } from "@/i18n/utils";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const homepageOgImage = getHomepageOgImage(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${site.name[locale]} - ${t(locale, "home.titleSuffix")}`}
+  description={site.description[locale]}
+  ogImage={homepageOgImage}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.name[locale],
+    description: site.description[locale],
+    url: `${site.baseUrl}/${locale}`,
+  }}
+>
+  <HomeProjectTabs
+    locale={locale}
+    eyebrow={t(locale, "home.hero.eyebrow")}
+    title={t(locale, "home.hero.title")}
+    subtitle={t(locale, "home.hero.subtitle")}
+    metaItems={[
+      t(locale, "home.hero.metaFeatured"),
+      t(locale, "home.hero.metaPortfolio"),
+      t(locale, "home.hero.metaBilingual"),
+    ]}
+  />
+
+  <div id="all-projects" class="scroll-mt-20">
+    <PortfolioNav
+      locale={locale}
+      eyebrow={t(locale, "home.directory.eyebrow")}
+      title={t(locale, "home.directory.title")}
+      description={t(locale, "home.directory.description")}
+    />
+  </div>
+
+  <section class="container-page pb-24">
+    <div class="rounded-[28px] border border-line bg-panel px-6 py-12 text-center shadow-soft md:px-12 md:py-14">
+      <p class="eyebrow">{t(locale, "home.next.eyebrow")}</p>
+      <h2 class="balance mx-auto mt-3 max-w-3xl text-3xl font-semibold sm:text-4xl">{t(locale, "home.next.title")}</h2>
+      <p class="mx-auto mt-4 max-w-2xl leading-8 text-muted">{t(locale, "home.next.description")}</p>
+      <div class="mt-8">
+        <CTAButton href={`/${locale}/download`} label={t(locale, "home.next.cta")} />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

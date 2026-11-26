@@ -1,16 +1,10 @@
 ---
-import GameCard from "@/components/GameCard.astro";
-import PluginHomePromo from "@/components/PluginHomePromo.astro";
-import { pluginEntries } from "@/data/plugins";
-import type { GameContent } from "@/data/games";
-import type { GamePreviewMedia } from "@/data/media";
+import CTAButton from "@/components/CTAButton.astro";
+import FeatureGrid from "@/components/FeatureGrid.astro";
+import { OUT_OF_TOKENS_PLAY_URL } from "@/data/games";
+import { getPortfolioItems } from "@/data/portfolio";
 import type { Locale } from "@/data/site";
 import { t } from "@/i18n/utils";
-
-type GameCardEntry = {
-  game: GameContent;
-  media: GamePreviewMedia;
-};
 
 interface Props {
   locale: Locale;
@@ -18,79 +12,216 @@ interface Props {
   title: string;
   subtitle: string;
   metaItems?: string[];
-  gameCards: GameCardEntry[];
 }
 
-const { locale, eyebrow, title, subtitle, metaItems = [], gameCards } = Astro.props;
-const defaultSlug = gameCards[0]?.game.slug;
-const projects = [
-  ...gameCards.map(({ game }) => ({ slug: game.slug, label: game.shortTitle })),
-  ...pluginEntries.map((plugin) => ({ slug: plugin.slug, label: plugin.copy[locale].name })),
-];
+const { locale, eyebrow, title, subtitle, metaItems = [] } = Astro.props;
+const items = getPortfolioItems(locale);
+const defaultSlug = items[0]?.slug ?? "out-of-tokens";
 ---
 
-<section class="container-page pt-20 pb-14 text-center md:pt-28 md:pb-16" data-home-project-tabs>
-  <p class="eyebrow">{eyebrow}</p>
-  <h1 class="balance mx-auto mt-5 max-w-4xl text-4xl font-semibold leading-[1.12] tracking-normal sm:text-5xl lg:text-6xl">{title}</h1>
-  <p class="balance mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted md:text-xl md:leading-9">{subtitle}</p>
-  {
-    metaItems.length > 0 && (
-      <div class="mx-auto mt-7 flex max-w-3xl flex-wrap justify-center gap-2">
-        {metaItems.map((item) => (
-          <span class="rounded-full border border-line bg-white/78 px-3 py-1.5 text-sm font-medium text-muted shadow-sm">{item}</span>
-        ))}
-      </div>
-    )
-  }
+<div data-home-project-tabs>
+  <section class="container-page pt-16 pb-12 text-center md:pt-24 md:pb-14">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 class="balance mx-auto mt-5 max-w-4xl text-4xl font-semibold leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
+      {title}
+    </h1>
+    <p class="balance mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted md:text-xl md:leading-9">{subtitle}</p>
 
-  <div class="mx-auto mt-8 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-line bg-white/82 p-1.5 shadow-soft" role="tablist" aria-label={t(locale, "home.tabs.aria")}>
-    {
-      projects.map((project) => (
-        <button
-          type="button"
-          class="home-project-tab rounded-full px-5 py-3 text-sm font-semibold text-muted transition hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/30 sm:text-base"
-          role="tab"
-          aria-selected={project.slug === defaultSlug ? "true" : "false"}
-          aria-controls={`home-project-panel-${project.slug}`}
-          id={`home-project-tab-${project.slug}`}
-          data-tab-target={project.slug}
-          tabindex={project.slug === defaultSlug ? 0 : -1}
-        >
-          {project.label}
-        </button>
-      ))
-    }
-  </div>
+    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
+      <CTAButton href={OUT_OF_TOKENS_PLAY_URL} label={t(locale, "home.hero.primary")} external />
+      <CTAButton href="#all-projects" label={t(locale, "home.hero.secondary")} variant="secondary" />
+    </div>
 
-  <div id="games" class="mt-12 grid gap-6 text-left md:mt-12">
     {
-      gameCards.map(({ game, media }) => (
-        <div
-          id={`home-project-panel-${game.slug}`}
-          role="tabpanel"
-          aria-labelledby={`home-project-tab-${game.slug}`}
-          data-tab-panel={game.slug}
-          hidden={game.slug !== defaultSlug}
-        >
-          <GameCard game={game} imageSrc={media.hero} imageAlt={media.alt} imageDisclaimer={media.disclaimer} />
+      metaItems.length > 0 && (
+        <div class="mx-auto mt-7 flex max-w-3xl flex-wrap justify-center gap-2">
+          {metaItems.map((item) => (
+            <span class="rounded-full border border-line bg-white/80 px-3.5 py-1.5 text-sm font-medium text-muted shadow-sm">
+              {item}
+            </span>
+          ))}
         </div>
-      ))
+      )
     }
-    {pluginEntries.map((plugin) => (
-      <div id={`home-project-panel-${plugin.slug}`} role="tabpanel" aria-labelledby={`home-project-tab-${plugin.slug}`} data-tab-panel={plugin.slug} hidden>
-        <PluginHomePromo plugin={plugin} locale={locale} />
+
+    <div id="games" class="mt-10 scroll-mt-24">
+      <div
+        class="mx-auto inline-flex max-w-full flex-wrap items-center justify-center gap-1.5 rounded-full border border-line bg-white/88 p-1.5 shadow-soft"
+        role="tablist"
+        aria-label={t(locale, "home.tabs.aria")}
+      >
+        {
+          items.map((project) => (
+            <button
+              type="button"
+              class="home-project-tab rounded-full px-4 py-2.5 text-sm font-semibold text-muted transition hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/30 sm:px-5 sm:text-base"
+              role="tab"
+              aria-selected={project.slug === defaultSlug ? "true" : "false"}
+              aria-controls={`home-project-panel-${project.slug}`}
+              id={`home-project-tab-${project.slug}`}
+              data-tab-target={project.slug}
+              tabindex={project.slug === defaultSlug ? 0 : -1}
+            >
+              {project.tabLabel}
+            </button>
+          ))
+        }
       </div>
-    ))}
-  </div>
-</section>
+    </div>
+
+    <div class="mt-8 text-left md:mt-10">
+      {
+        items.map((item) => (
+          <div
+            id={`home-project-panel-${item.slug}`}
+            role="tabpanel"
+            aria-labelledby={`home-project-tab-${item.slug}`}
+            data-tab-panel={item.slug}
+            hidden={item.slug !== defaultSlug}
+            style={`--color-accent: ${item.accentRgb};`}
+          >
+            <article
+              id={`project-${item.slug}`}
+              class="grid scroll-mt-28 gap-8 rounded-[28px] border border-line bg-panel p-6 shadow-soft md:grid-cols-[1.16fr_0.84fr] md:items-center md:p-8 lg:grid-cols-[1.22fr_0.78fr] lg:p-10"
+            >
+              <figure class="m-0 overflow-hidden rounded-[22px] border border-line bg-paper">
+                <a href={item.detailHref} class="block">
+                  <img
+                    src={item.heroMedia.src}
+                    alt={item.heroMedia.alt}
+                    width={item.heroMedia.width}
+                    height={item.heroMedia.height}
+                    loading={item.slug === defaultSlug ? "eager" : "lazy"}
+                    fetchpriority={item.slug === defaultSlug ? "high" : "auto"}
+                    decoding="async"
+                    class="aspect-[16/10] w-full bg-paper object-cover"
+                  />
+                </a>
+                {item.heroMedia.caption && (
+                  <figcaption class="border-t border-line bg-white/80 px-4 py-2.5 text-xs leading-5 text-muted">
+                    {item.heroMedia.caption}
+                  </figcaption>
+                )}
+              </figure>
+
+              <div class="flex flex-col justify-center">
+                <p class="eyebrow">{item.eyebrow}</p>
+                <p class="mt-2 text-xs font-medium text-muted">
+                  {item.statusLabel}
+                  {item.versionLabel ? ` · ${item.versionLabel}` : ""}
+                </p>
+                <h2 class="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">{item.title}</h2>
+                <p class="mt-4 text-base leading-8 text-muted sm:text-lg">{item.summary}</p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  {item.tags.map((tag) => (
+                    <span class="rounded-full border border-line bg-paper/70 px-3 py-1 text-xs font-medium text-muted sm:text-sm">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div class="mt-7 flex flex-wrap gap-3">
+                  <CTAButton
+                    href={item.primaryCta.href}
+                    label={item.primaryCta.label}
+                    external={item.primaryCta.external}
+                    compact
+                  />
+                  <CTAButton
+                    href={item.secondaryCta.href}
+                    label={item.secondaryCta.label}
+                    external={item.secondaryCta.external}
+                    variant="secondary"
+                    compact
+                  />
+                </div>
+              </div>
+            </article>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    items.map((item) => (
+      <section
+        class="border-y border-line/70 bg-white/74 py-16 md:py-24"
+        data-home-project-detail={item.slug}
+        hidden={item.slug !== defaultSlug}
+        style={`--color-accent: ${item.accentRgb};`}
+      >
+        <div class="container-page">
+          <div class="max-w-3xl">
+            <p class="eyebrow">{t(locale, "home.preview.featuresEyebrow")}</p>
+            <h2 class="balance mt-3 text-3xl font-semibold sm:text-4xl">{item.featuresTitle}</h2>
+            <p class="mt-4 text-base leading-8 text-muted sm:text-lg">{item.description}</p>
+          </div>
+
+          <div class="mt-10">
+            <FeatureGrid features={item.features} />
+          </div>
+
+          {item.gallery && item.gallery.images.length > 0 && (
+            <div class="mt-14">
+              <div class="mb-7 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p class="eyebrow">{item.gallery.eyebrow || t(locale, "home.preview.galleryEyebrow")}</p>
+                  <h3 class="mt-2 text-2xl font-semibold sm:text-3xl">{item.gallery.title}</h3>
+                </div>
+                <p class="text-xs text-muted">{t(locale, "home.preview.openFullImage")}</p>
+              </div>
+              <div
+                class:list={[
+                  "grid gap-5",
+                  item.gallery.images.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2",
+                ]}
+              >
+                {item.gallery.images.slice(0, 4).map((image) => (
+                  <figure class="m-0 flex flex-col justify-between overflow-hidden rounded-[24px] border border-line bg-panel shadow-sm">
+                    <a
+                      href={image.src}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={t(locale, "game.openImageAria", { alt: image.alt })}
+                      class="block bg-paper p-2"
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        loading="lazy"
+                        decoding="async"
+                        class="aspect-[16/10] w-full rounded-2xl bg-paper object-contain"
+                      />
+                    </a>
+                    <figcaption class="border-t border-line px-5 py-3.5 text-sm leading-6 text-muted">
+                      {image.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    ))
+  }
+</div>
 
 <script>
   const roots = document.querySelectorAll("[data-home-project-tabs]");
 
   roots.forEach((root) => {
-    const tabs = Array.from(root.querySelectorAll("[data-tab-target]")).filter((node): node is HTMLElement => node instanceof HTMLElement);
-    const panels = Array.from(root.querySelectorAll("[data-tab-panel]")).filter((node): node is HTMLElement => node instanceof HTMLElement);
-    const detailPanels = Array.from(document.querySelectorAll("[data-home-project-detail]")).filter((node): node is HTMLElement => node instanceof HTMLElement);
+    const tabs = Array.from(root.querySelectorAll("[data-tab-target]")).filter(
+      (node): node is HTMLElement => node instanceof HTMLElement
+    );
+    const panels = Array.from(root.querySelectorAll("[data-tab-panel]")).filter(
+      (node): node is HTMLElement => node instanceof HTMLElement
+    );
+    const detailPanels = Array.from(root.querySelectorAll("[data-home-project-detail]")).filter(
+      (node): node is HTMLElement => node instanceof HTMLElement
+    );
 
     const activate = (slug: string) => {
       tabs.forEach((tab) => {
@@ -109,11 +240,18 @@ const projects = [
     };
 
     const activateHash = () => {
-      const slug = window.location.hash.replace(/^#project-/, "");
+      const rawHash = window.location.hash;
+      if (!rawHash) return;
+      if (rawHash === "#games") {
+        root.querySelector("#games")?.scrollIntoView({ block: "start" });
+        return;
+      }
+      const slug = rawHash.replace(/^#project-/, "");
       if (!tabs.some((tab) => tab.dataset.tabTarget === slug)) return;
       activate(slug);
       root.querySelector("#games")?.scrollIntoView({ block: "start" });
     };
+
     window.addEventListener("hashchange", activateHash);
     activateHash();
 
@@ -131,7 +269,12 @@ const projects = [
         if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
         event.preventDefault();
         const offset = event.key === "ArrowRight" ? 1 : -1;
-        const nextIndex = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + offset + tabs.length) % tabs.length;
+        const nextIndex =
+          event.key === "Home"
+            ? 0
+            : event.key === "End"
+              ? tabs.length - 1
+              : (index + offset + tabs.length) % tabs.length;
         const nextTab = tabs[nextIndex];
         if (!(nextTab instanceof HTMLElement)) return;
         nextTab.focus();
@@ -146,10 +289,9 @@ const projects = [
 </script>
 
 <style>
-  #games { scroll-margin-top: 9rem; }
   .home-project-tab[aria-selected="true"] {
     background: rgb(var(--color-ink));
     color: white;
-    box-shadow: 0 14px 36px rgb(15 23 42 / 0.16);
+    box-shadow: 0 12px 30px rgb(15 23 42 / 0.16);
   }
 </style>
